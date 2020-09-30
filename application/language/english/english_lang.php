@@ -3627,3 +3627,5 @@ $lang['invoice_will_be_sent_at']        = 'Invoice will be sent at %s';
 $lang['add_item_group'] = "Add Item Group";
 $lang['invoice_grand_total'] = 'Grand Total';
 $lang['shipping'] = 'Shipping';
+
+$lang['sales_item_group']                  = 'Group';

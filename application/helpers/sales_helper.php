@@ -689,7 +689,11 @@ function add_new_sales_item_post($item, $rel_id, $rel_type)
     }
 
     $CI = &get_instance();
-
+    $groupid = NULL;
+    if(isset($item['group_id'])){
+        $groupid = $item['group_id'];
+    }
+    // Bitsclan Solutions Start Code Invoice module   
     $CI->db->insert(db_prefix() . 'itemable', [
                     'description'      => $item['description'],
                     'long_description' => nl2br($item['long_description']),
@@ -699,8 +703,10 @@ function add_new_sales_item_post($item, $rel_id, $rel_type)
                     'rel_type'         => $rel_type,
                     'item_order'       => $item['order'],
                     'unit'             => $item['unit'],
+                    'group_id'         => $groupid,
                 ]);
 
+    // Bitsclan Solutions End Code Invoice module
     $id = $CI->db->insert_id();
 
     if ($custom_fields !== false) {
@@ -821,6 +827,33 @@ function get_items_table_data($transaction, $type, $for = 'html', $admin_preview
 {
     include_once(APPPATH . 'libraries/App_items_table.php');
     $class = new App_items_table($transaction, $type, $for, $admin_preview);
+
+
+    $class = hooks()->apply_filters('items_table_class', $class, $transaction, $type, $for, $admin_preview);
+
+    if (!$class instanceof App_items_table_template) {
+        show_error(get_class($class) . ' must be instance of "App_items_template"');
+    }
+
+    return $class;
+}
+
+
+
+/**
+ * Bitsclan solutions
+ * Get items table for preview
+ * @param  object  $transaction   e.q. invoice, estimate from database result row
+ * @param  string  $type          type, e.q. invoice, estimate, proposal
+ * @param  string  $for           where the items will be shown, html or pdf
+ * @param  boolean $admin_preview is the preview for admin area
+ * @return object
+ */
+function get_group_items_table_data($transaction, $type, $for = 'html', $admin_preview = false)
+{
+    include_once(APPPATH . 'libraries/App_group_items_table.php');
+    $class = new App_group_items_table($transaction, $type, $for, $admin_preview);
+
 
     $class = hooks()->apply_filters('items_table_class', $class, $transaction, $type, $for, $admin_preview);
 

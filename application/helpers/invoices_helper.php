@@ -608,3 +608,19 @@ function user_can_view_invoice($id, $staff_id = false)
 
     return false;
 }
+
+
+
+// Bitsclan Solutions Start Code Invoice module   
+
+function item_group($group_id='')
+{
+    $CI = &get_instance();
+    $CI->db->select('*');
+    $CI->db->from(db_prefix() . 'items_groups');
+    $CI->db->where('id', $group_id);
+    $res = $CI->db->get()->row();
+    return $res;
+}
+
+// Bitsclan Solutions End Code Invoice module

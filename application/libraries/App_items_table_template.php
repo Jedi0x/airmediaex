@@ -335,9 +335,10 @@ abstract class App_items_table_template
     public function table()
     {
         $html = $this->{$this->for . '_table_open'}();
-        $html .= '<thead>';
-        $html .= $this->{$this->for . '_headings'}();
-        $html .= '</thead>';
+        //bitsclan code here
+        // $html .= '<thead>';
+        // $html .= $this->{$this->for . '_headings'}();
+        // $html .= '</thead>';
         $html .= '<tbody>';
         $html .= $this->items();
         $html .= '</tbody>';

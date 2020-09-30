@@ -75,6 +75,9 @@ class Estimates extends AdminController
                 if (!has_permission('estimates', '', 'create')) {
                     access_denied('estimates');
                 }
+                // Bitsclan Solutions Start Code Estimate module
+                unset($estimate_data['item_select_group']);
+                // Bitsclan Solutions End Code Estimate module
                 $id = $this->estimates_model->add($estimate_data);
                 if ($id) {
                     set_alert('success', _l('added_successfully', _l('estimate')));
@@ -88,6 +91,9 @@ class Estimates extends AdminController
                 if (!has_permission('estimates', '', 'edit')) {
                     access_denied('estimates');
                 }
+                // Bitsclan Solutions Start Code Estimate module
+                unset($estimate_data['item_select_group']);
+                // Bitsclan Solutions End Code Estimate module
                 $success = $this->estimates_model->update($estimate_data, $id);
                 if ($success) {
                     set_alert('success', _l('updated_successfully', _l('estimate')));

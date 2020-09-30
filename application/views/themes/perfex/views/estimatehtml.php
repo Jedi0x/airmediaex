@@ -145,7 +145,9 @@
             <div class="col-md-12">
                <div class="table-responsive">
                   <?php
-                     $items = get_items_table_data($estimate, 'estimate');
+                     // Bitsclan Solutions Start Code Estimate module   
+                     $items = get_group_items_table_data($estimate, 'estimate', 'pdf');
+                     // Bitsclan Solutions End Code Estimate module
                      echo $items->table();
                      ?>
                </div>

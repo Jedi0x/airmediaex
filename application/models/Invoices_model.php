@@ -265,6 +265,8 @@ class Invoices_model extends App_Model
      */
     public function add($data, $expense = false)
     {
+
+
         $data['prefix'] = get_option('invoice_prefix');
 
         $data['number_format'] = get_option('invoice_number_format');
@@ -338,6 +340,9 @@ class Invoices_model extends App_Model
 
         $data  = $hook['data'];
         $items = $hook['items'];
+
+
+
 
         $this->db->insert(db_prefix() . 'invoices', $data);
         $insert_id = $this->db->insert_id();

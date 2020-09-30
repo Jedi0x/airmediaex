@@ -1,9 +1,9 @@
-
+<div class="item-group-<?php echo $group->id ?>">
 <div class="table-responsive s_table">
 	<h4 class="group-custom-head-class"><?php echo $group->name ?>
-		<button type="button" onclick="" class="btn pull-right btn-danger"><i class="fa fa-times"></i></button>
+		<button type="button" onclick="delete_item_group(<?php echo $group->id ?>); return false;" class="btn pull-right btn-danger"><i class="fa fa-times"></i></button>
 	</h4>
-   	<table class="table invoice-items-table items table-main-invoice-edit has-calculations no-mtop">
+   	<table class="table invoice-items-table items table-item-group<?php echo $group->id; ?> table-main-invoice-edit has-calculations no-mtop">
         <thead>
             <tr>
                 <th></th>
@@ -27,7 +27,7 @@
                 <th align="center"><i class="fa fa-cog"></i></th>
             </tr>
         </thead>
-        <tbody class="item<?php echo $group->id ?>">
+        <tbody class="item<?php echo $group->id ?> ui-sortable">
         	<tr class="main">
                 <td></td>
                 <td>
@@ -68,15 +68,15 @@
                 if(isset($invoice)){
                     $new_item = true;
                 } ?>
-                <button type="button" onclick="add_item_to_table('undefined','undefined',<?php echo $new_item; ?>); return false;" class="btn pull-right btn-info"><i class="fa fa-check"></i></button>
+                <button type="button" onclick="add_group_item_to_table('undefined','undefined','undefined','',<?php echo $group->id; ?>); return false;" class="btn pull-right btn-info"><i class="fa fa-check"></i></button>
                   </td>
             </tr>
 
             <?php 
-            $i               = 1;
+            $i               = rand();
             $order = 1;
-               $items_indicator = 'newitems';
-               $sub_total = 0;
+            $items_indicator = 'newitems';
+            $sub_total = 0;
             foreach ($items as $k => $item) { 
             	$item['id'] = $item['itemid'];
                	$manual    = false;
@@ -91,11 +91,13 @@
                         $invoice_item_taxes = $item['taxname'];
                         $manual             = true;
                     }
-                    $table_row .= form_hidden('' . $items_indicator . '[' . $i . '][itemid]', $item['id']);
+                    //$table_row .= form_hidden('' . $items_indicator . '[' . $i . '][itemid]', $item['id']);
+                    $table_row .= '<input type="hidden" class="itemid" name="'. $items_indicator .'['  . $i . '][itemid]" value="' .$item['id']. '">';
                     $amount = $item['rate'] * $item['qty'];
                     $amount = app_format_number($amount);
-                    $sub_total+=$amount;
+                   
                     // order input
+                    $table_row .= '<input type="hidden" name="'. $items_indicator .'['  . $i . '][group_id]" value="' .$group->id. '">';
                     $table_row .= '<input type="hidden" class="order" name="' . $items_indicator . '[' . $i . '][order]" value="'.$order.'">';
                     $table_row .= '</td>';
                     $table_row .= '<td class="bold description"><textarea name="' . $items_indicator . '[' . $i . '][description]" class="form-control" rows="5">' . clear_textarea_breaks($item['description']) . '</textarea></td>';
@@ -114,7 +116,7 @@
                     $table_row .= '<input type="text" placeholder="'.$unit_placeholder.'" name="'.$items_indicator.'['.$i.'][unit]" class="form-control input-transparent text-right" value="'.$item['unit'].'">';
 
                     $table_row .= '</td>';
-                    $table_row .= '<td class="rate"><input type="number" data-toggle="tooltip" title="' . _l('numbers_not_formatted_while_editing') . '" onblur="calculate_total_group('.$item['id'].','.$group->id.');" onchange="calculate_total_group('.$item['id'].','.$group->id.');" name="' . $items_indicator . '[' . $i . '][rate]" value="' . $item['rate'] . '" class="form-control" data-amount = "'.$item['rate'].'"></td>';
+                    $table_row .= '<td class="rate"><input type="number" data-toggle="tooltip" title="' . _l('numbers_not_formatted_while_editing') . '" onblur="calculate_total_group('.$item['id'].','.$group->id.');" onchange="calculate_total_group('.$item['id'].','.$group->id.');" name="' . $items_indicator . '[' . $i . '][rate]" value="' . $item['rate'] . '" class="form-control item-amount" data-amount = "'.$item['rate'].'"></td>';
                     $table_row .= '<td class="taxrate">' . $this->misc_model->get_taxes_dropdown_template('' . $items_indicator . '[' . $i . '][taxname][]', $invoice_item_taxes, 'invoice', $item['id'], true, $manual,$item['id']) . '</td>';
                     $table_row .= '<td class="amount" align="right">' . $amount . '</td>';
                     $table_row .= '<td><a href="#" class="btn btn-danger pull-left" onclick="delete_item(this,' . $item['id'] . ','.$group->id.'); return false;"><i class="fa fa-times"></i></a></td>';
@@ -133,6 +135,7 @@
                     echo $table_row;
                     $i++;
                     $order++;
+                    $sub_total+=$item['rate'] * $item['qty'];
                } ?>
 
 
@@ -157,3 +160,4 @@
 
       <div class="clearfix"></div>
       <div class="clearfix"></div>
+    </div>

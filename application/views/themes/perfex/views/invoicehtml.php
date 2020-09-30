@@ -112,7 +112,9 @@
             <div class="col-md-12">
                <div class="table-responsive">
                   <?php
-                     $items = get_items_table_data($invoice, 'invoice');
+                  // Bitsclan Solutions Start Code Invoice module   
+                     $items = get_group_items_table_data($invoice, 'invoice');
+                     // Bitsclan Solutions End Code Invoice module
                      echo $items->table();
                      ?>
                </div>

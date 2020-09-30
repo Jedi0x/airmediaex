@@ -296,6 +296,10 @@ class Invoices extends AdminController
                 if (!has_permission('invoices', '', 'create')) {
                     access_denied('invoices');
                 }
+                // Bitsclan Solutions Start Code Invoice module   
+                unset($invoice_data['item_select_group']);
+                // Bitsclan Solutions End Code Invoice module
+                
                 $id = $this->invoices_model->add($invoice_data);
                 if ($id) {
                     set_alert('success', _l('added_successfully', _l('invoice')));
@@ -313,6 +317,9 @@ class Invoices extends AdminController
                 if (!has_permission('invoices', '', 'edit')) {
                     access_denied('invoices');
                 }
+                // Bitsclan Solutions Start Code Invoice module   
+                unset($invoice_data['item_select_group']);
+                // Bitsclan Solutions End Code Invoice module
                 $success = $this->invoices_model->update($invoice_data, $id);
                 if ($success) {
                     set_alert('success', _l('updated_successfully', _l('invoice')));

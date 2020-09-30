@@ -261,6 +261,9 @@ class Estimates_model extends App_Model
             $new_invoice_data['newitems'][$key]['qty']              = $item['qty'];
             $new_invoice_data['newitems'][$key]['unit']             = $item['unit'];
             $new_invoice_data['newitems'][$key]['taxname']          = [];
+            // Bitsclan Solutions Start Code Estimate module   
+            $new_invoice_data['newitems'][$key]['group_id']         = $item['group_id'];
+            // Bitsclan Solutions End Code Estimate module
             $taxes                                                  = get_estimate_item_taxes($item['id']);
             foreach ($taxes as $tax) {
                 // tax name is in format TAX1|10.00
@@ -621,12 +624,14 @@ class Estimates_model extends App_Model
                 $this->send_estimate_to_client($insert_id, '', true, '', true);
             }
 
-            // Bitsclan Solutions Start Code 
-            $data['insert_id'] = $insert_id;
-            hooks()->do_action('after_estimate_added_activity', $data);
-            set_alert('success', _l('added_successfully', _l('estimate')));
-            redirect(admin_url('opportunities/opportunity/'.$data['opportunity'].'?group=estimates'));
-            // Bitsclan Solutions End Code
+            if(isset($data['opportunity']) && $data['opportunity'] != ""){
+                // Bitsclan Solutions Start Code 
+                $data['insert_id'] = $insert_id;
+                hooks()->do_action('after_estimate_added_activity', $data);
+                set_alert('success', _l('added_successfully', _l('estimate')));
+                redirect(admin_url('opportunities/opportunity/'.$data['opportunity'].'?group=estimates'));
+                // Bitsclan Solutions End Code
+            }
 
             return $insert_id;
         }

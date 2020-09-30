@@ -84,6 +84,42 @@ class Invoice_items extends AdminController
         }
     }
 
+    //Bitsclan Solutions Start Code Invoice module   
+    public function manage_group()
+    {
+        if (has_permission('items', '', 'view')) {
+            if ($this->input->post()) {
+                $data = $this->input->post();
+                if (!has_permission('items', '', 'create')) {
+                    header('HTTP/1.0 400 Bad error');
+                    echo _l('access_denied');
+                    die;
+                }
+                $this->db->insert(db_prefix() . 'items_groups', array("name" => $data['name']));
+                $id      =  $this->db->insert_id();
+                $success = false;
+                $message = '';
+                if ($id) {
+                    $success = true;
+                    $message = _l('added_successfully', _l('sales_item_group'));
+                }
+                $this->db->select('*');
+                $this->db->from(db_prefix() . 'items_groups');
+                $this->db->where('id',$id);
+                $group = $this->db->get()->row();
+
+                echo json_encode([
+                    'success' => $success,
+                    'message' => $message,
+                    'group'    => $group,
+                ]);
+
+            }
+        }
+    }
+
+    //Bitsclan Solutions End Code Invoice module   
+
     public function import()
     {
         if (!has_permission('items', '', 'create')) {

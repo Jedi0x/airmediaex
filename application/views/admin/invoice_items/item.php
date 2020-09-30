@@ -76,6 +76,43 @@
 </div>
 </div>
 </div>
+
+
+
+<!-- Bitsclan Solutions Start Code Invoice module   -->
+
+<div class="modal fade" id="sale_group" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">
+          <span class="add-title"><?php echo _l('new_group'); ?></span>
+        </h4>
+      </div>
+      <?php echo form_open('admin/invoice_items/manage_group',array('id'=>'invoice_group_custom_form')); ?>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="alert alert-warning affect-warning hide">
+                <?php echo _l('changing_items_affect_warning'); ?>
+              </div>
+              <?php echo render_input('name','kb_group_add_edit_name'); ?>            
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo _l('close'); ?></button>
+          <button type="submit" class="btn btn-info"><?php echo _l('submit'); ?></button>
+          <?php echo form_close(); ?>
+        </div>
+      
+    </div>
+  </div>
+</div>
+<!-- Bitsclan Solutions End Code Invoice module   -->
+
+
 <script>
     // Maybe in modal? Eq convert to invoice or convert proposal to estimate/invoice
     if(typeof(jQuery) != 'undefined'){
@@ -140,6 +177,40 @@ function manage_invoice_items(form) {
     });
     return false;
 }
+
+
+// Bitsclan Solutions Start Code Invoice module   
+
+function manage_invoice_groups(form) {
+    var data = $(form).serialize();
+    var url = form.action;
+    $.post(url, data).done(function (response) {
+        response = JSON.parse(response);
+        if (response.success == true) {
+            var item_select_group = $('#item_select_group');
+            if ($("body").find('.accounting-template').length > 0) {
+                if (!item_select_group.hasClass('ajax-search')) {
+                    var group = item_select_group.find('[data-group-id="' + response.group.id + '"]');
+                    group.prepend('<option " value="' + response.group.id + '">' + response.group.name + '</option>'); 
+                }
+                
+                item_select_group.selectpicker('refresh');
+                add_group_item_to_preview(response.group.id);
+            } else {
+                // Is general items view
+                $('.table-invoice-items').DataTable().ajax.reload(null, false);
+            }
+            alert_float('success', response.message);
+        }
+        $('#sale_group').modal('hide');
+    }).fail(function (data) {
+        alert_float('danger', data.responseText);
+    });
+    return false;
+}
+
+// Bitsclan Solutions End Code Invoice module 
+
 function init_item_js() {
      // Add item to preview from the dropdown for invoices estimates
     $("body").on('change', 'select[name="item_select"]', function () {
@@ -150,7 +221,7 @@ function init_item_js() {
     });
 
 
-    // Bitsclan Solutions Start Code
+    // Bitsclan Solutions Start Code Invoice module   
 
     $("body").on('change', 'select[name="item_select_group"]', function () {
         var groupid = $(this).selectpicker('val');
@@ -159,17 +230,11 @@ function init_item_js() {
         }
     });
 
-    // var shipping = parseFloat($('input[name="shipping"]').val());
-    // var total = parseFloat($('input[name="total"]').val());;
-    // total = parseFloat(total+shipping);
-    // $('.shipping').html(format_money(shipping));
-    // $('.total').html(format_money(total) + hidden_input('total', accounting.toFixed(total, app.options.decimal_places)));
 
-    // Bitsclan Solutions End Code
+    // Bitsclan Solutions End Code Invoice module
 
 
-
-    // Items modal show action
+    // salegroup modal show action
     $("body").on('show.bs.modal', '#sales_item_modal', function (event) {
 
         $('.affect-warning').addClass('hide');
@@ -225,6 +290,7 @@ function init_item_js() {
     });
 
    validate_item_form();
+   validate_group_form();
 }
 function validate_item_form(){
     // Set validation for invoice item form
@@ -235,4 +301,16 @@ function validate_item_form(){
         }
     }, manage_invoice_items);
 }
+
+// Bitsclan Solutions Start Code Invoice module   
+
+function validate_group_form(){
+    // Set validation for invoice item form
+    appValidateForm($('#invoice_group_custom_form'), {
+        name: 'required'
+    }, manage_invoice_groups);
+}
+
+// Bitsclan Solutions End Code Invoice module 
+
 </script>

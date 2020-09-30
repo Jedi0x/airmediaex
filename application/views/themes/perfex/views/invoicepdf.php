@@ -78,7 +78,10 @@ pdf_multi_row($left_info, $right_info, $pdf, ($dimensions['wk'] / 2) - $dimensio
 $pdf->Ln(hooks()->apply_filters('pdf_info_and_table_separator', 6));
 
 // The items table
-$items = get_items_table_data($invoice, 'invoice', 'pdf');
+
+// Bitsclan Solutions Start Code Invoice module   
+$items = get_group_items_table_data($invoice, 'invoice', 'pdf');
+// Bitsclan Solutions End Code Invoice module
 
 $tblhtml = $items->table();
 

@@ -293,8 +293,10 @@
                      <div class="col-md-12">
                         <div class="table-responsive">
                               <?php
-                                 $items = get_items_table_data($estimate, 'estimate', 'html', true);
+                                 // Bitsclan Solutions Start Code Estimate module   
+                                 $items = get_group_items_table_data($estimate, 'estimate', 'html', true);
                                  echo $items->table();
+                                 // Bitsclan Solutions End Code Estimate module
                               ?>
                         </div>
                      </div>

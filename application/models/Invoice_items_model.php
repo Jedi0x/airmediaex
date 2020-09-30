@@ -281,7 +281,7 @@ class Invoice_items_model extends App_Model
         return false;
     }
 
-    // Bitsclan Solutions
+    // Bitsclan Solutions Start Code Invoice module   
 
     public function items_group_by_id($id)
     {
@@ -311,4 +311,6 @@ class Invoice_items_model extends App_Model
         $this->db->where('id', $id);
         return $this->db->get(db_prefix() . 'items_groups')->row();
     }
+
+    // Bitsclan Solutions End Code Invoice module
 }
