@@ -160,6 +160,7 @@ if($invoice->scheduled_email) { ?>
       <div class="table-responsive">
          <?php
          // Bitsclan Solutions Start Code Invoice module   
+    
          $items = get_group_items_table_data($invoice, 'invoice', 'html', true);
          echo $items->table();
          // Bitsclan Solutions End Code Invoice module
@@ -204,6 +205,14 @@ if($invoice->scheduled_email) { ?>
                   </td>
                </tr>
             <?php } ?>
+
+            <tr>
+               <td><span class="bold"><?php echo _l('shipping'); ?></span>
+               </td>
+               <td class="total">
+                  <?php echo app_format_money($invoice->shipping, $invoice->currency_name); ?>
+               </td>
+            </tr>
             <tr>
                <td><span class="bold"><?php echo _l('invoice_total'); ?></span>
                </td>

@@ -228,7 +228,7 @@ class Estimates_model extends App_Model
         $new_invoice_data['shipping_state']   = $_estimate->shipping_state;
         $new_invoice_data['shipping_zip']     = $_estimate->shipping_zip;
         $new_invoice_data['shipping_country'] = $_estimate->shipping_country;
-
+        $new_invoice_data['shipping']         = $_estimate->shipping;
         if ($_estimate->include_shipping == 1) {
             $new_invoice_data['include_shipping'] = 1;
         }
@@ -263,6 +263,8 @@ class Estimates_model extends App_Model
             $new_invoice_data['newitems'][$key]['taxname']          = [];
             // Bitsclan Solutions Start Code Estimate module   
             $new_invoice_data['newitems'][$key]['group_id']         = $item['group_id'];
+            $new_invoice_data['newitems'][$key]['group_order']      = $item['group_order'];
+            $new_invoice_data['newitems'][$key]['discount']         = $item['discount'];
             // Bitsclan Solutions End Code Estimate module
             $taxes                                                  = get_estimate_item_taxes($item['id']);
             foreach ($taxes as $tax) {

@@ -563,6 +563,7 @@ function get_items_by_type($type, $id)
     $CI->db->from(db_prefix() . 'itemable');
     $CI->db->where('rel_id', $id);
     $CI->db->where('rel_type', $type);
+     $CI->db->order_by('group_order', 'asc');
     $CI->db->order_by('item_order', 'asc');
 
    return $CI->db->get()->result_array();
@@ -693,6 +694,16 @@ function add_new_sales_item_post($item, $rel_id, $rel_type)
     if(isset($item['group_id'])){
         $groupid = $item['group_id'];
     }
+
+    $discount = NULL;
+    if(isset($item['discount'])){
+        $discount = $item['discount'];
+    }
+
+    $group_order = NULL;
+    if(isset($item['group_order'])){
+        $group_order = $item['group_order'];
+    }
     // Bitsclan Solutions Start Code Invoice module   
     $CI->db->insert(db_prefix() . 'itemable', [
                     'description'      => $item['description'],
@@ -704,6 +715,8 @@ function add_new_sales_item_post($item, $rel_id, $rel_type)
                     'item_order'       => $item['order'],
                     'unit'             => $item['unit'],
                     'group_id'         => $groupid,
+                    'discount'         => $discount,
+                    'group_order'      => $group_order,
                 ]);
 
     // Bitsclan Solutions End Code Invoice module
@@ -736,6 +749,12 @@ function update_sales_item_post($item_id, $data, $field = '')
         } else {
             $update[$field] = $data[$field];
         }
+        $group_order = NULL;
+        if(isset($data['group_order'])){
+            $group_order = $data['group_order'];
+        }
+
+        
     } else {
         $update = [
             'item_order'       => $data['order'],
@@ -744,8 +763,12 @@ function update_sales_item_post($item_id, $data, $field = '')
             'rate'             => number_format($data['rate'], get_decimal_places(), '.', ''),
             'qty'              => $data['qty'],
             'unit'             => $data['unit'],
+            'discount'         => $data['discount'],
+            'group_order'      => $group_order,
         ];
     }
+
+    //bitsclan code here
 
     $CI = &get_instance();
     $CI->db->where('id', $item_id);
@@ -857,7 +880,7 @@ function get_group_items_table_data($transaction, $type, $for = 'html', $admin_p
 
     $class = hooks()->apply_filters('items_table_class', $class, $transaction, $type, $for, $admin_preview);
 
-    if (!$class instanceof App_items_table_template) {
+    if (!$class instanceof App_group_items_table_template) {
         show_error(get_class($class) . ' must be instance of "App_items_template"');
     }
 

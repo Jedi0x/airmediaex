@@ -144,7 +144,7 @@
 <?php init_tail(); ?>
 <script>
   $(function(){
-
+   
     var notSortableAndSearchableItemColumns = [];
     <?php if(has_permission('items','','delete')){ ?>
       notSortableAndSearchableItemColumns.push(0);

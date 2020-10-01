@@ -123,6 +123,8 @@ class App_items_table extends App_items_table_template
                 $this->exclude_currency()
             );
 
+           
+
             $itemHTML .= '<td class="amount" align="right" width="' . $regularItemWidth . '%">' . $item_amount_with_quantity . '</td>';
 
             // Close table row

@@ -846,6 +846,7 @@ class Invoices_model extends App_Model
         }
 
         if (count($items) > 0) {
+
             foreach ($items as $key => $item) {
                 $original_item = $this->get_invoice_item($item['itemid']);
 
@@ -856,6 +857,20 @@ class Invoices_model extends App_Model
                 if (update_sales_item_post($item['itemid'], $item, 'unit')) {
                     $affectedRows++;
                 }
+
+                // Bitsclan Solutions Start Code Invoice module 
+                if (update_sales_item_post($item['itemid'], $item, 'discount')) {
+                    $affectedRows++;
+                }
+
+                if(isset($item['group_order'])){
+                    if (update_sales_item_post($item['itemid'], $item, 'group_order')) {
+                        $affectedRows++;
+                    }  
+                }
+                
+
+                // Bitsclan Solutions End Code Invoice module
 
                 if (update_sales_item_post($item['itemid'], $item, 'description')) {
                     $this->log_invoice_activity($id, 'invoice_estimate_activity_updated_item_short_description', false, serialize([

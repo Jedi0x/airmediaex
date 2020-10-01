@@ -429,6 +429,8 @@
          </div>
       </div>
    </div>
+   <?php  $sub_total = 0;
+            $total_amount = 0; ?>
    <div class="panel-body mtop10">
       <div class="row">
          <div class="col-md-4">
@@ -464,13 +466,14 @@
                 $group_items[$group_id][] = array($item);
               } 
             } 
-
+             $sub_total = 0;
+            $total_amount = 0;
             foreach ($group_items as $group => $group_items_arr) {
               $_group = item_group($group); ?>
 
-              <div class="item-group-<?php echo $_group->id ?>">
+              <div class="item-group-<?php echo $_group->id ?> item-group"  data-group-id = "<?php echo $_group->id; ?>">
                 <div class="table-responsive s_table">
-                  <h4 class="group-custom-head-class"><?php echo $_group->name ?>
+                  <h4 class="group-custom-head-class dragger ui-sortable-handle"><?php echo $_group->name ?>
                   <button type="button" onclick="delete_item_group('<?php echo $_group->id ?>'); return false;" class="btn pull-right btn-danger"><i class="fa fa-times"></i></button>
                 </h4>
                 <table class="table invoice-items-table items table-item-group<?php echo $_group->id; ?> table-main-invoice-edit has-calculations no-mtop">
@@ -493,6 +496,7 @@
                       <th width="10%" align="right" class="qty"><?php echo $qty_heading; ?></th>
                       <th width="15%" align="right"><?php echo _l('invoice_table_rate_heading'); ?></th>
                       <th width="20%" align="right"><?php echo _l('invoice_table_tax_heading'); ?></th>
+                      <th width="20%" align="right"><?php echo _l('invoice_discount'); ?></th>
                       <th width="10%" align="right"><?php echo _l('invoice_table_amount_heading'); ?></th>
                       <th align="center"><i class="fa fa-cog"></i></th>
                     </tr>
@@ -531,6 +535,9 @@
                         echo $select;
                         ?>
                       </td>
+                      <td>
+                        <input type="number" min="0"  data-discount name="discount" value="0" class="form-control">';
+                      </td>
                       <td></td>
                       <td>
                         <?php
@@ -568,11 +575,17 @@
                         $invoice_item_taxes = $item[0]['taxname'];
                         $manual             = true;
                       }
-                    // $table_row .= form_hidden('' . $items_indicator . '[' . $i . '][itemid]', $item[0]['id']);
+                   
                       $table_row .= '<input type="hidden" class="itemid" name="'. $items_indicator .'['  . $i . '][itemid]" value="' .$item[0]['id']. '">';
                       $amount = $item[0]['rate'] * $item[0]['qty'];
-                      $amount = app_format_number($amount);
-                      
+
+                      $percentage = $item[0]['discount'];
+                      $discounted_value = ($percentage / 100) * $amount;
+
+                      $sub_total+=($amount - $discounted_value);
+
+                      $amount = app_format_number($amount - $discounted_value);
+
                     // order input
                       $table_row .= '<input type="hidden" name="'. $items_indicator .'['  . $i . '][group_id]" value="' .$_group->id. '">';
                       $table_row .= '<input type="hidden" class="order" name="' . $items_indicator . '[' . $i . '][order]" value="'.$order.'">';
@@ -595,7 +608,10 @@
                       $table_row .= '</td>';
                       $table_row .= '<td class="rate"><input type="number" data-toggle="tooltip" title="' . _l('numbers_not_formatted_while_editing') . '" onblur="calculate_total_group('.$item[0]['id'].','.$_group->id.');" onchange="calculate_total_group('.$item[0]['id'].','.$_group->id.');" name="' . $items_indicator . '[' . $i . '][rate]" value="' . $item[0]['rate'] . '" class="form-control" data-amount = "'.$item[0]['rate'].'"></td>';
                       $table_row .= '<td class="taxrate">' . $this->misc_model->get_taxes_dropdown_template('' . $items_indicator . '[' . $i . '][taxname][]', $invoice_item_taxes, 'invoice', $item[0]['id'], true, $manual,$item[0]['id']) . '</td>';
-                      $table_row .= '<td class="amount" align="right">' . $amount . '</td>';
+
+                      $table_row .= '<td><input type="number" min="0"  max="100" onblur="calculate_total_group('.$item[0]['id'].','.$_group->id.');" onchange="calculate_total_group('.$item[0]['id'].','.$_group->id.');" keyup="calculate_total_group('.$item[0]['id'].','.$_group->id.');" data-discount name="' . $items_indicator . '[' . $i . '][discount]" value="'.$item[0]['discount'].'" class="form-control"></td>';
+
+                      $table_row .= '<td class="amount-group" align="right">' . $amount . '</td>';
                       $table_row .= '<td><a href="#" class="btn btn-danger pull-left" onclick="delete_item(this,' . $item[0]['itemid'] . ','.$_group->id.'); return false;"><i class="fa fa-times"></i></a></td>';
                       if (isset($item[0]['task_id'])) {
                         if (!is_array($item[0]['task_id'])) {
@@ -612,8 +628,13 @@
                       echo $table_row;
                       $i++;
                       $order++;
-                      $sub_total+=$item[0]['rate'] * $item[0]['qty'];
-                    } ?>
+                      
+                   
+
+                    }
+
+                    $total_amount+=$sub_total;
+                     ?>
                   </tbody>
                 </table>
               </div>
@@ -643,7 +664,8 @@
                <tr id="subtotal">
                   <td><span class="bold"><?php echo _l('invoice_subtotal'); ?> :</span>
                   </td>
-                  <td class="subtotal">
+                  <td class="subtotal-group">
+                    <?php echo "$".app_format_number($sub_total); ?>
                   </td>
                </tr>
                <tr id="discount_area">
@@ -689,7 +711,9 @@
                         </div>
                      </div>
                   </td>
-                  <td class="discount-total"></td>
+                  <td class="discount-total">
+                    <?php echo "$".app_format_number(0); ?>
+                  </td>
                </tr>
                <tr>
                   <td>
@@ -702,7 +726,7 @@
                         </div>
                      </div>
                   </td>
-                  <td class="adjustment"></td>
+                  <td class="adjustment-group"><?php if(isset($invoice)){ echo "$".app_format_number($invoice->adjustment); } else { echo "$".app_format_number(0); } ?></td>
                </tr>
                <tr>
                   <td>
@@ -711,16 +735,24 @@
                            <span class="bold"><?php echo _l('shipping'); ?></span>
                         </div>
                         <div class="col-md-5">
-                           <input type="number" data-toggle="tooltip" data-title="<?php echo _l('numbers_not_formatted_while_editing'); ?>" value="<?php if(isset($invoice)){echo $invoice->adjustment; } else { echo 1000; } ?>" class="form-control pull-left" name="shipping">
+                           <input type="number" data-toggle="tooltip" data-title="<?php echo _l('numbers_not_formatted_while_editing'); ?>" value="<?php if(isset($invoice)){echo $invoice->shipping; } else { echo 1000; } ?>" class="form-control pull-left" name="shipping">
                         </div>
                      </div>
                   </td>
-                  <td class="shipping"><?php echo "$".app_format_number(1000); ?></td>
+                  <td class="shipping"><?php if(isset($invoice)){ echo "$".app_format_number($invoice->shipping); } else { echo "$".app_format_number(1000); } ?></td>
                </tr>
                <tr>
                   <td><span class="bold"><?php echo _l('invoice_grand_total'); ?> :</span>
                   </td>
-                  <td class="total">
+                  <td class="total-group">
+                   
+                    <?php 
+                    $shipping_price = 0;
+                    if(isset($invoice)){
+                      $shipping_price = $invoice->shipping;
+                    }
+                    echo "$".app_format_number($total_amount+$shipping_price); 
+                    ?>
                   </td>
                </tr>
             </tbody>

@@ -2,9 +2,9 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-include_once(APPPATH . 'libraries/App_items_table_template.php');
+include_once(APPPATH . 'libraries/App_group_items_table_template.php');
 
-class App_group_items_table extends App_items_table_template
+class App_group_items_table extends App_group_items_table_template
 {
     public function __construct($transaction, $type, $for = 'html', $admin_preview = false)
     {
@@ -27,7 +27,6 @@ class App_group_items_table extends App_items_table_template
     {
         $html = '';
 
-
         $descriptionItemWidth = $this->get_description_item_width();
 
         $regularItemWidth  = $this->get_regular_items_width(6);
@@ -43,6 +42,11 @@ class App_group_items_table extends App_items_table_template
         $groups = array();
         $group_items = array();
 
+      
+
+
+       // array_multisort(array_column($this->items, 'group_order'), SORT_ASC, $this->items);
+
         foreach ($this->items as $item) {
             if(!in_array($item['group_id'], $groups)){
                 array_push($groups, $item['group_id']);
@@ -57,20 +61,37 @@ class App_group_items_table extends App_items_table_template
         }
 
         
-
+        $html.=' <div class="group_items-drag">';
         foreach ($group_items as $group => $group_items_arr) {
             $_group = item_group($group);
-            $html.='<tr class="sortable" data-group-id="' . $group . '" style="background-color: #415165; color: #fff; margin: 0px"><td ' . $this->td_attributes() . ' align="center" width="5%">#</td><td class="description" align="left;" width="' . $descriptionItemWidth . '%">'.$_group->name.'</td><td align="right" width="' . $regularItemWidth . '%">Qty</td><td  align="right" width="' . $regularItemWidth . '%">Rate</td><td class="amount" align="right" width="' . $regularItemWidth . '%">Amount</td></tr>';
-            
+
+            $html.='<div class="item-group-'.$_group->id.' item-group"  data-group-id = "'.$_group->id.' " data-invoice-id = "'.$this->items[0]['rel_id'].'">
+            <table class="table items items-preview invoice-items-preview" data-type="invoice">
+            <thead>
+                <tr style="background-color: #415165; color: #fff; margin: 0px">
+                  <th align="center" width="5%">#</th>
+                  <th class="description" align="left;" width="' . $descriptionItemWidth . '%">'.$_group->name.'</th>
+                  <th align="right" width="' . $regularItemWidth . '%">Qty</th>
+                  <th  align="right" width="' . $regularItemWidth . '%">Rate</th>
+                  <th class="amount" align="right" width="' . $regularItemWidth . '%">Tax</th>
+                  <th class="amount" align="right" width="' . $regularItemWidth . '%">Discount</th>
+                  <th class="amount" align="right" width="' . $regularItemWidth . '%">Amount</th>
+                </tr>
+            </thead>
+            <tbody>';
+
             $subtotal = 0;
-            foreach ($group_items_arr as $item) {
+
+
+            foreach ($group_items_arr as $keyx => $item) {
+
                 $itemHTML = '';
 
                 // Open table row
                 $itemHTML .= '<tr' . $this->tr_attributes($item[0]) . '>';
 
                 // Table data number
-                $itemHTML .= '<td' . $this->td_attributes() . ' align="center" width="5%">' . $i . '</td>';
+                $itemHTML .= '<td' . $this->td_attributes() . ' align="center" width="5%">' . $i  . ' </td>';
 
                 $itemHTML .= '<td class="description" align="left;" width="' . $descriptionItemWidth . '%">';
 
@@ -133,19 +154,30 @@ class App_group_items_table extends App_items_table_template
                  * Items table taxes HTML custom function because it's too general for all features/options
                  * @var string
                  */
+
+
+
                 $itemHTML .= $this->taxes_html($item[0], $regularItemWidth);
 
                 /**
                  * Possible action hook user to include tax in item total amount calculated with the quantiy
                  * eq Rate * QTY + TAXES APPLIED
                  */
+                $amount = $item[0]['qty'] * $item[0]['rate'];
+                $percentage = $item[0]['discount'];
+                $discounted_value = ($percentage / 100) * $amount;
+
                 $item_amount_with_quantity = hooks()->apply_filters(
                     'item_preview_amount_with_currency',
-                    app_format_money(($item[0]['qty'] * $item[0]['rate']), $this->transaction->currency_name, $this->exclude_currency()),
+                    app_format_money(($amount - $discounted_value), $this->transaction->currency_name, $this->exclude_currency()),
                     $item,
                     $this->transaction,
                     $this->exclude_currency()
                 );
+
+                $itemHTML .= '<td align="right" width="' . $regularItemWidth . '%">' . $item[0]['discount'] . ' %</td>';
+
+               
 
                 $itemHTML .= '<td class="amount" align="right" width="' . $regularItemWidth . '%">' . $item_amount_with_quantity . '</td>';
 
@@ -159,11 +191,21 @@ class App_group_items_table extends App_items_table_template
                 $i++;
             }
 
-             $html.='<tr align="right"><td colspan="4"><span class="bold">'._l('invoice_subtotal').'</span>
-               </td><td class="subtotal">'.app_format_money($subtotal,$this->transaction->currency_name).'</td></tr>';
+            $html.='</tbody>';
+
+        
+
+            $html.='<tfoot class="table text-right">
+                        <tr>
+                           <td  colspan=4><span class="bold">'._l('invoice_subtotal').'</span></td>
+                           <td class="subtotal" colspan=3>'.app_format_money($subtotal,$this->transaction->currency_name).'</td>
+                        </tr>
+                    </tfoot></table> </div>';
 
 
         }
+
+        $html.=' </div>';
 
         return $html;
     }

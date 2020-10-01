@@ -75,9 +75,28 @@ class Estimates extends AdminController
                 if (!has_permission('estimates', '', 'create')) {
                     access_denied('estimates');
                 }
-                // Bitsclan Solutions Start Code Estimate module
-                unset($estimate_data['item_select_group']);
+               
+                // Bitsclan Solutions Start Code Estimate module  
+                if(isset($estimate_data['group_order'])){
+                    foreach ($estimate_data['group_order'] as $group_id => $order) {
+                        foreach ($estimate_data['items'] as $item_key => $item) {
+                            if($item['group_id'] == $group_id){
+                                $estimate_data['items'][$item_key]['group_order'] = $order;
+                            }  
+                        }
+                        if(isset($estimate_data['newitems'])){
+                           foreach ($estimate_data['newitems'] as $newitems_key => $newitems) {
+                                if($newitems['group_id'] == $group_id){
+                                    $estimate_data['newitems'][$newitems_key]['group_order'] = $order;
+                                }  
+                            } 
+                        }
+                        
+                    }
+                }
+                 unset($estimate_data['item_select_group'],$estimate_data['discount'],$estimate_data['group_order']);
                 // Bitsclan Solutions End Code Estimate module
+
                 $id = $this->estimates_model->add($estimate_data);
                 if ($id) {
                     set_alert('success', _l('added_successfully', _l('estimate')));
@@ -91,8 +110,25 @@ class Estimates extends AdminController
                 if (!has_permission('estimates', '', 'edit')) {
                     access_denied('estimates');
                 }
-                // Bitsclan Solutions Start Code Estimate module
-                unset($estimate_data['item_select_group']);
+                // Bitsclan Solutions Start Code Estimate module  
+                if(isset($estimate_data['group_order'])){
+                    foreach ($estimate_data['group_order'] as $group_id => $order) {
+                        foreach ($estimate_data['items'] as $item_key => $item) {
+                            if($item['group_id'] == $group_id){
+                                $estimate_data['items'][$item_key]['group_order'] = $order;
+                            }  
+                        }
+                        if(isset($estimate_data['newitems'])){
+                           foreach ($estimate_data['newitems'] as $newitems_key => $newitems) {
+                                if($newitems['group_id'] == $group_id){
+                                    $estimate_data['newitems'][$newitems_key]['group_order'] = $order;
+                                }  
+                            } 
+                        }
+                        
+                    }
+                }
+                 unset($estimate_data['item_select_group'],$estimate_data['discount'],$estimate_data['group_order']);
                 // Bitsclan Solutions End Code Estimate module
                 $success = $this->estimates_model->update($estimate_data, $id);
                 if ($success) {

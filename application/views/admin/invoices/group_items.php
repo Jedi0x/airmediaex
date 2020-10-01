@@ -1,6 +1,6 @@
-<div class="item-group-<?php echo $group->id ?>">
-<div class="table-responsive s_table">
-	<h4 class="group-custom-head-class"><?php echo $group->name ?>
+<div class="item-group-<?php echo $group->id ?> sortable">
+<div class="table-responsive s_table ">
+	<h4 class="group-custom-head-class dragger ui-sortable-handle"><?php echo $group->name ?>
 		<button type="button" onclick="delete_item_group(<?php echo $group->id ?>); return false;" class="btn pull-right btn-danger"><i class="fa fa-times"></i></button>
 	</h4>
    	<table class="table invoice-items-table items table-item-group<?php echo $group->id; ?> table-main-invoice-edit has-calculations no-mtop">
@@ -23,6 +23,7 @@
                 <th width="10%" align="right" class="qty"><?php echo $qty_heading; ?></th>
                 <th width="15%" align="right"><?php echo _l('invoice_table_rate_heading'); ?></th>
                 <th width="20%" align="right"><?php echo _l('invoice_table_tax_heading'); ?></th>
+                <th width="20%" align="right"><?php echo _l('invoice_discount'); ?></th>
                 <th width="10%" align="right"><?php echo _l('invoice_table_amount_heading'); ?></th>
                 <th align="center"><i class="fa fa-cog"></i></th>
             </tr>
@@ -61,6 +62,9 @@
                         echo $select;
                         ?>
                 </td>
+                <td>
+                    <input type="number" min="0"  data-discount name="discount" value="0" class="form-control">';
+                </td>
                 <td></td>
                 <td>
                 <?php
@@ -77,6 +81,7 @@
             $order = 1;
             $items_indicator = 'newitems';
             $sub_total = 0;
+
             foreach ($items as $k => $item) { 
             	$item['id'] = $item['itemid'];
                	$manual    = false;
@@ -118,7 +123,10 @@
                     $table_row .= '</td>';
                     $table_row .= '<td class="rate"><input type="number" data-toggle="tooltip" title="' . _l('numbers_not_formatted_while_editing') . '" onblur="calculate_total_group('.$item['id'].','.$group->id.');" onchange="calculate_total_group('.$item['id'].','.$group->id.');" name="' . $items_indicator . '[' . $i . '][rate]" value="' . $item['rate'] . '" class="form-control item-amount" data-amount = "'.$item['rate'].'"></td>';
                     $table_row .= '<td class="taxrate">' . $this->misc_model->get_taxes_dropdown_template('' . $items_indicator . '[' . $i . '][taxname][]', $invoice_item_taxes, 'invoice', $item['id'], true, $manual,$item['id']) . '</td>';
-                    $table_row .= '<td class="amount" align="right">' . $amount . '</td>';
+
+                    $table_row .= '<td><input type="number" min="0" onblur="calculate_total_group('.$item['id'].','.$group->id.');"  keyup="calculate_total_group('.$item['id'].','.$group->id.'); "onchange="calculate_total_group('.$item['id'].','.$group->id.');" data-discount name="' . $items_indicator . '[' . $i . '][discount]" value="' . $item['discount'] . '" class="form-control">';
+
+                    $table_row .= '<td class="amount-group" align="right">' . $amount . '</td>';
                     $table_row .= '<td><a href="#" class="btn btn-danger pull-left" onclick="delete_item(this,' . $item['id'] . ','.$group->id.'); return false;"><i class="fa fa-times"></i></a></td>';
                     if (isset($item['task_id'])) {
                       if (!is_array($item['task_id'])) {
