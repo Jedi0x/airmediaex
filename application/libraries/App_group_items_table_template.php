@@ -334,6 +334,8 @@ abstract class App_group_items_table_template
      */
     public function table()
     {
+
+        
         //$html = $this->{$this->for . '_table_open'}();
         //bitsclan code here
         // $html .= '<thead>';

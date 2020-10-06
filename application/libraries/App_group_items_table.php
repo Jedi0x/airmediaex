@@ -32,9 +32,22 @@ class App_group_items_table extends App_group_items_table_template
         $regularItemWidth  = $this->get_regular_items_width(6);
         $customFieldsItems = $this->get_custom_fields_for_table();
 
+       
+
         if ($this->for == 'html') {
             $descriptionItemWidth = $descriptionItemWidth - 5;
             $regularItemWidth     = $regularItemWidth - 5;
+           
+            $tblhtml = '<tr style="background-color: #415165; color: #fff;">';
+        }
+
+
+        if($this->for == "pdf"){
+        $descriptionItemWidth = $this->get_description_item_width();
+        $regularItemWidth     = $this->get_regular_items_width(6);
+        $customFieldsItems    = $this->get_custom_fields_for_table();
+
+        $tblhtml = '<tr height="30" bgcolor="' . get_option('pdf_table_heading_color') . '" style="color:' . get_option('pdf_table_heading_text_color') . ';">';
         }
 
         $i = 1;
@@ -44,8 +57,6 @@ class App_group_items_table extends App_group_items_table_template
 
       
 
-
-       // array_multisort(array_column($this->items, 'group_order'), SORT_ASC, $this->items);
 
         foreach ($this->items as $item) {
             if(!in_array($item['group_id'], $groups)){
@@ -67,9 +78,11 @@ class App_group_items_table extends App_group_items_table_template
 
             $html.='<div class="item-group-'.$_group->id.' item-group"  data-group-id = "'.$_group->id.' " data-invoice-id = "'.$this->items[0]['rel_id'].'">
             <table class="table items items-preview invoice-items-preview" data-type="invoice">
-            <thead>
-                <tr style="background-color: #415165; color: #fff; margin: 0px">
-                  <th align="center" width="5%">#</th>
+            <thead>';
+
+                $html.=$tblhtml;
+                
+                 $html.=' <th align="center" width="5%">#</th>
                   <th class="description" align="left;" width="' . $descriptionItemWidth . '%">'.$_group->name.'</th>
                   <th align="right" width="' . $regularItemWidth . '%">Qty</th>
                   <th  align="right" width="' . $regularItemWidth . '%">Rate</th>
@@ -164,9 +177,16 @@ class App_group_items_table extends App_group_items_table_template
                  * eq Rate * QTY + TAXES APPLIED
                  */
                 $amount = $item[0]['qty'] * $item[0]['rate'];
-                $percentage = $item[0]['discount'];
-                $discounted_value = ($percentage / 100) * $amount;
+                if($item[0]['discount_type'] == 'percentage'){
+                    $discount = $item[0]['discount']." %";
+                    $percentage = $item[0]['discount'];
+                    $discounted_value = ($percentage / 100) * $amount;
+                }else{
+                    $discount =  app_format_money($item[0]['discount'],$this->transaction->currency_name,$this->exclude_currency());
+                    $discounted_value = $item[0]['discount'];
+                }
 
+            
                 $item_amount_with_quantity = hooks()->apply_filters(
                     'item_preview_amount_with_currency',
                     app_format_money(($amount - $discounted_value), $this->transaction->currency_name, $this->exclude_currency()),
@@ -175,7 +195,13 @@ class App_group_items_table extends App_group_items_table_template
                     $this->exclude_currency()
                 );
 
-                $itemHTML .= '<td align="right" width="' . $regularItemWidth . '%">' . $item[0]['discount'] . ' %</td>';
+                if($item[0]['discount_type'] == 'percentage'){
+                    $discount = $item[0]['discount']." %";
+                }else{
+                    $discount =  app_format_money($item[0]['discount'],$this->transaction->currency_name,$this->exclude_currency());
+                }
+
+                $itemHTML .= '<td align="right" width="' . $regularItemWidth . '%">' . $discount . ' </td>';
 
                
 
@@ -194,13 +220,26 @@ class App_group_items_table extends App_group_items_table_template
             $html.='</tbody>';
 
         
-
+            if($this->for == 'html'){
             $html.='<tfoot class="table text-right">
                         <tr>
-                           <td  colspan=4><span class="bold">'._l('invoice_subtotal').'</span></td>
-                           <td class="subtotal" colspan=3>'.app_format_money($subtotal,$this->transaction->currency_name).'</td>
+                           <td  colspan=4 align="right"><span class="bold" >'._l('invoice_subtotal').'</span></td>
+                           <td class="subtotal" colspan=3 align="right">'.app_format_money($subtotal,$this->transaction->currency_name).'</td>
                         </tr>
                     </tfoot></table> </div>';
+                }else{
+                    $html.='
+
+
+                        <tr>
+                           <td  colspan= "3" align="right">'._l('invoice_subtotal').'</td>
+                           <td  colspan= "2" align="right">'.app_format_money($subtotal,$this->transaction->currency_name).'</td>
+                        </tr>
+                    </table>
+                </div>
+
+                    ';
+                }
 
 
         }
@@ -216,23 +255,23 @@ class App_group_items_table extends App_group_items_table_template
      */
     public function html_headings()
     {
-        $html = '<tr>';
-        $html .= '<th align="center">' . $this->number_heading() . '</th>';
-        $html .= '<th class="description" width="' . $this->get_description_item_width() . '%" align="left">' . $this->item_heading() . '</th>';
+        // $html = '<tr>';
+        // $html .= '<th align="center">' . $this->number_heading() . '</th>';
+        // $html .= '<th class="description" width="' . $this->get_description_item_width() . '%" align="left">' . $this->item_heading() . '</th>';
 
-        $customFieldsItems = $this->get_custom_fields_for_table();
-        foreach ($customFieldsItems as $cf) {
-            $html .= '<th class="custom_field" align="left">' . $cf['name'] . '</th>';
-        }
+        // $customFieldsItems = $this->get_custom_fields_for_table();
+        // foreach ($customFieldsItems as $cf) {
+        //     $html .= '<th class="custom_field" align="left">' . $cf['name'] . '</th>';
+        // }
 
-        $html .= '<th align="right">' . $this->qty_heading() . '</th>';
-        $html .= '<th align="right">' . $this->rate_heading() . '</th>';
-        if ($this->show_tax_per_item()) {
-            $html .= '<th align="right">' . $this->tax_heading() . '</th>';
-        }
-        $html .= '<th align="right">' . $this->amount_heading() . '</th>';
-        $html .= '</tr>';
-
+        // $html .= '<th align="right">' . $this->qty_heading() . '</th>';
+        // $html .= '<th align="right">' . $this->rate_heading() . '</th>';
+        // if ($this->show_tax_per_item()) {
+        //     $html .= '<th align="right">' . $this->tax_heading() . '</th>';
+        // }
+        // $html .= '<th align="right">' . $this->amount_heading() . '</th>';
+        // $html .= '</tr>';
+        $html= '';
         return $html;
     }
 
@@ -242,30 +281,30 @@ class App_group_items_table extends App_group_items_table_template
      */
     public function pdf_headings()
     {
-        $descriptionItemWidth = $this->get_description_item_width();
-        $regularItemWidth     = $this->get_regular_items_width(6);
-        $customFieldsItems    = $this->get_custom_fields_for_table();
+        // $descriptionItemWidth = $this->get_description_item_width();
+        // $regularItemWidth     = $this->get_regular_items_width(6);
+        // $customFieldsItems    = $this->get_custom_fields_for_table();
 
-        $tblhtml = '<tr height="30" bgcolor="' . get_option('pdf_table_heading_color') . '" style="color:' . get_option('pdf_table_heading_text_color') . ';">';
+        // $tblhtml = '<tr height="30" bgcolor="' . get_option('pdf_table_heading_color') . '" style="color:' . get_option('pdf_table_heading_text_color') . ';">';
 
-        $tblhtml .= '<th width="5%;" align="center">' . $this->number_heading() . '</th>';
-        $tblhtml .= '<th width="' . $descriptionItemWidth . '%" align="left">' . $this->item_heading() . '</th>';
+        // $tblhtml .= '<th width="5%;" align="center">' . $this->number_heading() . '</th>';
+        // $tblhtml .= '<th width="' . $descriptionItemWidth . '%" align="left">' . $this->item_heading() . '</th>';
 
-        foreach ($customFieldsItems as $cf) {
-            $tblhtml .= '<th width="' . $regularItemWidth . '%" align="left">' . $cf['name'] . '</th>';
-        }
+        // foreach ($customFieldsItems as $cf) {
+        //     $tblhtml .= '<th width="' . $regularItemWidth . '%" align="left">' . $cf['name'] . '</th>';
+        // }
 
-        $tblhtml .= '<th width="' . $regularItemWidth . '%" align="right">' . $this->qty_heading() . '</th>';
-        $tblhtml .= '<th width="' . $regularItemWidth . '%" align="right">' . $this->rate_heading() . '</th>';
+        // $tblhtml .= '<th width="' . $regularItemWidth . '%" align="right">' . $this->qty_heading() . '</th>';
+        // $tblhtml .= '<th width="' . $regularItemWidth . '%" align="right">' . $this->rate_heading() . '</th>';
 
-        if ($this->show_tax_per_item()) {
-            $tblhtml .= '<th width="' . $regularItemWidth . '%" align="right">' . $this->tax_heading() . '</th>';
-        }
+        // if ($this->show_tax_per_item()) {
+        //     $tblhtml .= '<th width="' . $regularItemWidth . '%" align="right">' . $this->tax_heading() . '</th>';
+        // }
 
-        $tblhtml .= '<th width="' . $regularItemWidth . '%" align="right">' . $this->amount_heading() . '</th>';
-        $tblhtml .= '</tr>';
+        // $tblhtml .= '<th width="' . $regularItemWidth . '%" align="right">' . $this->amount_heading() . '</th>';
+        // $tblhtml .= '</tr>';
 
-        return $tblhtml;
+        return '';
     }
 
     /**

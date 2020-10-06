@@ -124,11 +124,19 @@ if ((int) $invoice->adjustment != 0) {
 </tr>';
 }
 
+//bitsclan
+$tbltotal.='<tr style="background-color:#f0f0f0;">
+       <td align="right" width="85%"><strong>' . _l('shipping') . '</strong></td>
+       <td align="right" width="15%">' . app_format_money($invoice->shipping, $invoice->currency_name) . '</td>
+   </tr>';
+
+
 $tbltotal .= '
 <tr style="background-color:#f0f0f0;">
     <td align="right" width="85%"><strong>' . _l('invoice_total') . '</strong></td>
     <td align="right" width="15%">' . app_format_money($invoice->total, $invoice->currency_name) . '</td>
 </tr>';
+
 
 if (count($invoice->payments) > 0 && get_option('show_total_paid_on_invoice') == 1) {
     $tbltotal .= '
@@ -142,6 +150,8 @@ if (count($invoice->payments) > 0 && get_option('show_total_paid_on_invoice') ==
     ]), $invoice->currency_name) . '</td>
     </tr>';
 }
+
+
 
 if (get_option('show_credits_applied_on_invoice') == 1 && $credits_applied = total_credits_applied_to_invoice($invoice->id)) {
     $tbltotal .= '
@@ -157,6 +167,8 @@ if (get_option('show_amount_due_on_invoice') == 1 && $invoice->status != Invoice
        <td align="right" width="15%">' . app_format_money($invoice->total_left_to_pay, $invoice->currency_name) . '</td>
    </tr>';
 }
+
+
 
 $tbltotal .= '</table>';
 $pdf->writeHTML($tbltotal, true, false, false, false, '');

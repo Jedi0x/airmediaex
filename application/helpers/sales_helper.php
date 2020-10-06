@@ -689,21 +689,45 @@ function add_new_sales_item_post($item, $rel_id, $rel_type)
         $custom_fields = $item['custom_fields'];
     }
 
+
+
     $CI = &get_instance();
     $groupid = NULL;
     if(isset($item['group_id'])){
         $groupid = $item['group_id'];
     }
 
-    $discount = NULL;
-    if(isset($item['discount'])){
-        $discount = $item['discount'];
+    $discount = 0;
+    $discount_type = NULL;
+
+
+    if(isset($item['discount_group_percent']) && isset($item['discount_group_total'])){
+        if($item['discount_group_percent'] > 0){
+            $discount_type = "percentage";
+            $discount = $item['discount_group_percent'];
+        }elseif($item['discount_group_total'] > 0){
+            $discount_type = "fix amount";
+            $discount = $item['discount_group_total'];
+        }else{
+            $discount_type = "percentage";
+            $discount = $item['discount_group_percent'];
+        }
     }
 
     $group_order = NULL;
     if(isset($item['group_order'])){
         $group_order = $item['group_order'];
     }
+
+
+    if(isset($item['discount_type'])){
+        $discount_type = $item['discount_type'];
+    }
+
+    if(isset($item['discount'])){
+        $discount = $item['discount'];
+    }
+ 
     // Bitsclan Solutions Start Code Invoice module   
     $CI->db->insert(db_prefix() . 'itemable', [
                     'description'      => $item['description'],
@@ -716,6 +740,7 @@ function add_new_sales_item_post($item, $rel_id, $rel_type)
                     'unit'             => $item['unit'],
                     'group_id'         => $groupid,
                     'discount'         => $discount,
+                    'discount_type'    => $discount_type,
                     'group_order'      => $group_order,
                 ]);
 
@@ -749,13 +774,51 @@ function update_sales_item_post($item_id, $data, $field = '')
         } else {
             $update[$field] = $data[$field];
         }
+
         $group_order = NULL;
         if(isset($data['group_order'])){
             $group_order = $data['group_order'];
         }
 
+        $discount = 0;
+        $discount_type = NULL;
+
+        if(isset($data['discount_group_percent']) && isset($data['discount_group_total'])){
+        if($data['discount_group_percent'] > 0){
+            $discount_type = "percentage";
+            $discount = $data['discount_group_percent'];
+        }elseif($data['discount_group_total'] > 0){
+            $discount_type = "fix amount";
+            $discount = $data['discount_group_total'];
+        }else{
+            $discount_type = "percentage";
+            $discount = $data['discount_group_percent'];
+        }
+    }
+
         
     } else {
+        $group_order = NULL;
+        if(isset($data['group_order'])){
+            $group_order = $data['group_order'];
+        }
+
+        $discount = 0;
+        $discount_type = NULL;
+
+        if(isset($data['discount_group_percent']) && isset($data['discount_group_total'])){
+            if($data['discount_group_percent'] > 0){
+                $discount_type = "percentage";
+                $discount = $data['discount_group_percent'];
+            }elseif($data['discount_group_total'] > 0){
+                $discount_type = "fix amount";
+                $discount = $data['discount_group_total'];
+            }else{
+                $discount_type = "percentage";
+                $discount = $data['discount_group_percent'];
+            }
+        }
+
         $update = [
             'item_order'       => $data['order'],
             'description'      => $data['description'],
@@ -763,7 +826,8 @@ function update_sales_item_post($item_id, $data, $field = '')
             'rate'             => number_format($data['rate'], get_decimal_places(), '.', ''),
             'qty'              => $data['qty'],
             'unit'             => $data['unit'],
-            'discount'         => $data['discount'],
+            'discount'         => $discount,
+            'discount_type'    => $discount_type,
             'group_order'      => $group_order,
         ];
     }

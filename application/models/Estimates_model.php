@@ -265,6 +265,7 @@ class Estimates_model extends App_Model
             $new_invoice_data['newitems'][$key]['group_id']         = $item['group_id'];
             $new_invoice_data['newitems'][$key]['group_order']      = $item['group_order'];
             $new_invoice_data['newitems'][$key]['discount']         = $item['discount'];
+            $new_invoice_data['newitems'][$key]['discount_type']   = $item['discount_type'];
             // Bitsclan Solutions End Code Estimate module
             $taxes                                                  = get_estimate_item_taxes($item['id']);
             foreach ($taxes as $tax) {

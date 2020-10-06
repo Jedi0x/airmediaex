@@ -22,8 +22,8 @@
                 } ?>
                 <th width="10%" align="right" class="qty"><?php echo $qty_heading; ?></th>
                 <th width="15%" align="right"><?php echo _l('invoice_table_rate_heading'); ?></th>
-                <th width="20%" align="right"><?php echo _l('invoice_table_tax_heading'); ?></th>
-                <th width="20%" align="right"><?php echo _l('invoice_discount'); ?></th>
+                <th width="10%" align="right"><?php echo _l('invoice_table_tax_heading'); ?></th>
+                <th width="30%" align="right"><?php echo _l('invoice_discount'); ?></th>
                 <th width="10%" align="right"><?php echo _l('invoice_table_amount_heading'); ?></th>
                 <th align="center"><i class="fa fa-cog"></i></th>
             </tr>
@@ -63,7 +63,32 @@
                         ?>
                 </td>
                 <td>
-                    <input type="number" min="0"  data-discount name="discount" value="0" class="form-control">';
+                  <?php $rand = rand(); ?>
+                  <div class="input-group" id="discount-total-<?php echo $rand; ?>">
+                    <input type="number" value="0" class="form-control pull-left input-discount-group-percent" min="0" max="100" name="discount_group_percent" data-group-id = "<?php echo $group->id ?>">
+
+                    <input type="number" data-toggle="tooltip" data-title="<?php echo _l('numbers_not_formatted_while_editing') ?>" value="0" class="form-control pull-left input-discount-group-fixed hide" min="0" name="discount_group_total" data-group-id = "<?php echo $group->id ?>">
+                    <div class="input-group-addon">
+                      <div class="dropdown">
+                        <a class="dropdown-toggle" href="#" id="dropdown_menu_tax_total_type_1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                          <span class="discount-group-total-type-selected">%</span>
+                          <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu discount-group-total-type-dropdown" id="discount-group-total-type-dropdown<?php echo $rand; ?>" aria-labelledby="dropdown_menu_tax_total_type">
+                          <li>
+                            <a href="#" class="discount-group-total-type discount-type-percent selected" data-group-id = "<?php echo $group->id ?>" data-item-id = "<?php echo $rand; ?>">%</a>
+                          </li>
+                          <li>
+                            <a href="#" class="discount-group-total-type discount-type-fixed" data-group-id = "<?php echo $group->id ?>" data-item-id = "<?php echo $rand; ?>">
+                              <?php echo _l('discount_fixed_amount') ?>
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+
                 </td>
                 <td></td>
                 <td>
@@ -96,7 +121,7 @@
                         $invoice_item_taxes = $item['taxname'];
                         $manual             = true;
                     }
-                    //$table_row .= form_hidden('' . $items_indicator . '[' . $i . '][itemid]', $item['id']);
+                   
                     $table_row .= '<input type="hidden" class="itemid" name="'. $items_indicator .'['  . $i . '][itemid]" value="' .$item['id']. '">';
                     $amount = $item['rate'] * $item['qty'];
                     $amount = app_format_number($amount);
@@ -124,7 +149,32 @@
                     $table_row .= '<td class="rate"><input type="number" data-toggle="tooltip" title="' . _l('numbers_not_formatted_while_editing') . '" onblur="calculate_total_group('.$item['id'].','.$group->id.');" onchange="calculate_total_group('.$item['id'].','.$group->id.');" name="' . $items_indicator . '[' . $i . '][rate]" value="' . $item['rate'] . '" class="form-control item-amount" data-amount = "'.$item['rate'].'"></td>';
                     $table_row .= '<td class="taxrate">' . $this->misc_model->get_taxes_dropdown_template('' . $items_indicator . '[' . $i . '][taxname][]', $invoice_item_taxes, 'invoice', $item['id'], true, $manual,$item['id']) . '</td>';
 
-                    $table_row .= '<td><input type="number" min="0" onblur="calculate_total_group('.$item['id'].','.$group->id.');"  keyup="calculate_total_group('.$item['id'].','.$group->id.'); "onchange="calculate_total_group('.$item['id'].','.$group->id.');" data-discount name="' . $items_indicator . '[' . $i . '][discount]" value="' . $item['discount'] . '" class="form-control">';
+
+                    $table_row .= '<td class="discount">
+                    <div class="input-group" id="discount-total-'.$item['id'].'">
+                      <input type="number" value="0" class="form-control pull-left input-discount-group-percent shOw" min="0" max="100" name="' . $items_indicator . '[' . $i . '][discount_group_percent]" data-discount data-group-id = "'.$group->id.'">
+
+                      <input type="number" data-toggle="tooltip" data-title="'._l('numbers_not_formatted_while_editing').'" value="0" class="form-control pull-left input-discount-group-fixed hide" min="0" name="' . $items_indicator . '[' . $i . '][discount_group_total]" data-group-id = "'.$group->id.'" data-discount>
+                      <div class="input-group-addon">
+                      <div class="dropdown">
+                      <a class="dropdown-toggle" href="#" id="dropdown_menu_tax_total_type_1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <span class="discount-group-total-type-selected">%</span>
+                        <span class="caret"></span>
+                      </a>
+                      <ul class="dropdown-menu discount-group-total-type-dropdown" id="discount-group-total-type-dropdown'.$item['id'].'" aria-labelledby="dropdown_menu_tax_total_type">
+                        <li>
+                          <a href="#" class="discount-group-total-type discount-type-percent selected" data-group-id = "'.$group->id .'" data-item-id = "'.$item['id'] .'">%</a>
+                        </li>
+                        <li>
+                          <a href="#" class="discount-group-total-type discount-type-fixed" data-group-id = "'.$group->id .'" data-item-id = "'.$item['id'] .'">
+                          '. _l('discount_fixed_amount').'
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  </div>
+                  </td>';
 
                     $table_row .= '<td class="amount-group" align="right">' . $amount . '</td>';
                     $table_row .= '<td><a href="#" class="btn btn-danger pull-left" onclick="delete_item(this,' . $item['id'] . ','.$group->id.'); return false;"><i class="fa fa-times"></i></a></td>';

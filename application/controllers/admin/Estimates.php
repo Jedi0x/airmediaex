@@ -94,7 +94,7 @@ class Estimates extends AdminController
                         
                     }
                 }
-                 unset($estimate_data['item_select_group'],$estimate_data['discount'],$estimate_data['group_order']);
+                 unset($estimate_data['item_select_group'],$estimate_data['discount'],$estimate_data['group_order'],$estimate_data['discount_group_percent'],$estimate_data['discount_group_total']);
                 // Bitsclan Solutions End Code Estimate module
 
                 $id = $this->estimates_model->add($estimate_data);
@@ -128,7 +128,7 @@ class Estimates extends AdminController
                         
                     }
                 }
-                 unset($estimate_data['item_select_group'],$estimate_data['discount'],$estimate_data['group_order']);
+                 unset($estimate_data['item_select_group'],$estimate_data['discount'],$estimate_data['group_order'],$estimate_data['discount_group_percent'],$estimate_data['discount_group_total']);
                 // Bitsclan Solutions End Code Estimate module
                 $success = $this->estimates_model->update($estimate_data, $id);
                 if ($success) {

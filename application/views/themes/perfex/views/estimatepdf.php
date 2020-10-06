@@ -118,6 +118,13 @@ if ((int)$estimate->adjustment != 0) {
 </tr>';
 }
 
+//bitsclan
+$tbltotal.='<tr style="background-color:#f0f0f0;">
+       <td align="right" width="85%"><strong>' . _l('shipping') . '</strong></td>
+       <td align="right" width="15%">' . app_format_money($estimate->shipping, $estimate->currency_name) . '</td>
+   </tr>';
+
+
 $tbltotal .= '
 <tr style="background-color:#f0f0f0;">
     <td align="right" width="85%"><strong>' . _l('estimate_total') . '</strong></td>

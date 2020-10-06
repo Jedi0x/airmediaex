@@ -296,7 +296,6 @@ class Invoices extends AdminController
                 if (!has_permission('invoices', '', 'create')) {
                     access_denied('invoices');
                 }
-
                 // Bitsclan Solutions Start Code Invoice module   
                 if(isset($invoice_data['group_order'])){
                     foreach ($invoice_data['group_order'] as $group_id => $order) {
@@ -315,7 +314,8 @@ class Invoices extends AdminController
                         
                     }
                 }
-                 unset($invoice_data['item_select_group'],$invoice_data['discount'],$invoice_data['group_order']);
+
+                unset($invoice_data['item_select_group'],$invoice_data['discount'],$invoice_data['group_order'],$invoice_data['discount_group_percent'],$invoice_data['discount_group_total']);
                 // Bitsclan Solutions End Code Invoice module
                 
                 $id = $this->invoices_model->add($invoice_data);
@@ -354,8 +354,12 @@ class Invoices extends AdminController
                         
                     }
                 }
-                unset($invoice_data['item_select_group'],$invoice_data['discount'],$invoice_data['group_order']);
+
+                unset($invoice_data['item_select_group'],$invoice_data['discount'],$invoice_data['group_order'],$invoice_data['discount_group_percent'],$invoice_data['discount_group_total']);
                 // Bitsclan Solutions End Code Invoice module
+
+
+              
                 $success = $this->invoices_model->update($invoice_data, $id);
                 if ($success) {
                     set_alert('success', _l('updated_successfully', _l('invoice')));

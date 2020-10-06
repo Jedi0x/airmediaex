@@ -859,16 +859,28 @@ class Invoices_model extends App_Model
                 }
 
                 // Bitsclan Solutions Start Code Invoice module 
-                if (update_sales_item_post($item['itemid'], $item, 'discount')) {
-                    $affectedRows++;
-                }
+                
 
                 if(isset($item['group_order'])){
                     if (update_sales_item_post($item['itemid'], $item, 'group_order')) {
                         $affectedRows++;
                     }  
                 }
+
+
+                if(isset($item['discount_group_percent'])){
+                    if (update_sales_item_post($item['itemid'], $item)) {
+                        $affectedRows++;
+                    }  
+                }
+
+                if(isset($item['discount_group_total'])){
+                    if (update_sales_item_post($item['itemid'], $item)) {
+                        $affectedRows++;
+                    }  
+                }
                 
+
 
                 // Bitsclan Solutions End Code Invoice module
 
