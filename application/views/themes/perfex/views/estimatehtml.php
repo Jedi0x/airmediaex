@@ -228,17 +228,45 @@
                <?php } ?>
             </div>
             <?php } ?>
+           
             <?php if(!empty($estimate->clientnote)){ ?>
             <div class="col-md-12 estimate-html-note">
                <b><?php echo _l('estimate_note'); ?></b><br /><br /><?php echo $estimate->clientnote; ?>
             </div>
             <?php } ?>
+
             <?php if(!empty($estimate->terms)){ ?>
             <div class="col-md-12 estimate-html-terms-and-conditions">
                <hr />
                <b><?php echo _l('terms_and_conditions'); ?></b><br /><br /><?php echo $estimate->terms; ?>
             </div>
             <?php } ?>
+
+            <?php if(!empty($estimate->shipping_terms)){ ?>
+            <div class="col-md-12 estimate-html-terms-and-conditions">
+               <hr />
+               <b><?php echo _l('shipping'); ?></b><br /><br /><?php echo $estimate->shipping_terms; ?>
+            </div>
+            <?php } ?>
+
+
+            <?php if(!empty($estimate->payment_terms)){ ?>
+            <div class="col-md-12 estimate-html-terms-and-conditions">
+               <hr />
+               <b><?php echo _l('payment_terms'); ?></b><br /><br /><?php echo $estimate->payment_terms; ?>
+            </div>
+            <?php } ?>
+
+
+            <?php if(!empty($estimate->labour_terms)){ ?>
+            <div class="col-md-12 estimate-html-terms-and-conditions">
+               <hr />
+               <b><?php echo _l('labour_terms'); ?></b><br /><br /><?php echo $estimate->labour_terms; ?>
+            </div>
+            <?php } ?>
+
+
+
          </div>
       </div>
    </div>

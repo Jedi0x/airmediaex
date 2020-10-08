@@ -399,12 +399,36 @@
                         <p><?php echo $estimate->clientnote; ?></p>
                      </div>
                      <?php } ?>
-                     <?php if($estimate->terms != ''){ ?>
+
+                     <?php if($estimate->term_and_conditions_active == 1){ ?>
                      <div class="col-md-12 mtop15">
                         <p class="bold text-muted"><?php echo _l('terms_and_conditions'); ?></p>
                         <p><?php echo $estimate->terms; ?></p>
                      </div>
                      <?php } ?>
+
+                      <?php if($estimate->shipping_active == 1){ ?>
+                     <div class="col-md-12 mtop15">
+                        <p class="bold text-muted"><?php echo _l('shipping'); ?></p>
+                        <p><?php echo $estimate->shipping_terms; ?></p>
+                     </div>
+                     <?php } ?>
+
+
+                      <?php if($estimate->payment_terms_active == 1){ ?>
+                     <div class="col-md-12 mtop15">
+                        <p class="bold text-muted"><?php echo _l('terms_and_conditions'); ?></p>
+                        <p><?php echo $estimate->payment_terms; ?></p>
+                     </div>
+                     <?php } ?>
+
+                      <?php if($estimate->labour_terms_active == 1){ ?>
+                     <div class="col-md-12 mtop15">
+                        <p class="bold text-muted"><?php echo _l('labour_terms'); ?></p>
+                        <p><?php echo $estimate->labour_terms; ?></p>
+                     </div>
+                     <?php } ?>
+
                   </div>
                </div>
             </div>

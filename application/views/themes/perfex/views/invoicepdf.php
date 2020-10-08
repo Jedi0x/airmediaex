@@ -246,11 +246,47 @@ if (!empty($invoice->clientnote)) {
     $pdf->writeHTMLCell('', '', '', '', $invoice->clientnote, 0, 1, false, true, 'L', true);
 }
 
-if (!empty($invoice->terms)) {
-    $pdf->Ln(4);
-    $pdf->SetFont($font_name, 'B', $font_size);
-    $pdf->Cell(0, 0, _l('terms_and_conditions'), 0, 1, 'L', 0, '', 0);
-    $pdf->SetFont($font_name, '', $font_size);
-    $pdf->Ln(2);
-    $pdf->writeHTMLCell('', '', '', '', $invoice->terms, 0, 1, false, true, 'L', true);
+if($invoice->term_and_conditions_active == 1){
+    if (!empty($invoice->terms)) {
+        $pdf->Ln(4);
+        $pdf->SetFont($font_name, 'B', $font_size);
+        $pdf->Cell(0, 0, _l('terms_and_conditions'), 0, 1, 'L', 0, '', 0);
+        $pdf->SetFont($font_name, '', $font_size);
+        $pdf->Ln(2);
+        $pdf->writeHTMLCell('', '', '', '', $invoice->terms, 0, 1, false, true, 'L', true);
+    }
+}
+
+if($invoice->shipping_active == 1){
+    if (!empty($invoice->shipping_terms)) {
+        $pdf->Ln(4);
+        $pdf->SetFont($font_name, 'B', $font_size);
+        $pdf->Cell(0, 0, _l('shipping'), 0, 1, 'L', 0, '', 0);
+        $pdf->SetFont($font_name, '', $font_size);
+        $pdf->Ln(2);
+        $pdf->writeHTMLCell('', '', '', '', $invoice->shipping_terms, 0, 1, false, true, 'L', true);
+    }
+}
+
+if($invoice->payment_terms_active == 1){
+    if (!empty($invoice->payment_terms)) {
+        $pdf->Ln(4);
+        $pdf->SetFont($font_name, 'B', $font_size);
+        $pdf->Cell(0, 0, _l('payment_terms'), 0, 1, 'L', 0, '', 0);
+        $pdf->SetFont($font_name, '', $font_size);
+        $pdf->Ln(2);
+        $pdf->writeHTMLCell('', '', '', '', $invoice->payment_terms, 0, 1, false, true, 'L', true);
+    }
+}
+
+
+if($invoice->labour_terms_active == 1){
+    if (!empty($invoice->labour_terms)) {
+        $pdf->Ln(4);
+        $pdf->SetFont($font_name, 'B', $font_size);
+        $pdf->Cell(0, 0, _l('labour_terms'), 0, 1, 'L', 0, '', 0);
+        $pdf->SetFont($font_name, '', $font_size);
+        $pdf->Ln(2);
+        $pdf->writeHTMLCell('', '', '', '', $invoice->labour_terms, 0, 1, false, true, 'L', true);
+    }
 }

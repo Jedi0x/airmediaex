@@ -291,10 +291,43 @@ if($invoice->scheduled_email) { ?>
       <p><?php echo $invoice->clientnote; ?></p>
    </div>
 <?php } ?>
+
+
+<?php if($invoice->term_and_conditions_active == 1){ ?>
 <?php if($invoice->terms != ''){ ?>
    <div class="col-md-12 row mtop15">
       <p class="bold text-muted"><?php echo _l('terms_and_conditions'); ?></p>
       <p><?php echo $invoice->terms; ?></p>
    </div>
+<?php } ?>
+<?php } ?>
+
+
+<?php if($invoice->shipping_active == 1){ ?>
+<?php if($invoice->shipping_terms != ''){ ?>
+   <div class="col-md-12 row mtop15">
+      <p class="bold text-muted"><?php echo _l('shipping'); ?></p>
+      <p><?php echo $invoice->shipping_terms; ?></p>
+   </div>
+<?php } ?>
+<?php } ?>
+
+
+<?php if($invoice->payment_terms_active == 1){ ?>
+<?php if($invoice->payment_terms != ''){ ?>
+   <div class="col-md-12 row mtop15">
+      <p class="bold text-muted"><?php echo _l('payment_terms'); ?></p>
+      <p><?php echo $invoice->payment_terms; ?></p>
+   </div>
+<?php } ?>
+<?php } ?>
+
+<?php if($invoice->labour_terms_active == 1){ ?>
+<?php if($invoice->labour_terms != ''){ ?>
+   <div class="col-md-12 row mtop15">
+      <p class="bold text-muted"><?php echo _l('labour_terms'); ?></p>
+      <p><?php echo $invoice->labour_terms; ?></p>
+   </div>
+<?php } ?>
 <?php } ?>
 </div>

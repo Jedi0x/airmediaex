@@ -292,32 +292,64 @@ class Invoices extends AdminController
     {
         if ($this->input->post()) {
             $invoice_data = $this->input->post();
+
+            
+            // Bitsclan Solutions Start Code Invoice module   
+            if(isset($invoice_data['group_order'])){
+                foreach ($invoice_data['group_order'] as $group_id => $order) {
+                    foreach ($invoice_data['items'] as $item_key => $item) {
+                        if($item['group_id'] == $group_id){
+                            $invoice_data['items'][$item_key]['group_order'] = $order;
+                        }  
+                    }
+                    if(isset($invoice_data['newitems'])){
+                        foreach ($invoice_data['newitems'] as $newitems_key => $newitems) {
+                            if($newitems['group_id'] == $group_id){
+                                 $invoice_data['newitems'][$newitems_key]['group_order'] = $order;
+                            }  
+                        } 
+                    }   
+                }
+            }
+
+            if(isset($invoice_data['shipping_active'])){
+                $invoice_data['shipping_active'] = $invoice_data['shipping_active'];
+            }else{
+                $invoice_data['shipping_active'] = 0;
+                $invoice_data['shipping_terms'] = '';
+            }
+
+            if(isset($invoice_data['payment_terms_active'])){
+                $invoice_data['payment_terms_active'] = $invoice_data['payment_terms_active'];
+            }else{
+                $invoice_data['payment_terms_active'] = 0;
+                $invoice_data['payment_terms'] = '';
+            }
+
+            if(isset($invoice_data['term_and_conditions_active'])){
+                $invoice_data['term_and_conditions_active'] = $invoice_data['term_and_conditions_active'];
+            }else{
+                $invoice_data['term_and_conditions_active'] = 0;
+                $invoice_data['terms'] = '';
+            }
+
+            if(isset($invoice_data['labour_terms_active'])){
+                $invoice_data['labour_terms_active'] = $invoice_data['labour_terms_active'];
+            }else{
+                $invoice_data['labour_terms_active'] = 0;
+                $invoice_data['labour_terms'] = '';
+            }
+
+            unset($invoice_data['item_select_group'],$invoice_data['discount'],$invoice_data['group_order'],$invoice_data['discount_group_percent'],$invoice_data['discount_group_total']);
+            // Bitsclan Solutions End Code Invoice module
+
+
             if ($id == '') {
                 if (!has_permission('invoices', '', 'create')) {
                     access_denied('invoices');
                 }
-                // Bitsclan Solutions Start Code Invoice module   
-                if(isset($invoice_data['group_order'])){
-                    foreach ($invoice_data['group_order'] as $group_id => $order) {
-                        foreach ($invoice_data['items'] as $item_key => $item) {
-                            if($item['group_id'] == $group_id){
-                                $invoice_data['items'][$item_key]['group_order'] = $order;
-                            }  
-                        }
-                        if(isset($invoice_data['newitems'])){
-                           foreach ($invoice_data['newitems'] as $newitems_key => $newitems) {
-                                if($newitems['group_id'] == $group_id){
-                                    $invoice_data['newitems'][$newitems_key]['group_order'] = $order;
-                                }  
-                            } 
-                        }
-                        
-                    }
-                }
 
-                unset($invoice_data['item_select_group'],$invoice_data['discount'],$invoice_data['group_order'],$invoice_data['discount_group_percent'],$invoice_data['discount_group_total']);
-                // Bitsclan Solutions End Code Invoice module
-                
+               
                 $id = $this->invoices_model->add($invoice_data);
                 if ($id) {
                     set_alert('success', _l('added_successfully', _l('invoice')));
@@ -335,31 +367,8 @@ class Invoices extends AdminController
                 if (!has_permission('invoices', '', 'edit')) {
                     access_denied('invoices');
                 }
-
-                // Bitsclan Solutions Start Code Invoice module   
-                if(isset($invoice_data['group_order'])){
-                    foreach ($invoice_data['group_order'] as $group_id => $order) {
-                        foreach ($invoice_data['items'] as $item_key => $item) {
-                            if($item['group_id'] == $group_id){
-                                $invoice_data['items'][$item_key]['group_order'] = $order;
-                            }  
-                        }
-                        if(isset($invoice_data['newitems'])){
-                           foreach ($invoice_data['newitems'] as $newitems_key => $newitems) {
-                                if($newitems['group_id'] == $group_id){
-                                    $invoice_data['newitems'][$newitems_key]['group_order'] = $order;
-                                }  
-                            } 
-                        }
-                        
-                    }
-                }
-
-                unset($invoice_data['item_select_group'],$invoice_data['discount'],$invoice_data['group_order'],$invoice_data['discount_group_percent'],$invoice_data['discount_group_total']);
-                // Bitsclan Solutions End Code Invoice module
-
-
-              
+                // debug($invoice_data,true);
+                
                 $success = $this->invoices_model->update($invoice_data, $id);
                 if ($success) {
                     set_alert('success', _l('updated_successfully', _l('invoice')));

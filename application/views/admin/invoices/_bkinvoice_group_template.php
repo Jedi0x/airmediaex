@@ -1,4 +1,5 @@
-<div class="group_items"><?php 
+<div class="group_items">
+<?php 
   if (isset($invoice) || isset($add_items)) {
     $i               = 1;
     $items_indicator = 'newitems';
@@ -27,15 +28,22 @@
     $total_amount = 0;
     foreach ($group_items as $group => $group_items_arr) {
       $_group = item_group($group); ?>
-      <table class="table invoice-items-table items table-item-group<?php echo $_group->id; ?> table-main-invoice-edit has-calculations no-mtop item-group-<?php echo $_group->id ?> item-group"  data-group-id = "<?php echo $_group->id; ?>">
-      <thead>
-        <tr>
-          <th colspan="9"  class="dragger ui-sortable-handle">
-            <h4 class="group-custom-head-class"><?php echo $_group->name ?>
-              <button type="button" onclick="delete_item_group(<?php echo $_group->id ?>); return false;" class="btn pull-right btn-danger"><i class="fa fa-times"></i></button>
-            </h4>
-          </th>
-        </tr>
+
+      <div class="item-group-<?php echo $_group->id ?> item-group"  data-group-id = "<?php echo $_group->id; ?>">
+        <div class="table-responsive s_table">
+          <h4 class="group-custom-head-class dragger ui-sortable-handle"><?php echo $_group->name ?>
+            <button type="button" onclick="delete_item_group('<?php echo $_group->id ?>'); return false;" class="btn pull-right btn-danger"><i class="fa fa-times"></i></button>
+          </h4>
+          <table class="table invoice-items-table items table-item-group<?php echo $_group->id; ?> table-main-invoice-edit has-calculations no-mtop">
+            <thead>
+
+              <tr>
+                <th colspan="9"  class="dragger ui-sortable-handle">
+                  <h4 class="group-custom-head-class"><?php echo $_group->name ?>
+                  <button type="button" onclick="delete_item_group(<?php echo $_group->id ?>); return false;" class="btn pull-right btn-danger"><i class="fa fa-times"></i></button>
+                </h4>
+              </th>
+            </tr>
 
 
               <tr>
@@ -178,7 +186,7 @@
                     $amount = app_format_number($amount - $discounted_value);
 
                     // order input
-                    $table_row .= '<input type="hidden" class="item_group_id"  name="'. $items_indicator .'['  . $i . '][group_id]" value="' .$_group->id. '">';
+                    $table_row .= '<input type="hidden" name="'. $items_indicator .'['  . $i . '][group_id]" value="' .$_group->id. '">';
                     $table_row .= '<input type="hidden" class="order" name="' . $items_indicator . '[' . $i . '][order]" value="'.$order.'">';
                     $table_row .= '</td>';
                     $table_row .= '<td class="bold description"><textarea name="' . $items_indicator . '[' . $i . '][description]" class="form-control" rows="5">' . clear_textarea_breaks($item[0]['description']) . '</textarea></td>';
@@ -258,7 +266,7 @@
                      ?>
                   </tbody>
                 </table>
- 
+              </div>
               <div class="col-md-8 col-md-offset-4">
                 <table class="table text-right">
                   <tbody>
@@ -273,7 +281,7 @@
                 </table>
               </div>
               <div class="clearfix"></div>
-          <?php
+            </div><?php
           }
         } ?>
       </div>

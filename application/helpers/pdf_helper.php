@@ -147,7 +147,9 @@ function get_pdf_format($option_name)
  * @return mixed object
  */
 function invoice_pdf($invoice, $tag = '')
-{
+{   
+
+    // debug($invoice,true);
     return app_pdf('invoice', LIBSPATH . 'pdf/Invoice_pdf', $invoice, $tag);
 }
 /**

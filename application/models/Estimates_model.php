@@ -228,7 +228,16 @@ class Estimates_model extends App_Model
         $new_invoice_data['shipping_state']   = $_estimate->shipping_state;
         $new_invoice_data['shipping_zip']     = $_estimate->shipping_zip;
         $new_invoice_data['shipping_country'] = $_estimate->shipping_country;
+
         $new_invoice_data['shipping']         = $_estimate->shipping;
+        $new_invoice_data['shipping_active']         = $_estimate->shipping_active;
+        $new_invoice_data['payment_terms_active']         = $_estimate->payment_terms_active;
+        $new_invoice_data['term_and_conditions_active']         = $_estimate->term_and_conditions_active;
+        $new_invoice_data['labour_terms_active']         = $_estimate->labour_terms_active;
+        $new_invoice_data['shipping_terms']         = $_estimate->shipping_terms;
+        $new_invoice_data['payment_terms']         = $_estimate->payment_terms;
+        $new_invoice_data['labour_terms']         = $_estimate->labour_terms;
+        
         if ($_estimate->include_shipping == 1) {
             $new_invoice_data['include_shipping'] = 1;
         }

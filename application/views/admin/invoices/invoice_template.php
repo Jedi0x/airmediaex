@@ -429,6 +429,66 @@
          </div>
       </div>
    </div>
+
+      <div class="panel-body mtop10">
+        <div class="row">
+          <div class="col-md-12">
+          <p class="bold"><?php echo  _l('quote_configuration'); ?></p>
+            <div class="col-md-4">
+
+              <div class="checkbox">
+                <?php 
+                  $checked = "";
+                  if(isset($invoice)){
+                    $checked = ($invoice->shipping_active == 1 ? 'checked' : '');
+                  }
+                   ?>
+                <input type="checkbox"  class="shipping" name="shipping_active" value="1" <?php echo $checked; ?>>
+                <label><?php echo  _l('shipping'); ?></label>
+              </div>
+
+              <div class="checkbox">
+               <?php 
+                  $checked = "";
+                  if(isset($invoice)){
+                    $checked = ($invoice->payment_terms_active == 1 ? 'checked' : '');
+                  }
+                   ?>
+                <input type="checkbox"  class="payment_terms" name="payment_terms_active" value="1" <?php echo $checked; ?>>
+                <label><?php echo  _l('payment_terms'); ?></label>
+              </div>
+
+            </div>
+            <div class="col-md-4">
+
+              <div class="checkbox">
+                <?php 
+                  $checked = "";
+                  if(isset($invoice)){
+                    $checked = ($invoice->term_and_conditions_active == 1 ? 'checked' : '');
+                  }
+                   ?>
+                <input type="checkbox"  class="term_and_conditions" name="term_and_conditions_active" value="1" <?php echo $checked; ?>>
+                <label><?php echo  _l('term_and_conditions'); ?></label>
+              </div>
+
+              <div class="checkbox">
+                <?php 
+                  $checked = "";
+                  if(isset($invoice)){
+                    $checked = ($invoice->labour_terms_active == 1 ? 'checked' : '');
+                  }
+                   ?>
+                <input type="checkbox"  class="labour_terms" name="labour_terms_active" value="1" <?php echo $checked; ?>>
+                <label><?php echo  _l('labour_terms'); ?></label>
+              </div>
+
+            </div>
+            <div class="col-md-4"></div>
+          </div>
+        
+      </div>
+    </div>
     <?php  
       $sub_total = 0;
       $total_amount = 0; 
@@ -557,10 +617,60 @@
    <div class="row">
       <div class="col-md-12 mtop15">
          <div class="panel-body bottom-transaction">
+
             <?php $value = (isset($invoice) ? $invoice->clientnote : get_option('predefined_clientnote_invoice')); ?>
             <?php echo render_textarea('clientnote','invoice_add_edit_client_note',$value,array(),array(),'mtop15'); ?>
-            <?php $value = (isset($invoice) ? $invoice->terms : get_option('predefined_terms_invoice')); ?>
-            <?php echo render_textarea('terms','terms_and_conditions',$value,array(),array(),'mtop15'); ?>
+            
+
+            <?php 
+            $class_terms = "hide";
+            if(isset($invoice)){
+              $class_terms  = ($invoice->term_and_conditions_active == 1 ? '' : 'hide');
+            }
+            ?>
+            
+            <div class="term_and_conditions_box <?=$class_terms?>">
+              <?php $value = (isset($invoice) ? $invoice->terms : get_option('predefined_terms_invoice')); ?>
+              <?php echo render_textarea('terms','terms_and_conditions',$value,array(),array(),'mtop15'); ?>
+            </div>
+
+            <?php 
+            $class_shipping = "hide";
+            if(isset($invoice)){
+              $class_shipping  = ($invoice->shipping_active == 1 ? '' : 'hide');
+            }
+            ?>
+
+            <div class="shipping_box <?=$class_shipping?>">
+              <?php $value = (isset($invoice) ? $invoice->shipping_terms : get_option('predefined_terms_invoice')); ?>
+              <?php echo render_textarea('shipping_terms','shipping',$value,array(),array(),'mtop15'); ?>
+            </div>
+
+            <?php 
+            $class_payment_term = "hide";
+            if(isset($invoice)){
+              $class_payment_term  = ($invoice->payment_terms_active == 1 ? '' : 'hide');
+            }
+            ?>
+
+            <div class="payment_terms_box <?= $class_payment_term?>">
+            <?php $value = (isset($invoice) ? $invoice->payment_terms : get_option('predefined_terms_invoice')); ?>
+            <?php echo render_textarea('payment_terms','payment_terms',$value,array(),array(),'mtop15'); ?>
+            </div>
+
+
+            <?php 
+            $class_labour = "hide";
+            if(isset($invoice)){
+              $class_labour  = ($invoice->labour_terms_active == 1 ? '' : 'hide');
+            }
+            ?>
+
+            <div class="labour_terms_box <?=$class_labour?>">
+            <?php $value = (isset($invoice) ? $invoice->labour_terms : get_option('predefined_terms_invoice')); ?>
+            <?php echo render_textarea('labour_terms','labour_terms',$value,array(),array(),'mtop15'); ?>
+            </div>
+
             <div class="btn-bottom-toolbar text-right">
                 <?php if(!isset($invoice)){ ?>
                 <button class="btn-tr btn btn-default mleft10 text-right invoice-form-submit save-as-draft transaction-submit">

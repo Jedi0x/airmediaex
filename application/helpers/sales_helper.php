@@ -829,6 +829,7 @@ function update_sales_item_post($item_id, $data, $field = '')
             'discount'         => $discount,
             'discount_type'    => $discount_type,
             'group_order'      => $group_order,
+            'group_id'         => $data['group_id'],
         ];
     }
 

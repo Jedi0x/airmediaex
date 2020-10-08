@@ -153,11 +153,48 @@ if (!empty($estimate->clientnote)) {
     $pdf->writeHTMLCell('', '', '', '', $estimate->clientnote, 0, 1, false, true, 'L', true);
 }
 
-if (!empty($estimate->terms)) {
-    $pdf->Ln(4);
-    $pdf->SetFont($font_name, 'B', $font_size);
-    $pdf->Cell(0, 0, _l('terms_and_conditions'), 0, 1, 'L', 0, '', 0);
-    $pdf->SetFont($font_name, '', $font_size);
-    $pdf->Ln(2);
-    $pdf->writeHTMLCell('', '', '', '', $estimate->terms, 0, 1, false, true, 'L', true);
+
+if($estimate->term_and_conditions_active == 1){
+    if (!empty($estimate->terms)) {
+        $pdf->Ln(4);
+        $pdf->SetFont($font_name, 'B', $font_size);
+        $pdf->Cell(0, 0, _l('terms_and_conditions'), 0, 1, 'L', 0, '', 0);
+        $pdf->SetFont($font_name, '', $font_size);
+        $pdf->Ln(2);
+        $pdf->writeHTMLCell('', '', '', '', $estimate->terms, 0, 1, false, true, 'L', true);
+    }
+}
+
+if($estimate->shipping_active == 1){
+    if (!empty($estimate->shipping_terms)) {
+        $pdf->Ln(4);
+        $pdf->SetFont($font_name, 'B', $font_size);
+        $pdf->Cell(0, 0, _l('shipping'), 0, 1, 'L', 0, '', 0);
+        $pdf->SetFont($font_name, '', $font_size);
+        $pdf->Ln(2);
+        $pdf->writeHTMLCell('', '', '', '', $estimate->shipping_terms, 0, 1, false, true, 'L', true);
+    }
+}
+
+if($estimate->payment_terms_active == 1){
+    if (!empty($estimate->payment_terms)) {
+        $pdf->Ln(4);
+        $pdf->SetFont($font_name, 'B', $font_size);
+        $pdf->Cell(0, 0, _l('payment_terms'), 0, 1, 'L', 0, '', 0);
+        $pdf->SetFont($font_name, '', $font_size);
+        $pdf->Ln(2);
+        $pdf->writeHTMLCell('', '', '', '', $estimate->payment_terms, 0, 1, false, true, 'L', true);
+    }
+}
+
+
+if($estimate->labour_terms_active == 1){
+    if (!empty($estimate->labour_terms)) {
+        $pdf->Ln(4);
+        $pdf->SetFont($font_name, 'B', $font_size);
+        $pdf->Cell(0, 0, _l('labour_terms'), 0, 1, 'L', 0, '', 0);
+        $pdf->SetFont($font_name, '', $font_size);
+        $pdf->Ln(2);
+        $pdf->writeHTMLCell('', '', '', '', $estimate->labour_terms, 0, 1, false, true, 'L', true);
+    }
 }

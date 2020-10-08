@@ -3629,3 +3629,9 @@ $lang['invoice_grand_total'] = 'Grand Total';
 $lang['shipping'] = 'Shipping';
 
 $lang['sales_item_group']                  = 'Group';
+
+$lang['quote_configuration'] = "Quote Configuration";
+
+$lang['term_and_conditions'] = "Terms and Conditions (Default)";
+$lang['payment_terms'] = "Payment Terms";
+$lang['labour_terms'] = "Labour Terms";
