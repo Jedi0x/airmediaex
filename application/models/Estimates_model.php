@@ -783,9 +783,10 @@ class Estimates_model extends App_Model
             $affectedRows++;
         }
 
-
-
         foreach ($items as $key => $item) {
+
+
+
             $original_item = $this->get_estimate_item($item['itemid']);
 
             if (update_sales_item_post($item['itemid'], $item, 'item_order')) {
@@ -795,6 +796,29 @@ class Estimates_model extends App_Model
             if (update_sales_item_post($item['itemid'], $item, 'unit')) {
                 $affectedRows++;
             }
+
+
+            if(isset($item['group_order'])){
+                if (update_sales_item_post($item['itemid'], $item, 'group_order')) {
+                    $affectedRows++;
+                }  
+            }
+
+
+            if(isset($item['discount_group_percent'])){
+                if (update_sales_item_post($item['itemid'], $item)) {
+                    $affectedRows++;
+                }  
+            }
+
+            if(isset($item['discount_group_total'])){
+                if (update_sales_item_post($item['itemid'], $item)) {
+                    $affectedRows++;
+                }  
+            }
+
+
+
 
             if (update_sales_item_post($item['itemid'], $item, 'rate')) {
                 $this->log_estimate_activity($id, 'invoice_estimate_activity_updated_item_rate', false, serialize([

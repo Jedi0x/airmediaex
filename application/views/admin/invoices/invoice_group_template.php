@@ -256,6 +256,7 @@
 
                     $total_amount+=$sub_total;
                      ?>
+                     
                   </tbody>
                 </table>
  

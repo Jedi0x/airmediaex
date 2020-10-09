@@ -71,54 +71,55 @@ class Estimates extends AdminController
     {
         if ($this->input->post()) {
             $estimate_data = $this->input->post();
+
                 // Bitsclan Solutions Start Code Estimate module  
-                if(isset($estimate_data['group_order'])){
-                    foreach ($estimate_data['group_order'] as $group_id => $order) {
-                        foreach ($estimate_data['items'] as $item_key => $item) {
-                            if($item['group_id'] == $group_id){
-                                $estimate_data['items'][$item_key]['group_order'] = $order;
-                            }  
-                        }
-                        if(isset($estimate_data['newitems'])){
-                           foreach ($estimate_data['newitems'] as $newitems_key => $newitems) {
-                                if($newitems['group_id'] == $group_id){
-                                    $estimate_data['newitems'][$newitems_key]['group_order'] = $order;
-                                }  
-                            } 
-                        }
-                        
+            if(isset($estimate_data['group_order'])){
+                foreach ($estimate_data['group_order'] as $group_id => $order) {
+                    foreach ($estimate_data['items'] as $item_key => $item) {
+                        if($item['group_id'] == $group_id){
+                            $estimate_data['items'][$item_key]['group_order'] = $order;
+                        }  
                     }
-                }
+                    if(isset($estimate_data['newitems'])){
+                        foreach ($estimate_data['newitems'] as $newitems_key => $newitems) {
+                            if($newitems['group_id'] == $group_id){
+                                $estimate_data['newitems'][$newitems_key]['group_order'] = $order;
+                            }  
+                        } 
+                    }
 
-                if(isset($estimate_data['shipping_active'])){
-                    $estimate_data['shipping_active'] = $estimate_data['shipping_active'];
-                }else{
-                    $estimate_data['shipping_active'] = 0;
-                    $estimate_data['shipping_terms'] = '';
                 }
+            }
 
-                if(isset($estimate_data['payment_terms_active'])){
-                    $estimate_data['payment_terms_active'] = $estimate_data['payment_terms_active'];
-                }else{
-                    $estimate_data['payment_terms_active'] = 0;
-                    $estimate_data['payment_terms'] = '';
-                }
+            if(isset($estimate_data['shipping_active'])){
+                $estimate_data['shipping_active'] = $estimate_data['shipping_active'];
+            }else{
+                $estimate_data['shipping_active'] = 0;
+                $estimate_data['shipping_terms'] = '';
+            }
 
-                if(isset($estimate_data['term_and_conditions_active'])){
-                    $estimate_data['term_and_conditions_active'] = $estimate_data['term_and_conditions_active'];
-                }else{
-                    $estimate_data['term_and_conditions_active'] = 0;
-                    $estimate_data['terms'] = '';
-                }
+            if(isset($estimate_data['payment_terms_active'])){
+                $estimate_data['payment_terms_active'] = $estimate_data['payment_terms_active'];
+            }else{
+                $estimate_data['payment_terms_active'] = 0;
+                $estimate_data['payment_terms'] = '';
+            }
 
-                if(isset($estimate_data['labour_terms_active'])){
-                    $estimate_data['labour_terms_active'] = $estimate_data['labour_terms_active'];
-                }else{
-                    $estimate_data['labour_terms_active'] = 0;
-                    $estimate_data['labour_terms'] = '';
-                }
+            if(isset($estimate_data['term_and_conditions_active'])){
+                $estimate_data['term_and_conditions_active'] = $estimate_data['term_and_conditions_active'];
+            }else{
+                $estimate_data['term_and_conditions_active'] = 0;
+                $estimate_data['terms'] = '';
+            }
 
-                unset($estimate_data['item_select_group'],$estimate_data['discount'],$estimate_data['group_order'],$estimate_data['discount_group_percent'],$estimate_data['discount_group_total']);
+            if(isset($estimate_data['labour_terms_active'])){
+                $estimate_data['labour_terms_active'] = $estimate_data['labour_terms_active'];
+            }else{
+                $estimate_data['labour_terms_active'] = 0;
+                $estimate_data['labour_terms'] = '';
+            }
+
+            unset($estimate_data['item_select_group'],$estimate_data['discount'],$estimate_data['group_order'],$estimate_data['discount_group_percent'],$estimate_data['discount_group_total']);
                 // Bitsclan Solutions End Code Estimate module
 
 
@@ -142,6 +143,8 @@ class Estimates extends AdminController
                 if (!has_permission('estimates', '', 'edit')) {
                     access_denied('estimates');
                 }
+
+                // debug($estimate_data,true);
                 $success = $this->estimates_model->update($estimate_data, $id);
                 if ($success) {
                     set_alert('success', _l('updated_successfully', _l('estimate')));
@@ -243,6 +246,7 @@ class Estimates extends AdminController
         $original_number = $this->input->post('original_number');
         $number          = trim($number);
         $number          = ltrim($number, '0');
+
 
         if ($isedit == 'true') {
             if ($number == $original_number) {
