@@ -19,6 +19,7 @@
                         </div>
                         <?php echo render_input('description','invoice_item_add_edit_description'); ?>
                         <?php echo render_textarea('long_description','invoice_item_long_description'); ?>
+                        <?php echo render_input('part_number','part_number'); ?>
                         <div class="form-group">
                         <label for="rate" class="control-label">
                             <?php echo _l('invoice_item_add_edit_rate_currency',$base_currency->name . ' <small>('._l('base_currency_string').')</small>'); ?></label>
@@ -257,9 +258,9 @@ function init_item_js() {
             $('input[name="itemid"]').val(id);
 
             requestGetJSON('invoice_items/get_item_by_id/' + id).done(function (response) {
-              
                 $itemModal.find('input[name="description"]').val(response.description);
                 $itemModal.find('textarea[name="long_description"]').val(response.long_description.replace(/(<|<)br\s*\/*(>|>)/g, " "));
+                $itemModal.find('input[name="part_number"]').val(response.part_number);
                 $itemModal.find('input[name="rate"]').val(response.rate);
                 $itemModal.find('input[name="unit"]').val(response.unit);
                 $('select[name="tax"]').selectpicker('val', response.taxid).change();

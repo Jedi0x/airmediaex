@@ -379,9 +379,9 @@ if (!function_exists('format_customer_info')) {
         if ($companyLink && (!isset($data->deleted_customer_name) || (isset($data->deleted_customer_name) && empty($data->deleted_customer_name)))) {
             $companyName = '<a href="' . admin_url('clients/client/' . $clientId) . '" target="_blank"><b>' . $companyName . '</b></a>';
         } elseif ($companyName != '') {
-            $companyName = '<b>' . $companyName . '</b>';
+            $companyName = $companyName;
         }
-
+        $street = trim(preg_replace("/<br\W*?\/>/", "\n", $street));
         $format = _info_format_replace('company_name', $companyName, $format);
         $format = _info_format_replace('customer_id', $clientId, $format);
         $format = _info_format_replace('street', $street, $format);
@@ -426,6 +426,179 @@ if (!function_exists('format_customer_info')) {
             'type'         => $type,
             'company_link' => $companyLink,
         ]);
+    }
+}
+
+
+if (!function_exists('format_customer_info_invoice')) {
+    /**
+     * Format customer address info
+     * @param  object  $data        customer object from database
+     * @param  string  $for         where this format will be used? Eq statement invoice etc
+     * @param  string  $type        billing/shipping
+     * @param  boolean $companyLink company link to be added on customer company/name, this is used in admin area only
+     * @return string
+     */
+    function format_customer_info_invoice($data, $for, $type, $companyLink = false)
+    {
+        $format   = get_option('customer_info_format');
+        $clientId = '';
+
+
+        if ($for == 'statement') {
+            $clientId = $data->userid;
+        } elseif ($type == 'billing') {
+            $clientId = $data->clientid;
+        }
+
+        $companyName = '';
+        if ($for == 'statement') {
+            $companyName = get_company_name($clientId);
+        } elseif ($type == 'billing') {
+            $companyName = $data->client->company;
+        }
+
+        if ($for == 'invoice' || $for == 'estimate' || $for == 'payment' || $for == 'credit_note') {
+            if (isset($data->client->show_primary_contact) && $data->client->show_primary_contact == 1) {
+                $primaryContactId = get_primary_contact_user_id($clientId);
+                if ($primaryContactId) {
+                    $companyName = get_contact_full_name($primaryContactId) . '<br />' . $companyName;
+                }
+            }
+        }
+
+        $street = '';
+        if ($type == 'billing') {
+            $street = $data->billing_street;
+        } elseif ($type == 'shipping') {
+            $street = $data->shipping_street;
+        }
+
+        $city = '';
+        if ($type == 'billing') {
+            $city = $data->billing_city;
+        } elseif ($type == 'shipping') {
+            $city = $data->shipping_city;
+        }
+        $state = '';
+        if ($type == 'billing') {
+            $state = $data->billing_state;
+        } elseif ($type == 'shipping') {
+            $state = $data->shipping_state;
+        }
+        $zipCode = '';
+        if ($type == 'billing') {
+            $zipCode = $data->billing_zip;
+        } elseif ($type == 'shipping') {
+            $zipCode = $data->shipping_zip;
+        }
+
+        $countryCode = '';
+        $countryName = '';
+        $country     = null;
+        if ($type == 'billing') {
+            $country = get_country($data->billing_country);
+        } elseif ($type == 'shipping') {
+            $country = get_country($data->shipping_country);
+        }
+
+        if ($country) {
+            $countryCode = $country->iso2;
+            $countryName = $country->short_name;
+        }
+
+        $phone = '';
+        if ($for == 'statement' && isset($data->phonenumber)) {
+            $phone = $data->phonenumber;
+        } elseif ($type == 'billing' && isset($data->client->phonenumber)) {
+            $phone = $data->client->phonenumber;
+        }
+
+        $vat = '';
+        if ($for == 'statement' && isset($data->vat)) {
+            $vat = $data->vat;
+        } elseif ($type == 'billing' && isset($data->client->vat)) {
+            $vat = $data->client->vat;
+        }
+
+        if ($companyLink && (!isset($data->deleted_customer_name) || (isset($data->deleted_customer_name) && empty($data->deleted_customer_name)))) {
+            $companyName = '<a href="' . admin_url('clients/client/' . $clientId) . '" target="_blank"><b>' . $companyName . '</b></a>';
+        } elseif ($companyName != '') {
+            $companyName = $companyName;
+        }
+        $street = trim(preg_replace("/<br\W*?\/>/", "\n", $street));
+        $format = _info_format_replace('company_name', $companyName, $format);
+        $format = _info_format_replace('customer_id', $clientId, $format);
+        $format = _info_format_replace('street', $street, $format);
+        $format = _info_format_replace('city', $city, $format);
+        $format = _info_format_replace('state', $state, $format);
+        $format = _info_format_replace('zip_code', $zipCode, $format);
+        $format = _info_format_replace('country_code', $countryCode, $format);
+        $format = _info_format_replace('country_name', $countryName, $format);
+        $format = _info_format_replace('phone', $phone, $format);
+        $format = _info_format_replace('vat_number', $vat, $format);
+        $format = _info_format_replace('vat_number_with_label', $vat == '' ? '' : _l('client_vat_number') . ': ' . $vat, $format);
+
+
+        $return = '';
+
+        $return .='
+        <tr>
+            <td>
+                '.$street.'
+            </td>
+        </tr>
+        <tr>
+            <td>
+                '.trim($city) .' '.trim($state).'
+            </td>
+        </tr>
+        <tr>
+            <td>
+                '.trim($countryCode) .' '.trim($zipCode).'
+            </td>
+        </tr>
+        <tr>
+            <td>
+                '.trim($vat) .'
+            </td>
+        </tr>'
+        ;
+
+        return $return;
+
+        // $customFieldsCustomer = [];
+
+        // // On shipping address no custom fields are shown
+        // if ($type != 'shipping') {
+        //     $whereCF = [];
+
+        //     if (is_custom_fields_for_customers_portal()) {
+        //         $whereCF['show_on_client_portal'] = 1;
+        //     }
+
+        //     $customFieldsCustomer = get_custom_fields('customers', $whereCF);
+        // }
+
+        // foreach ($customFieldsCustomer as $field) {
+        //     $value  = get_custom_field_value($clientId, $field['id'], 'customers');
+        //     $format = _info_format_custom_field($field['id'], $field['name'], $value, $format);
+        // }
+
+        // // If no custom fields found replace all custom fields merge fields to empty
+        // $format = _info_format_custom_fields_check($customFieldsCustomer, $format);
+        // $format = _maybe_remove_first_and_last_br_tag($format);
+
+        // // Remove multiple white spaces
+        // $format = preg_replace('/\s+/', ' ', $format);
+        // $format = trim($format);
+
+        // return hooks()->apply_filters('customer_info_text', $format, [
+        //     'data'         => $data,
+        //     'for'          => $for,
+        //     'type'         => $type,
+        //     'company_link' => $companyLink,
+        // ]);
     }
 }
 
@@ -513,7 +686,7 @@ if (!function_exists('format_organization_info')) {
         $format = get_option('company_info_format');
         $vat    = get_option('company_vat');
 
-        $format = _info_format_replace('company_name', '<b style="color:black" class="company-name-formatted">' . get_option('invoice_company_name') . '</b>', $format);
+        $format = _info_format_replace('company_name', '<b style="color:#00aeef;" class="company-name-formatted">' . get_option('invoice_company_name') . '</b>', $format);
         $format = _info_format_replace('address', get_option('invoice_company_address'), $format);
         $format = _info_format_replace('city', get_option('invoice_company_city'), $format);
         $format = _info_format_replace('state', get_option('company_state'), $format);
@@ -699,6 +872,7 @@ function add_new_sales_item_post($item, $rel_id, $rel_type)
 
     $discount = 0;
     $discount_type = NULL;
+    $part_number = NULL;
 
 
     if(isset($item['discount_group_percent']) && isset($item['discount_group_total'])){
@@ -727,6 +901,10 @@ function add_new_sales_item_post($item, $rel_id, $rel_type)
     if(isset($item['discount'])){
         $discount = $item['discount'];
     }
+
+     if(isset($item['part_number'])){
+        $part_number = $item['part_number'];
+    }
  
     // Bitsclan Solutions Start Code Invoice module   
     $CI->db->insert(db_prefix() . 'itemable', [
@@ -742,6 +920,7 @@ function add_new_sales_item_post($item, $rel_id, $rel_type)
                     'discount'         => $discount,
                     'discount_type'    => $discount_type,
                     'group_order'      => $group_order,
+                    'part_number'      => $part_number,
                 ]);
 
     // Bitsclan Solutions End Code Invoice module

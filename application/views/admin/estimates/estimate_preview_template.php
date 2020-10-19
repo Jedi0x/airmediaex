@@ -338,6 +338,9 @@
                                  </td>
                               </tr>
 
+
+                              <?php } ?>
+
                               <tr>
                                  <td>
                                     <span class="bold"><?php echo _l('shipping'); ?></span>
@@ -346,7 +349,6 @@
                                     <?php echo app_format_money($estimate->shipping, $estimate->currency_name); ?>
                                  </td>
                               </tr>
-                              <?php } ?>
                               <tr>
                                  <td><span class="bold"><?php echo _l('estimate_total'); ?></span>
                                  </td>

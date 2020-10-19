@@ -98,3 +98,125 @@ ERROR - 2020-10-09 13:54:46 --> 404 Page Not Found: /index
 ERROR - 2020-10-09 09:55:00 --> Could not find the language line "notify_send_create_password"
 ERROR - 2020-10-09 09:55:00 --> Could not find the language line "notify_send_create_password"
 ERROR - 2020-10-09 13:55:00 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 11:33:05 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 11:33:05 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 15:33:06 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 15:33:07 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 11:33:08 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 11:33:08 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 15:33:10 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 11:33:13 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 11:33:13 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 15:33:15 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 11:33:19 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 11:33:19 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 15:33:20 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 11:35:46 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 11:35:46 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 15:35:47 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 11:36:38 --> Could not find the language line "Enable Dark Theme for clients"
+ERROR - 2020-10-09 11:36:38 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 11:36:38 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 15:36:38 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 15:36:39 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 11:36:44 --> Could not find the language line "Enable Dark Theme for clients"
+ERROR - 2020-10-09 11:36:47 --> Could not find the language line "Enable Dark Theme for clients"
+ERROR - 2020-10-09 11:36:47 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 11:36:47 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 15:36:47 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 11:36:48 --> Could not find the language line "Enable Dark Theme for clients"
+ERROR - 2020-10-09 11:36:50 --> Could not find the language line "Enable Dark Theme for clients"
+ERROR - 2020-10-09 11:36:51 --> Could not find the language line "Enable Dark Theme for clients"
+ERROR - 2020-10-09 11:36:51 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 11:36:51 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 15:36:52 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 11:36:53 --> Could not find the language line "Enable Dark Theme for clients"
+ERROR - 2020-10-09 11:36:59 --> Could not find the language line "Enable Dark Theme for clients"
+ERROR - 2020-10-09 11:37:07 --> Could not find the language line "Enable Dark Theme for clients"
+ERROR - 2020-10-09 11:37:07 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 11:37:07 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 15:37:07 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 11:37:08 --> Could not find the language line "Enable Dark Theme for clients"
+ERROR - 2020-10-09 11:37:11 --> Could not find the language line "Enable Dark Theme for clients"
+ERROR - 2020-10-09 11:37:11 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 11:37:11 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 15:37:12 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 11:37:13 --> Could not find the language line "Enable Dark Theme for clients"
+ERROR - 2020-10-09 11:37:15 --> Could not find the language line "Enable Dark Theme for clients"
+ERROR - 2020-10-09 11:37:27 --> Could not find the language line "Enable Dark Theme for clients"
+ERROR - 2020-10-09 11:37:36 --> Could not find the language line "Enable Dark Theme for clients"
+ERROR - 2020-10-09 11:37:42 --> Could not find the language line "Enable Dark Theme for clients"
+ERROR - 2020-10-09 11:37:42 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 11:37:42 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 15:37:42 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 11:37:48 --> Could not find the language line "Enable Dark Theme for clients"
+ERROR - 2020-10-09 11:37:49 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 11:37:49 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 15:37:49 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 11:37:52 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 11:37:52 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 15:37:54 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 11:37:57 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 11:37:57 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 15:37:57 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 11:38:01 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 11:38:01 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 15:38:01 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 11:39:51 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 11:39:51 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 15:39:51 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 15:39:53 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 12:01:38 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 12:01:38 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 16:01:38 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 16:01:40 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 12:11:51 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 12:11:51 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 16:11:52 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 16:11:55 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 12:12:00 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 12:12:00 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 16:12:00 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 12:12:06 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 12:12:06 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 16:12:06 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 12:12:22 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 12:12:22 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 16:12:22 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 16:12:24 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 12:43:56 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 12:43:56 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 16:43:56 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 16:43:57 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 12:44:01 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 12:44:01 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 16:44:01 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 12:44:05 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 12:44:05 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 16:44:05 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 12:44:31 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 12:44:31 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 16:44:31 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 12:44:36 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 12:44:36 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 16:44:36 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 12:44:41 --> Severity: Notice --> Undefined property: Opportunities::$Opportunity_model D:\wamp64\www\airmediaex\modules\opportunities\controllers\Opportunities.php 268
+ERROR - 2020-10-09 12:44:41 --> Severity: error --> Exception: Call to a member function get() on null D:\wamp64\www\airmediaex\modules\opportunities\controllers\Opportunities.php 268
+ERROR - 2020-10-09 12:45:11 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 12:45:11 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 16:45:12 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 12:45:22 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 12:45:22 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 16:45:22 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 12:45:26 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 12:45:26 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 16:45:26 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 12:45:46 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 12:45:46 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 16:45:47 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 12:46:00 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 12:46:00 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 16:46:01 --> 404 Page Not Found: /index
+ERROR - 2020-10-09 12:46:17 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 12:46:17 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-09 16:46:18 --> 404 Page Not Found: /index

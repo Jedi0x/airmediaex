@@ -4,155 +4,350 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 $dimensions = $pdf->getPageDimensions();
 
-$info_right_column = '';
-$info_left_column  = '';
+$header = '';
 
-$info_right_column .= '<span style="font-weight:bold;font-size:27px;">' . _l('estimate_pdf_heading') . '</span><br />';
-$info_right_column .= '<b style="color:#4e4e4e;"># ' . $estimate_number . '</b>';
 
-if (get_option('show_status_on_pdf_ei') == 1) {
-    $info_right_column .= '<br /><span style="color:rgb(' . estimate_status_color_pdf($status) . ');text-transform:uppercase;">' . format_estimate_status($status, '', false) . '</span>';
-}
+$header .= '<table style="background-color: #072e41; color: #fff; padding-top:25px; padding-bottom:20px;padding-left:15px; padding-right:10px;">
+    <tbody>
+        <tr>
+            <td valign="middle">
+                <h5 style="font-size:50px;font-weight:500;">QUOTE</h5>
+            </td>
+            <td align="right">'.pdf_logo_url().'<br>'.format_organization_info().'<br>
+                <span>Tel: 416-597-2278 ext. 242</span><br>
+                <span>Fax: 416-597-9594</span><br>
+                <span>GST/HST No.: 137926234</span><br>
+            </td>
+        </tr>
+    </tbody>
+</table>';
 
 // Add logo
-$info_left_column .= pdf_logo_url();
-// Write top left logo and right column info/text
-pdf_multi_row($info_left_column, $info_right_column, $pdf, ($dimensions['wk'] / 2) - $dimensions['lm']);
 
-$pdf->ln(10);
 
-$organization_info = '<div style="color:#424242;">';
-    $organization_info .= format_organization_info();
-$organization_info .= '</div>';
+$pdf->writeHTML($header, false, false, false, false, '');
 
-// Estimate to
-$estimate_info = '<b>' . _l('estimate_to') . '</b>';
-$estimate_info .= '<div style="color:#424242;">';
-$estimate_info .= format_customer_info($estimate, 'estimate', 'billing');
-$estimate_info .= '</div>';
+$billing_info = '';
 
-// ship to to
-if ($estimate->include_shipping == 1 && $estimate->show_shipping_on_estimate == 1) {
-    $estimate_info .= '<br /><b>' . _l('ship_to') . '</b>';
-    $estimate_info .= '<div style="color:#424242;">';
-    $estimate_info .= format_customer_info($estimate, 'estimate', 'shipping');
-    $estimate_info .= '</div>';
-}
+$clientId = '';
 
-$estimate_info .= '<br />' . _l('estimate_data_date') . ': ' . _d($estimate->date) . '<br />';
 
-if (!empty($estimate->expirydate)) {
-    $estimate_info .= _l('estimate_data_expiry_date') . ': ' . _d($estimate->expirydate) . '<br />';
-}
 
-if (!empty($estimate->reference_no)) {
-    $estimate_info .= _l('reference_no') . ': ' . $estimate->reference_no . '<br />';
-}
+$clientId = $estimate->clientid;
 
-if ($estimate->sale_agent != 0 && get_option('show_sale_agent_on_estimates') == 1) {
-    $estimate_info .= _l('sale_agent_string') . ': ' . get_staff_full_name($estimate->sale_agent) . '<br />';
-}
 
-if ($estimate->project_id != 0 && get_option('show_project_on_estimate') == 1) {
-    $estimate_info .= _l('project') . ': ' . get_project_name_by_id($estimate->project_id) . '<br />';
-}
 
-foreach ($pdf_custom_fields as $field) {
-    $value = get_custom_field_value($estimate->id, $field['id'], 'estimate');
-    if ($value == '') {
-        continue;
+$companyName = $estimate->client->company;
+
+
+if (isset($estimate->client->show_primary_contact) && $estimate->client->show_primary_contact == 1) {
+    $primaryContactId = get_primary_contact_user_id($clientId);
+    if ($primaryContactId) {
+        $companyName = get_contact_full_name($primaryContactId) . '<br />' . $companyName;
     }
-    $estimate_info .= $field['name'] . ': ' . $value . '<br />';
 }
 
-$left_info  = $swap == '1' ? $estimate_info : $organization_info;
-$right_info = $swap == '1' ? $organization_info : $estimate_info;
 
-pdf_multi_row($left_info, $right_info, $pdf, ($dimensions['wk'] / 2) - $dimensions['lm']);
+$street = '';
+
+$street = $estimate->billing_street;
+
+$city = '';
+
+$city = $estimate->billing_city;
+
+
+$state = $estimate->billing_state;
+
+$zipCode = '';
+
+$zipCode = $estimate->billing_zip;
+
+
+$countryCode = '';
+$countryName = '';
+$country     = null;
+
+$country = get_country($estimate->billing_country);
+
+if ($country) {
+    $countryCode = $country->iso2;
+    $countryName = $country->short_name;
+}
+
+$phone = '';
+
+
+$phone = $estimate->client->phonenumber;
+
+
+$vat = '';
+
+$vat = $estimate->client->vat;
+
+
+$street = trim(preg_replace("/<br\W*?\/>/", "\n", $street));
+
+$companyName = $companyName;
+  
+
+$billing_info .= '<table width="100%" style="padding-top:20px;"  cellspacing="10px">
+    <tbody>
+        <tr>
+            <td align="left" width="35%">
+          
+                <table>
+                    <tbody>
+                        <tr>
+                            <td style="color:#00aeef;text-transform:uppercase;">Quoted To</td>
+                        </tr>
+                        <tr>
+                            <td> '.trim($companyName) .'</td>
+                        </tr>
+                        <tr>
+                            <td> '.$street .'</td>
+                        </tr>
+                        <tr>
+                            <td> '.trim($city) .' '.trim($state).'</td>
+                        </tr>
+                        <tr>
+                            <td> '.trim($countryCode) .' '.trim($zipCode).'</td>
+                        </tr>
+
+                        <tr>
+                            <td> '.trim($vat) .'</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td width="25%">
+            <table>
+                    <tbody>
+                        <tr>
+                            <td style="color:#00aeef;text-transform:uppercase;">Shipped To</td>
+                        </tr>
+                        '.format_customer_info_invoice($estimate, 'invoice', 'shipping').'
+                    </tbody>
+                </table>
+                
+            </td>
+            <td  align="right" width="40%">
+                <span style="color:#00aeef;text-transform:uppercase;">PROJECT NAME:</span> BlackTrax Average<br>
+                <span>System Size [SAMPLE]</span><br>
+                <span>Quote No.: # ' . $estimate_number . '</span><br>
+                <span>Created By: '. get_staff_full_name($estimate->addedfrom).'</span><br>
+                <span>Quote Date: '.$estimate->date.'</span><br>
+                <span>Expiration Date: '.$estimate->expirydate.'</span><br>
+                <span>EST. DELIVERY DATE: '.$estimate->date.'</span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" align="right" style="padding:0px;margin:0px;">
+                <table width="100%"  cellspacing="0px" cellpadding="0px" >
+                    <tbody>
+                        <tr>
+                            <td><h2 style="margin:0px;padding:0px;">TOTAL DUE: '.app_format_number($estimate->total).' USD</h2></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>';
+
+
+$pdf->writeHTML($billing_info, false, false, false, false, '');
+
+
+
 
 // The Table
-$pdf->Ln(hooks()->apply_filters('pdf_info_and_table_separator', 6));
+// $pdf->Ln(hooks()->apply_filters('pdf_info_and_table_separator', 6));
 
 // The items table
-// Bitsclan Solutions Start Code Estimate module   
-$items = get_group_items_table_data($estimate, 'estimate', 'pdf');
-// Bitsclan Solutions End Code Estimate module
+
+ 
+$items = get_group_items_table_data($estimate, 'invoice', 'pdf');
+
 
 $tblhtml = $items->table();
 
-$pdf->writeHTML($tblhtml, true, false, false, false, '');
+$pdf->writeHTML($tblhtml, false, false, false, false, '');
 
 $pdf->Ln(8);
-$tbltotal = '';
-$tbltotal .= '<table cellpadding="6" style="font-size:' . ($font_size + 4) . 'px">';
-$tbltotal .= '
-<tr>
-    <td align="right" width="85%"><strong>' . _l('estimate_subtotal') . '</strong></td>
-    <td align="right" width="15%">' . app_format_money($estimate->subtotal, $estimate->currency_name) . '</td>
-</tr>';
 
-if (is_sale_discount_applied($estimate)) {
-    $tbltotal .= '
-    <tr>
-        <td align="right" width="85%"><strong>' . _l('estimate_discount');
-    if (is_sale_discount($estimate, 'percent')) {
-        $tbltotal .= '(' . app_format_number($estimate->discount_percent, true) . '%)';
-    }
-    $tbltotal .= '</strong>';
-    $tbltotal .= '</td>';
-    $tbltotal .= '<td align="right" width="15%">-' . app_format_money($estimate->discount_total, $estimate->currency_name) . '</td>
-    </tr>';
-}
+$subtotal_Session = '';
+$subtotal_Session .='<table style="background-color:#ececec;" cellpadding="10px">
+    <tbody>
+        <tr>
+            <td>Currency:</td>
+            <td>USD</td>
+            <td>Subtotal:</td>
+            <td align="right">' . app_format_money($estimate->subtotal, $estimate->currency_name) . '</td>
+        </tr>
+        <tr>
+            <td>Discount Type:</td>
+            <td colspan="3">Rental Partner @10%</td>
+        </tr>';
 
-foreach ($items->taxes() as $tax) {
-    $tbltotal .= '<tr>
-    <td align="right" width="85%"><strong>' . $tax['taxname'] . ' (' . app_format_number($tax['taxrate']) . '%)' . '</strong></td>
-    <td align="right" width="15%">' . app_format_money($tax['total_tax'], $estimate->currency_name) . '</td>
+        foreach ($items->taxes() as $tax) {
+    $subtotal_Session .='<tr>
+    <td><strong>' . $tax['taxname'] . ' (' . app_format_number($tax['taxrate']) . '%)' . '</strong></td>
+    <td>' . app_format_money($tax['total_tax'], $estimate->currency_name) . '</td>
 </tr>';
 }
 
-if ((int)$estimate->adjustment != 0) {
-    $tbltotal .= '<tr>
-    <td align="right" width="85%"><strong>' . _l('estimate_adjustment') . '</strong></td>
-    <td align="right" width="15%">' . app_format_money($estimate->adjustment, $estimate->currency_name) . '</td>
-</tr>';
-}
+        
+        $subtotal_Session .='<tr>
+            <td>Shipping Provider:</td>
+            <td>CAST - FedEx</td>
+            <td>Shipping:</td>
+            <td align="right">' . app_format_money($estimate->shipping, $estimate->currency_name) . '</td>
+        </tr>
+        <tr>
+            <td colspan="4"><b><i>Payment Methods</i></b></td>
+        </tr>
 
-//bitsclan
-$tbltotal.='<tr style="background-color:#f0f0f0;">
-       <td align="right" width="85%"><strong>' . _l('shipping') . '</strong></td>
-       <td align="right" width="15%">' . app_format_money($estimate->shipping, $estimate->currency_name) . '</td>
-   </tr>';
+        <tr>
+            <td colspan="2"><i>Wire Transfer, Credit Card, Cheque</i></td>
+            <td >Total:</td>
+            <td align="right">' . app_format_money($estimate->total, $estimate->currency_name) . '</td>
+        </tr>
+    </tbody>
+</table>';
+
+$pdf->writeHTML($subtotal_Session, false, false, false, false, '');
+
+$pdf->Ln(hooks()->apply_filters('pdf_info_and_table_separator', 6));
+
+$total_due = '';
+$total_due .='<table style="background-color:#bdebfe; color:black;padding-left:10px;padding-right:10px;padding-top:10px;border-top:1px solid #000;" >
+    <tbody>
+        <tr>
+            <td><b>Net Total of all items listed above</b></td>
+            <td rowspan="2">
+            <table>
+            <tbody>
+                <tr>
+                    <td valign="middle"><h2>TOTAL DUE</h2></td>
+                    <td align="right" valign="middle">' . app_format_money($estimate->total, $estimate->currency_name) . '</td>
+                </tr>
+            </tbody></table>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-bottom:10px;"><i>excludes taxes and duties</i></td> 
+        </tr>
+    </tbody>
+</table>';
+$pdf->writeHTML($total_due, false, false, false, false, '');
+
+$pdf->Ln(hooks()->apply_filters('pdf_info_and_table_separator', 6));
+
+$payment_terms = '';
+
+$payment_terms .='<h2>PAYMENT TERMS</h2>';
+$payment_terms .='<table style="background-color:#ececec;margin-top:0px;">
+    <tbody>
+        <tr>
+            <td>Installment 1 - 50% Upon receipt of invoice</td>
+            <td align="right">' . app_format_money($estimate->total/2, $estimate->currency_name) . '</td>
+        </tr>
+        <tr>
+            <td>Installment 2 - 50 % Due prior to releasing the shipment</td>
+            <td align="right">' . app_format_money($estimate->total/2, $estimate->currency_name) . '</td>
+        </tr>
+    </tbody>
+</table>';
+$pdf->writeHTML($payment_terms, false, false, false, false, '');
 
 
-$tbltotal .= '
-<tr style="background-color:#f0f0f0;">
-    <td align="right" width="85%"><strong>' . _l('estimate_total') . '</strong></td>
-    <td align="right" width="15%">' . app_format_money($estimate->total, $estimate->currency_name) . '</td>
-</tr>';
+$pdf->Ln(3);
 
-$tbltotal .= '</table>';
+$aditional_items = '';
+$aditional_items .='<table  width="100%" style="padding-top:10px;padding-bottom:10px;border:1px solid #000;border-collapse: collapse;  border-spacing: 0; ">
+    <thead>
+    <tr style="background-color:#062e3f; color:#fff;">
+    <th align="center" style="color:#fff;"><h3>Additional Items</h3></th>
+    <th align="center" style="color:#fff;"><h3>Terms of Payment</h3></th>
+    </tr>
+    </thead>
+    <tbody >
+        <tr style="border:1px solid #000;"  >
+            <td style="border:1px solid #000;">Onsite Support - BT Technician for training including installation, configuration and calibration.</td>
+            <td align="center" style="border:1px solid #000;">4 days provided</td>
+        </tr>
+        <tr>
+            <td style="border:1px solid #000;">Shipping - normal delivery time unless otherwise specified</td>
+            <td align="center" valign="middle" rowspan ="2" style="border:1px solid #000;">Charged back</td>
+        </tr>
+        <tr>
+            <td>Travel - airfare, accomodations, local travel, per diems</td>  
+        </tr>
+    </tbody>
+</table>
+<hr style="width:100%;border-bottom:1px solid #000;margin:10px;"/>';
+$pdf->writeHTML($aditional_items, true, false, false, false, '');
 
-$pdf->writeHTML($tbltotal, true, false, false, false, '');
+$pdf->Ln(3);
 
-if (get_option('total_to_words_enabled') == 1) {
-    // Set the font bold
-    $pdf->SetFont($font_name, 'B', $font_size);
-    $pdf->Cell(0, 0, _l('num_word') . ': ' . $CI->numberword->convert($estimate->total, $estimate->currency_name), 0, 1, 'C', 0, '', 0);
-    // Set the font again to normal like the rest of the pdf
-    $pdf->SetFont($font_name, '', $font_size);
-    $pdf->Ln(4);
-}
+$clearfication_Requirements = '';
+$clearfication_Requirements .='<table  width="100%" style="padding-top:10px;padding-bottom:10px;border:1px solid #000;border-collapse: collapse;  border-spacing: 0; ">
+<thead>
+<tr style="background-color:#062e3f; color:#fff;">
+<th align="center" style="color:#fff;"><h3>Clarifications Required before Proceeding</h3></th>
+<th align="center" style="color:#fff;"><h3>Terms and Conditions</h3></th>
+</tr>
+</thead>
+<tbody >
+<tr style="border:1px solid #000;"  >
+<td style="border-right:1px solid #000;"><ol type="1">
+<li>CAST needs a 3D CAD of your location to understand the number and placement of BT Cams necessary to ensure complete coverage of your tracking area and to identify any occlusions</li>
+
+<li>Pricing of the ‘Additional Items’ section is determined and charged back to you at a later date.</li>
+
+<li>You will identify a suitable candidate(s) who will receive a dedicated and thorough training of the onsite operation of your BT System.</li>
+
+<li>During installation and for remote Tech Support, you will supply internet access to the Server at your expense.</li>
+
+<li>Please refer to the ‘Technical, Financial and Legal Terms & Conditions governing BlackTrax supply, install and/or rental transactions’ document which apply to this quote for further information.</li>
+
+<li>You are responsible for locally sourcing CAT 6 Cables, POE switches, and lighting merge nodes for your BT System.</li>
+
+<li style="background-color: yellow;">Your support services membership commences 2 weeks from the date that your BT System was shipped from CAST. There is no annual fee for the first year of support services. Succeeding years cost $2,500/year and are payable in advance of the commencement of each proceeding year.</li>
+</ol></td>
+<td><ol type="1">
+<li>This Quote is not a formal invoice, contract or undertaking to supply and/or install the BT System.</li>
+
+<li>This Quote, the documentation generated in conjunction with it, and any attachments are deemed strictly Confidential Information. You cannot copy, distribute, share, publish, disseminate or use it or the information in it, in
+public or to any other party without the prior written permission of CAST.</li>
+
+<li>This Quote relies on verbal and nonverbal information obtained from you. We have not attempted to test the veracity or accuracy of the information submitted by you. Any errors may change this quote price.</li>
+
+<li>CAST may engage a BT Expert or BTD to complete a site survey for, install, calibrate, and/or commission your BT System at their discretion.</li>
+
+<li>Onsite labour provided by CAST will not exceed 10 hours per day. Additional labour must be approved by both CAST and the client party and will be charged at a rate of $112.50 USD per hour.</li>
+
+<li>Normal delivery time for receiving your BT System is 4 weeks from receiving your deposit payment. An expedited fee of 3% will be applied to the BT System price if a delivery time frame of 2 weeks is necessary.</li>
+</ol></td>
+</tr>
+
+</tbody>
+</table>
+<hr style="width:100%;border-bottom:1px solid #000;margin:10px;"/>';
+$pdf->writeHTML($clearfication_Requirements, true, false, false, false, '');
+
+
+
 
 if (!empty($estimate->clientnote)) {
     $pdf->Ln(4);
     $pdf->SetFont($font_name, 'B', $font_size);
-    $pdf->Cell(0, 0, _l('estimate_note'), 0, 1, 'L', 0, '', 0);
+    $pdf->Cell(0, 0, _l('invoice_note'), 0, 1, 'L', 0, '', 0);
     $pdf->SetFont($font_name, '', $font_size);
     $pdf->Ln(2);
     $pdf->writeHTMLCell('', '', '', '', $estimate->clientnote, 0, 1, false, true, 'L', true);
 }
-
 
 if($estimate->term_and_conditions_active == 1){
     if (!empty($estimate->terms)) {

@@ -3635,3 +3635,4 @@ $lang['quote_configuration'] = "Quote Configuration";
 $lang['term_and_conditions'] = "Terms and Conditions (Default)";
 $lang['payment_terms'] = "Payment Terms";
 $lang['labour_terms'] = "Labour Terms";
+$lang['part_number'] = "Part Number";

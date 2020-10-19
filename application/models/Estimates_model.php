@@ -237,6 +237,7 @@ class Estimates_model extends App_Model
         $new_invoice_data['shipping_terms']         = $_estimate->shipping_terms;
         $new_invoice_data['payment_terms']         = $_estimate->payment_terms;
         $new_invoice_data['labour_terms']         = $_estimate->labour_terms;
+      
         
         if ($_estimate->include_shipping == 1) {
             $new_invoice_data['include_shipping'] = 1;
@@ -274,7 +275,8 @@ class Estimates_model extends App_Model
             $new_invoice_data['newitems'][$key]['group_id']         = $item['group_id'];
             $new_invoice_data['newitems'][$key]['group_order']      = $item['group_order'];
             $new_invoice_data['newitems'][$key]['discount']         = $item['discount'];
-            $new_invoice_data['newitems'][$key]['discount_type']   = $item['discount_type'];
+            $new_invoice_data['newitems'][$key]['discount_type']    = $item['discount_type'];
+             $new_invoice_data['newitems'][$key]['part_number']   =  $item['part_number'];
             // Bitsclan Solutions End Code Estimate module
             $taxes                                                  = get_estimate_item_taxes($item['id']);
             foreach ($taxes as $tax) {

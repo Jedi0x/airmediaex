@@ -1,7 +1,7 @@
 <table class="table invoice-items-table items table-item-group<?php echo $group->id; ?> table-main-invoice-edit has-calculations no-mtop item-group-<?php echo $group->id ?> group_items-drag" data-group-id = <?=$group->id?>>
   <thead>
     <tr>
-      <th colspan="9"  class="dragger ui-sortable-handle">
+      <th colspan="10"  class="dragger ui-sortable-handle">
         <h4 class="group-custom-head-class"><?php echo $group->name ?>
           <button type="button" onclick="delete_item_group(<?php echo $group->id ?>); return false;" class="btn pull-right btn-danger"><i class="fa fa-times"></i></button>
         </h4>
@@ -10,7 +10,7 @@
     <tr>
       <th></th>
       <th width="20%" align="left"><i class="fa fa-exclamation-circle" aria-hidden="true" data-toggle="tooltip" data-title="<?php echo _l('item_description_new_lines_notice'); ?>"></i> <?php echo _l('invoice_table_item_heading'); ?></th>
-      <th width="25%" align="left"><?php echo _l('invoice_table_item_description'); ?></th>
+      <th width="20%" align="left"><?php echo _l('invoice_table_item_description'); ?></th>
       <?php
         $custom_fields = get_custom_fields('items');
         foreach($custom_fields as $cf){
@@ -22,8 +22,9 @@
         } else if(isset($invoice) && $invoice->show_quantity_as == 3){
           $qty_heading = _l('invoice_table_quantity_heading') .'/'._l('invoice_table_hours_heading');
         } ?>
+        <th width="10%"><?php echo _l('part_number'); ?></th>
         <th width="10%" align="right" class="qty"><?php echo $qty_heading; ?></th>
-        <th width="15%" align="right"><?php echo _l('invoice_table_rate_heading'); ?></th>
+        <th width="10%" align="right"><?php echo _l('invoice_table_rate_heading'); ?></th>
         <th width="10%" align="right"><?php echo _l('invoice_table_tax_heading'); ?></th>
         <th width="30%" align="right"><?php echo _l('invoice_discount'); ?></th>
         <th width="10%" align="right"><?php echo _l('invoice_table_amount_heading'); ?></th>
@@ -38,6 +39,10 @@
         </td>
         <td>
           <textarea name="long_description" rows="4" class="form-control" placeholder="<?php echo _l('item_long_description_placeholder'); ?>"></textarea>
+        </td>
+
+        <td>
+          <input type="text" placeholder="<?php echo _l('part_number'); ?>" name="part_number" class="form-control">
         </td>
         <?php echo render_custom_fields_items_table_add_edit_preview(); ?>
         <td>
@@ -137,6 +142,10 @@
 
                     $table_row .= render_custom_fields_items_table_in($item,$items_indicator.'['.$i.']');
 
+                    $table_row .= '<td>
+                    <input type="text" name="' . $items_indicator . '[' . $i . '][part_number]" class="form-control" value="'.$item['part_number'].'">
+                    </td>';
+
                     $table_row .= '<td><input type="number" min="0" onblur="calculate_total_group('.$item['id'].','.$group->id.');" onchange="calculate_total_group('.$item['id'].','.$group->id.');" data-quantity name="' . $items_indicator . '[' . $i . '][qty]" value="' . $item['qty'] . '" class="form-control">';
 
                     $unit_placeholder = '';
@@ -198,10 +207,10 @@
                     $sub_total+=$item['rate'] * $item['qty'];
                } ?>
 
-               <tr>
-                 <td colspan="9">
-                    
-                    <div class="col-md-8 col-md-offset-4">
+           </tbody>
+       </table>
+
+                           <div class="col-md-8 col-md-offset-4">
          <table class="table text-right">
           <tbody>
             <tr>
@@ -217,12 +226,6 @@
 
       <div class="clearfix"></div>
       <div class="clearfix"></div>
-
-
-                 </td>
-               </tr>
-           </tbody>
-       </table>
 
 
 

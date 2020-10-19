@@ -293,8 +293,8 @@ class Invoices extends AdminController
         if ($this->input->post()) {
             $invoice_data = $this->input->post();
 
-            
-            // Bitsclan Solutions Start Code Invoice module   
+            // Bitsclan Solutions Start Code Invoice module  
+
             if(isset($invoice_data['group_order'])){
                 foreach ($invoice_data['group_order'] as $group_id => $order) {
                     foreach ($invoice_data['items'] as $item_key => $item) {
@@ -340,7 +340,7 @@ class Invoices extends AdminController
                 $invoice_data['labour_terms'] = '';
             }
 
-            unset($invoice_data['item_select_group'],$invoice_data['discount'],$invoice_data['group_order'],$invoice_data['discount_group_percent'],$invoice_data['discount_group_total']);
+            unset($invoice_data['item_select_group'],$invoice_data['discount'],$invoice_data['group_order'],$invoice_data['discount_group_percent'],$invoice_data['discount_group_total'],$invoice_data['part_number']);
             // Bitsclan Solutions End Code Invoice module
 
 
@@ -367,7 +367,6 @@ class Invoices extends AdminController
                 if (!has_permission('invoices', '', 'edit')) {
                     access_denied('invoices');
                 }
-                // debug($invoice_data,true);
                 
                 $success = $this->invoices_model->update($invoice_data, $id);
                 if ($success) {
@@ -770,7 +769,7 @@ class Invoices extends AdminController
         $group_id = $_POST['group_id'];
         $invoice_id = $_POST['invoice_id'];
         $this->db->where('rel_id',$invoice_id);
-        $this->db->where('rel_type','invoice');
+        $this->db->where('rel_type',$_POST['dtype']);
         $this->db->where('group_id',$group_id);
         $res = $this->db->update(db_prefix() . 'itemable', array('group_order' =>  $order));
         if($res){

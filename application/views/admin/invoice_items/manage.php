@@ -55,6 +55,7 @@
     $table_data = array_merge($table_data, array(
       _l('invoice_items_list_description'),
       _l('invoice_item_long_description'),
+      _l('part_number'),
       _l('invoice_items_list_rate'),
       _l('tax_1'),
       _l('tax_2'),

@@ -32,31 +32,9 @@ class App_group_items_table extends App_group_items_table_template
         $regularItemWidth  = $this->get_regular_items_width(6);
         $customFieldsItems = $this->get_custom_fields_for_table();
 
-       
-
-        if ($this->for == 'html') {
-            $descriptionItemWidth = $descriptionItemWidth - 5;
-            $regularItemWidth     = $regularItemWidth - 5;
-           
-            $tblhtml = '<tr style="background-color: #415165; color: #fff;">';
-        }
-
-
-        if($this->for == "pdf"){
-        $descriptionItemWidth = $this->get_description_item_width();
-        $regularItemWidth     = $this->get_regular_items_width(6);
-        $customFieldsItems    = $this->get_custom_fields_for_table();
-
-        $tblhtml = '<tr height="30" bgcolor="' . get_option('pdf_table_heading_color') . '" style="color:' . get_option('pdf_table_heading_text_color') . ';">';
-        }
-
         $i = 1;
-
         $groups = array();
         $group_items = array();
-
-      
-
 
         foreach ($this->items as $item) {
             if(!in_array($item['group_id'], $groups)){
@@ -71,180 +49,338 @@ class App_group_items_table extends App_group_items_table_template
             } 
         }
 
-        
-        $html.=' <div class="group_items-drag">';
-        foreach ($group_items as $group => $group_items_arr) {
-            $_group = item_group($group);
 
-            $html.='<div class="item-group-'.$_group->id.' item-group"  data-group-id = "'.$_group->id.' " data-invoice-id = "'.$this->items[0]['rel_id'].'">
-            <table class="table items items-preview invoice-items-preview" data-type="invoice">
-            <thead>';
+        if ($this->for == 'html') {
 
-                $html.=$tblhtml;
-                
-                 $html.=' <th align="center" width="5%">#</th>
-                  <th class="description" align="left;" width="' . $descriptionItemWidth . '%">'.$_group->name.'</th>
-                  <th align="right" width="' . $regularItemWidth . '%">Qty</th>
-                  <th  align="right" width="' . $regularItemWidth . '%">Rate</th>
-                  <th class="amount" align="right" width="' . $regularItemWidth . '%">Tax</th>
-                  <th class="amount" align="right" width="' . $regularItemWidth . '%">Discount</th>
-                  <th class="amount" align="right" width="' . $regularItemWidth . '%">Amount</th>
-                </tr>
-            </thead>
-            <tbody>';
+            $descriptionItemWidth = $descriptionItemWidth - 5;
+            $regularItemWidth     = $regularItemWidth - 5;
+           
 
-            $subtotal = 0;
+            $html.=' <div class="group_items-drag">';
+            foreach ($group_items as $group => $group_items_arr) {
+                $_group = item_group($group);
+
+                $html.='<div class="item-group-'.$_group->id.' item-group"  data-group-id = "'.$_group->id.' " data-invoice-id = "'.$this->items[0]['rel_id'].'" data-type="'.$this->type.' ">
+                    <table class="table items items-preview invoice-items-preview" data-type="'.$this->type.'" cellspacing="0px" cellpadding="0px" border-collapse: collapse;border-spacing: 0;>
+                        <thead>
+                            <tr class="odd" >
+                                <th align="left;" width="5%">#</th>
+                                <th class="description" align="left;" width="' . $descriptionItemWidth . '%">'.strtoupper($_group->name).'</th>
+                                <th align="right" width="' . $regularItemWidth . '%">PART NUMBER</th>
+                                <th align="right" width="' . $regularItemWidth . '%">QUANTITY</th>
+                                <th align="right" width="' . $regularItemWidth . '%">UNIT PRICE</th>
+                                <th align="right" width="' . $regularItemWidth . '%">TAX</th>
+                                <th align="right" width="' . $regularItemWidth . '%">DISCOUNT</th>
+                                <th width="' . $regularItemWidth . '%">NET TOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>';
+
+                         $subtotal = 0;
+                        foreach ($group_items_arr as $keyx => $item) {
+
+                            $itemHTML = '';
+
+                            // Open table row
+                            $itemHTML .= '<tr' . $this->tr_attributes($item[0]) . '>';
+
+                            // Table data number
+                            $itemHTML .= '<td' . $this->td_attributes() . ' align="center" width="5%">' . $i  . ' </td>';
+
+                            $itemHTML .= '<td class="description" align="left;"  width="' . $descriptionItemWidth . '%">';
+
+                            /**
+                             * Item description
+                             */
+                            if (!empty($item[0]['description'])) {
+                                $itemHTML .= '<span style="font-size:' . $this->get_pdf_font_size() . 'px;"><strong>'
+                                . $this->period_merge_field($item[0]['description'])
+                                . '</strong></span>';
+
+                                if (!empty($item[0]['long_description'])) {
+                                    $itemHTML .= '<br />';
+                                }
+                            }
+
+                            /**
+                             * Item long description
+                             */
+                            if (!empty($item[0]['long_description'])) {
+                                $itemHTML .= '<span style="color:#424242;">' . $this->period_merge_field($item[0]['long_description']) . '</span>';
+                            }
+
+                            $itemHTML .= '</td>';
+
+                            /**
+                             * Item custom fields
+                             */
+                            foreach ($customFieldsItems as $custom_field) {
+                                $itemHTML .= '<td align="left" width="' . $regularItemWidth . '%">' . get_custom_field_value($item[0]['id'], $custom_field['id'], 'items') . '</td>';
+                            }
+
+                            $itemHTML .= '<td align="right" width="' . $regularItemWidth . '%">' . $item[0]['part_number'] . '</td>';
+
+                            /**
+                             * Item quantity
+                             */
+                            $itemHTML .= '<td align="right" width="' . $regularItemWidth . '%">' . floatVal($item[0]['qty']);
+
+                            /**
+                             * Maybe item has added unit?
+                             */
+                            if ($item[0]['unit']) {
+                                $itemHTML .= ' ' . $item[0]['unit'];
+                            }
+
+                            $itemHTML .= '</td>';
+
+                            /**
+                             * Item rate
+                             * @var string
+                             */
+
+                            $rate = hooks()->apply_filters(
+                                'item_preview_rate',
+                                app_format_money($item[0]['rate'], $this->transaction->currency_name, $this->exclude_currency()),
+                                ['item' => $item[0], 'transaction' => $this->transaction]
+                            );
+
+                            $itemHTML .= '<td align="right" width="' . $regularItemWidth . '%">' . $rate . '</td>';
+
+                            /**
+                             * Items table taxes HTML custom function because it's too general for all features/options
+                             * @var string
+                             */
 
 
-            foreach ($group_items_arr as $keyx => $item) {
+                            $itemHTML .= $this->taxes_html($item[0], $regularItemWidth);
 
-                $itemHTML = '';
-
-                // Open table row
-                $itemHTML .= '<tr' . $this->tr_attributes($item[0]) . '>';
-
-                // Table data number
-                $itemHTML .= '<td' . $this->td_attributes() . ' align="center" width="5%">' . $i  . ' </td>';
-
-                $itemHTML .= '<td class="description" align="left;" width="' . $descriptionItemWidth . '%">';
-
-                /**
-                 * Item description
-                 */
-                if (!empty($item[0]['description'])) {
-                    $itemHTML .= '<span style="font-size:' . $this->get_pdf_font_size() . 'px;"><strong>'
-                    . $this->period_merge_field($item[0]['description'])
-                    . '</strong></span>';
-
-                    if (!empty($item[0]['long_description'])) {
-                        $itemHTML .= '<br />';
-                    }
-                }
-
-                /**
-                 * Item long description
-                 */
-                if (!empty($item[0]['long_description'])) {
-                    $itemHTML .= '<span style="color:#424242;">' . $this->period_merge_field($item[0]['long_description']) . '</span>';
-                }
-
-                $itemHTML .= '</td>';
-
-                /**
-                 * Item custom fields
-                 */
-                foreach ($customFieldsItems as $custom_field) {
-                    $itemHTML .= '<td align="left" width="' . $regularItemWidth . '%">' . get_custom_field_value($item[0]['id'], $custom_field['id'], 'items') . '</td>';
-                }
-
-                /**
-                 * Item quantity
-                 */
-                $itemHTML .= '<td align="right" width="' . $regularItemWidth . '%">' . floatVal($item[0]['qty']);
-
-                /**
-                 * Maybe item has added unit?
-                 */
-                if ($item[0]['unit']) {
-                    $itemHTML .= ' ' . $item[0]['unit'];
-                }
-
-                $itemHTML .= '</td>';
-
-                /**
-                 * Item rate
-                 * @var string
-                 */
-                $rate = hooks()->apply_filters(
-                    'item_preview_rate',
-                    app_format_money($item[0]['rate'], $this->transaction->currency_name, $this->exclude_currency()),
-                    ['item' => $item[0], 'transaction' => $this->transaction]
-                );
-
-                $itemHTML .= '<td align="right" width="' . $regularItemWidth . '%">' . $rate . '</td>';
-
-                /**
-                 * Items table taxes HTML custom function because it's too general for all features/options
-                 * @var string
-                 */
-
-
-
-                $itemHTML .= $this->taxes_html($item[0], $regularItemWidth);
-
-                /**
-                 * Possible action hook user to include tax in item total amount calculated with the quantiy
-                 * eq Rate * QTY + TAXES APPLIED
-                 */
-                $amount = $item[0]['qty'] * $item[0]['rate'];
-                if($item[0]['discount_type'] == 'percentage'){
-                    $discount = $item[0]['discount']." %";
-                    $percentage = $item[0]['discount'];
-                    $discounted_value = ($percentage / 100) * $amount;
-                }else{
-                    $discount =  app_format_money($item[0]['discount'],$this->transaction->currency_name,$this->exclude_currency());
-                    $discounted_value = $item[0]['discount'];
-                }
+                            /**
+                             * Possible action hook user to include tax in item total amount calculated with the quantiy
+                             * eq Rate * QTY + TAXES APPLIED
+                             */
+                            $amount = $item[0]['qty'] * $item[0]['rate'];
+                            if($item[0]['discount_type'] == 'percentage'){
+                                $discount = $item[0]['discount']." %";
+                                $percentage = $item[0]['discount'];
+                                $discounted_value = ($percentage / 100) * $amount;
+                            }else{
+                                $discount =  app_format_money($item[0]['discount'],$this->transaction->currency_name,$this->exclude_currency());
+                                $discounted_value = $item[0]['discount'];
+                            }
 
             
-                $item_amount_with_quantity = hooks()->apply_filters(
-                    'item_preview_amount_with_currency',
-                    app_format_money(($amount - $discounted_value), $this->transaction->currency_name, $this->exclude_currency()),
-                    $item,
-                    $this->transaction,
-                    $this->exclude_currency()
-                );
+                            $item_amount_with_quantity = hooks()->apply_filters(
+                                'item_preview_amount_with_currency',
+                                app_format_money(($amount - $discounted_value), $this->transaction->currency_name, $this->exclude_currency()),
+                                $item,
+                                $this->transaction,
+                                $this->exclude_currency()
+                            );
 
-                if($item[0]['discount_type'] == 'percentage'){
-                    $discount = $item[0]['discount']." %";
-                }else{
-                    $discount =  app_format_money($item[0]['discount'],$this->transaction->currency_name,$this->exclude_currency());
-                }
+                            if($item[0]['discount_type'] == 'percentage'){
+                                $discount = $item[0]['discount']." %";
+                            }else{
+                                $discount =  app_format_money($item[0]['discount'],$this->transaction->currency_name,$this->exclude_currency());
+                            }
 
-                $itemHTML .= '<td align="right" width="' . $regularItemWidth . '%">' . $discount . ' </td>';
+                            $itemHTML .= '<td align="right" width="' . $regularItemWidth . '%">' . $discount . ' </td>';
 
-               
+                            $itemHTML .= '<td class="amount" align="right" width="' . $regularItemWidth . '%">' . $item_amount_with_quantity . '</td>';
 
-                $itemHTML .= '<td class="amount" align="right" width="' . $regularItemWidth . '%">' . $item_amount_with_quantity . '</td>';
+                            // Close table row
+                            $itemHTML .= '</tr>';
 
-                // Close table row
-                $itemHTML .= '</tr>';
+                            $html .= $itemHTML;
 
-                $html .= $itemHTML;
+                            $subtotal+=$item[0]['rate'] * $item[0]['qty'];
 
-                $subtotal+=$item[0]['rate'] * $item[0]['qty'];
+                            $i++;
+                        }
 
-                $i++;
-            }
+                        $html.='</tbody>';
 
-            $html.='</tbody>';
-
-        
-            if($this->for == 'html'){
-            $html.='<tfoot class="table text-right">
+                        $html.='<tfoot class="table text-right">
                         <tr>
-                           <td  colspan=4 align="right"><span class="bold" >'._l('invoice_subtotal').'</span></td>
+                           <td  colspan=5 align="right"><span class="bold" >'._l('invoice_subtotal').'</span></td>
                            <td class="subtotal" colspan=3 align="right">'.app_format_money($subtotal,$this->transaction->currency_name).'</td>
                         </tr>
-                    </tfoot></table> </div>';
-                }else{
-                    $html.='
-
-
-                        <tr>
-                           <td  colspan= "3" align="right">'._l('invoice_subtotal').'</td>
-                           <td  colspan= "2" align="right">'.app_format_money($subtotal,$this->transaction->currency_name).'</td>
-                        </tr>
+                        </tfoot>
                     </table>
-                </div>
+                </div>';
+            }
 
-                    ';
-                }
-
+            $html.=' </div>';
 
         }
 
-        $html.=' </div>';
+
+        if($this->for == "pdf"){
+
+            $descriptionItemWidth = 20;
+            $regularItemWidth     = 13.3333;
+            $customFieldsItems    = $this->get_custom_fields_for_table();
+
+            $html.=' <div class="group_items-drag">';
+            foreach ($group_items as $group => $group_items_arr) {
+                $_group = item_group($group);
+
+                $html.='<div class="item-group-'.$_group->id.' item-group"  data-group-id = "'.$_group->id.' " data-invoice-id = "'.$this->items[0]['rel_id'].'" data-type="'.$this->type.' ">
+
+                    <table class="table-items" cellpadding="5" border-collapse="collapse" border-spacing="0">
+                        <thead> 
+                            <tr style="color:#00aeef;" >
+                                <th class="description" align="left;" width="' . $descriptionItemWidth . '%">'.$_group->name.'</th>
+                                <th width="' . $regularItemWidth . '%" style="padding:10px;">Part number</th>
+                                <th width="' . $regularItemWidth . '%">Qty</th>
+                                <th width="' . $regularItemWidth . '%">Unit Price</th>
+                                <th width="' . $regularItemWidth . '%">Tax</th>
+                                <th width="' . $regularItemWidth . '%">Discount</th>
+                                <th width="' . $regularItemWidth . '%">Net Total</th>
+                            </tr>
+                        </thead>
+                    <tbody>';
+
+                    $subtotal = 0;
+                    $c = 0;
+                    foreach ($group_items_arr as $keyx => $item) {
+
+                        $itemHTML = '';
+
+                        if($c++%2==1){
+                            $background = "background-color:#FFF;";
+
+                        }else{
+                            $background = "background-color:#e2e2e2;";
+                            
+                        }
+                        // Open table row
+                        $itemHTML .= '<tr style="'.$background.'">';
+
+
+                        $itemHTML .= '<td class="description" align="left;"  width="' . $descriptionItemWidth . '%">';
+
+                        /**
+                         * Item description
+                         */
+                        if (!empty($item[0]['description'])) {
+                            $itemHTML .= '<span style="font-size:' . $this->get_pdf_font_size() . 'px;"><strong>'
+                            . $this->period_merge_field($item[0]['description'])
+                            . '</strong></span>';
+
+                            if (!empty($item[0]['long_description'])) {
+                                $itemHTML .= '<br />';
+                            }
+                        }
+
+                        /**
+                         * Item long description
+                         */
+                        if (!empty($item[0]['long_description'])) {
+                            $itemHTML .= '<span style="color:#424242;">' . $this->period_merge_field($item[0]['long_description']) . '</span>';
+                        }
+
+                        $itemHTML .= '</td>';
+
+                        /**
+                         * Item custom fields
+                         */
+                        foreach ($customFieldsItems as $custom_field) {
+                            $itemHTML .= '<td align="left" width="' . $regularItemWidth . '%">' . get_custom_field_value($item[0]['id'], $custom_field['id'], 'items') . '</td>';
+                        }
+
+                        $itemHTML .= '<td width="' . $regularItemWidth . '%">' . $item[0]['part_number'] . '</td>';
+
+                        /**
+                         * Item quantity
+                         */
+                        $itemHTML .= '<td width="' . $regularItemWidth . '%">' . floatVal($item[0]['qty']);
+
+                        /**
+                         * Maybe item has added unit?
+                         */
+                        if ($item[0]['unit']) {
+                            $itemHTML .= ' ' . $item[0]['unit'];
+                        }
+
+                        $itemHTML .= '</td>';
+
+                        /**
+                         * Item rate
+                         * @var string
+                         */
+                        $rate = hooks()->apply_filters(
+                            'item_preview_rate',
+                            app_format_money($item[0]['rate'], $this->transaction->currency_name, $this->exclude_currency()),
+                            ['item' => $item[0], 'transaction' => $this->transaction]
+                        );
+
+                        $itemHTML .= '<td align="right" width="' . $regularItemWidth . '%">' . $rate . '</td>';
+
+                        /**
+                         * Items table taxes HTML custom function because it's too general for all features/options
+                         * @var string
+                         */
+
+                        $itemHTML .= $this->taxes_html($item[0], $regularItemWidth);
+
+                        /**
+                         * Possible action hook user to include tax in item total amount calculated with the quantiy
+                         * eq Rate * QTY + TAXES APPLIED
+                         */
+                        $amount = $item[0]['qty'] * $item[0]['rate'];
+                        if($item[0]['discount_type'] == 'percentage'){
+                            $discount = $item[0]['discount']." %";
+                            $percentage = $item[0]['discount'];
+                            $discounted_value = ($percentage / 100) * $amount;
+                        }else{
+                            $discount =  app_format_money($item[0]['discount'],$this->transaction->currency_name,$this->exclude_currency());
+                            $discounted_value = $item[0]['discount'];
+                        }
+
+                    
+                        $item_amount_with_quantity = hooks()->apply_filters(
+                            'item_preview_amount_with_currency',
+                            app_format_money(($amount - $discounted_value), $this->transaction->currency_name, $this->exclude_currency()),
+                            $item,
+                            $this->transaction,
+                            $this->exclude_currency()
+                        );
+
+                        if($item[0]['discount_type'] == 'percentage'){
+                            $discount = $item[0]['discount']." %";
+                        }else{
+                            $discount =  app_format_money($item[0]['discount'],$this->transaction->currency_name,$this->exclude_currency());
+                        }
+
+                        $itemHTML .= '<td align="right" width="' . $regularItemWidth . '%">' . $discount . ' </td>';
+
+                       
+
+                        $itemHTML .= '<td class="amount" align="right" width="' . $regularItemWidth . '%">' . $item_amount_with_quantity . '</td>';
+
+                        // Close table row
+                        $itemHTML .= '</tr>';
+
+                    $html .= $itemHTML;
+
+                    $subtotal+=$item[0]['rate'] * $item[0]['qty'];
+
+                    $i++;
+                }
+
+                $html.='<tr>
+                            <td  colspan= "5" align="right"><b>'._l('invoice_subtotal').'</b></td>
+                            <td  colspan= "2" align="right"><b>'.app_format_money($subtotal,$this->transaction->currency_name).'</b></td>
+                        </tr>';
+
+                $html.='</tbody> </table></div>';
+
+            }
+
+            $html.=' </div>';
+        
+        }
 
         return $html;
     }

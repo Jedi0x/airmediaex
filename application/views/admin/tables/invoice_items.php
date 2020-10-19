@@ -11,6 +11,7 @@ if (has_permission('items', '', 'delete')) {
 $aColumns = array_merge($aColumns, [
     'description',
     'long_description',
+    'part_number',
     db_prefix() . 'items.rate',
     't1.taxrate as taxrate_1',
     't2.taxrate as taxrate_2',
