@@ -12,6 +12,7 @@ class Crm_backup extends AdminController
 
     public function index()
     {
+
     	if (!has_permission('crm_backup', '', 'view')) {
             if (!have_assigned_customers() && !has_permission('crm_backup', '', 'create')) {
                 access_denied('crm_backup');
@@ -30,6 +31,28 @@ class Crm_backup extends AdminController
         $data['backup_remove'] = get_option('backup_remove');
 
         $data['title'] = _l('crm_backup');
-        $this->load->view('manage', $data);
+        $this->load->view('index', $data);
     }
+
+
+    public function google_drive_manage()
+    {
+        if ($this->input->post()) {
+
+            $data = $this->input->post();
+            update_option('google_drive_client_id', $data['google_drive_client_id']);
+            update_option('google_drive_client_secret', $data['google_drive_client_secret']);
+            update_option('google_drive_redirect_uri', $data['google_drive_redirect_uri']);
+            $success = true;
+            $message = _l('added_successfully', _l('settings_updated'));
+
+            echo json_encode([
+                'success' => $success,
+                'message' => $message,
+            ]);  
+        }
+        
+    }
+
+
 }

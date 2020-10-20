@@ -37,3 +37,14 @@ function remove_backup_options()
 
 	return $remove_options;
 }
+
+
+if (!function_exists('get_array_value')) {
+
+    function get_array_value(array $array, $key) {
+        if (array_key_exists($key, $array)) {
+            return $array[$key];
+        }
+    }
+
+}

@@ -1,0 +1,191 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+
+ERROR - 2020-10-20 10:33:47 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 10:33:47 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 10:34:06 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 10:34:06 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 10:36:46 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 10:36:46 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 10:39:02 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 10:39:02 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 10:44:47 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 10:44:47 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 10:45:17 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 10:45:17 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 10:45:49 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 10:45:49 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 10:47:15 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 10:47:15 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 10:56:22 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 10:56:22 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 10:56:35 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 10:56:35 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 10:59:42 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 10:59:42 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 10:59:54 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 10:59:54 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:01:13 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:01:13 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:02:03 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:02:03 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:02:03 --> Severity: Warning --> Illegal string offset 'id' D:\wamp64\www\airmediaex\application\libraries\gateways\Authorize_aim_gateway.php 120
+ERROR - 2020-10-20 11:02:03 --> Severity: Notice --> Uninitialized string offset: 0 D:\wamp64\www\airmediaex\application\libraries\gateways\Authorize_aim_gateway.php 120
+ERROR - 2020-10-20 11:02:03 --> Severity: Warning --> Illegal string offset 'id' D:\wamp64\www\airmediaex\application\libraries\gateways\Authorize_sim_gateway.php 127
+ERROR - 2020-10-20 11:02:04 --> Severity: Notice --> Uninitialized string offset: 0 D:\wamp64\www\airmediaex\application\libraries\gateways\Authorize_sim_gateway.php 127
+ERROR - 2020-10-20 11:02:04 --> Severity: Warning --> Illegal string offset 'id' D:\wamp64\www\airmediaex\application\libraries\gateways\Stripe_gateway.php 179
+ERROR - 2020-10-20 11:02:04 --> Severity: Notice --> Uninitialized string offset: 0 D:\wamp64\www\airmediaex\application\libraries\gateways\Stripe_gateway.php 179
+ERROR - 2020-10-20 11:02:04 --> Severity: Warning --> Illegal string offset 'id' D:\wamp64\www\airmediaex\application\libraries\gateways\Stripe_ideal_gateway.php 250
+ERROR - 2020-10-20 11:02:04 --> Severity: Notice --> Uninitialized string offset: 0 D:\wamp64\www\airmediaex\application\libraries\gateways\Stripe_ideal_gateway.php 250
+ERROR - 2020-10-20 11:02:04 --> Severity: Warning --> Illegal string offset 'id' D:\wamp64\www\airmediaex\application\libraries\gateways\Two_checkout_gateway.php 150
+ERROR - 2020-10-20 11:02:04 --> Severity: Notice --> Uninitialized string offset: 0 D:\wamp64\www\airmediaex\application\libraries\gateways\Two_checkout_gateway.php 150
+ERROR - 2020-10-20 11:02:09 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:02:09 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:02:35 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:02:35 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:03:08 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:03:08 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:03:43 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:03:43 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:03:51 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:03:51 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:03:58 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:03:58 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:04:09 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:04:09 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:04:19 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:04:19 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:04:27 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:04:27 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:09:20 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:09:20 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:10:34 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:10:34 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:10:57 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:10:57 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:11:40 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:11:40 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:11:49 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:11:49 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:13:45 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:13:45 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:27:37 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:27:37 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:27:52 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:27:52 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:28:02 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:28:02 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:30:04 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:30:04 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:30:14 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:30:14 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 15:30:51 --> 404 Page Not Found: admin/Survey/Participate
+ERROR - 2020-10-20 11:31:00 --> Severity: Warning --> Missing argument 1 for Participate::index(), called in D:\wamp64\www\airmediaex\system\core\CodeIgniter.php on line 532 and defined D:\wamp64\www\airmediaex\modules\surveys\controllers\Participate.php 7
+ERROR - 2020-10-20 11:31:00 --> Severity: Warning --> Missing argument 2 for Participate::index(), called in D:\wamp64\www\airmediaex\system\core\CodeIgniter.php on line 532 and defined D:\wamp64\www\airmediaex\modules\surveys\controllers\Participate.php 7
+ERROR - 2020-10-20 11:31:00 --> Severity: Notice --> Undefined variable: id D:\wamp64\www\airmediaex\modules\surveys\controllers\Participate.php 10
+ERROR - 2020-10-20 11:31:00 --> 404 Page Not Found: 
+ERROR - 2020-10-20 11:31:09 --> Severity: Warning --> Missing argument 1 for Participate::index(), called in D:\wamp64\www\airmediaex\system\core\CodeIgniter.php on line 532 and defined D:\wamp64\www\airmediaex\modules\surveys\controllers\Participate.php 7
+ERROR - 2020-10-20 11:31:09 --> Severity: Warning --> Missing argument 2 for Participate::index(), called in D:\wamp64\www\airmediaex\system\core\CodeIgniter.php on line 532 and defined D:\wamp64\www\airmediaex\modules\surveys\controllers\Participate.php 7
+ERROR - 2020-10-20 11:31:09 --> Severity: Notice --> Undefined variable: id D:\wamp64\www\airmediaex\modules\surveys\controllers\Participate.php 10
+ERROR - 2020-10-20 11:31:09 --> 404 Page Not Found: 
+ERROR - 2020-10-20 11:31:54 --> Severity: Warning --> Missing argument 1 for Participate::index(), called in D:\wamp64\www\airmediaex\system\core\CodeIgniter.php on line 532 and defined D:\wamp64\www\airmediaex\modules\surveys\controllers\Participate.php 7
+ERROR - 2020-10-20 11:31:54 --> Severity: Warning --> Missing argument 2 for Participate::index(), called in D:\wamp64\www\airmediaex\system\core\CodeIgniter.php on line 532 and defined D:\wamp64\www\airmediaex\modules\surveys\controllers\Participate.php 7
+ERROR - 2020-10-20 11:31:54 --> Severity: Notice --> Undefined variable: id D:\wamp64\www\airmediaex\modules\surveys\controllers\Participate.php 10
+ERROR - 2020-10-20 11:31:54 --> 404 Page Not Found: 
+ERROR - 2020-10-20 11:31:55 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:31:55 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:31:57 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:31:57 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:32:25 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:32:25 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:38:27 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:38:27 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:38:34 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:38:34 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:38:38 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:38:38 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:38:41 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:38:41 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:38:47 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:38:47 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:39:56 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:39:56 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:39:58 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:39:58 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:40:01 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:40:01 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:40:04 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:40:04 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:41:28 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:41:28 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:41:32 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:41:32 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:41:37 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:41:37 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:53:05 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:53:05 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:54:03 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:54:03 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:56:07 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:56:07 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:56:27 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:56:27 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:57:21 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:57:21 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:57:41 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:57:41 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:58:06 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:58:06 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:58:27 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:58:27 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:59:18 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 11:59:18 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 12:02:51 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 12:02:51 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 12:15:18 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 12:15:18 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 12:41:07 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 12:41:07 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 12:43:26 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 12:43:26 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 12:44:44 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 12:44:44 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 12:44:44 --> Severity: error --> Exception: Call to undefined function echo_uri() D:\wamp64\www\airmediaex\modules\crm_backup\views\index.php 155
+ERROR - 2020-10-20 12:45:19 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 12:45:19 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 12:45:19 --> Severity: error --> Exception: Call to undefined function echo_uri() D:\wamp64\www\airmediaex\modules\crm_backup\views\index.php 155
+ERROR - 2020-10-20 12:45:21 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 12:45:21 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 12:45:21 --> Severity: error --> Exception: Call to undefined function echo_uri() D:\wamp64\www\airmediaex\modules\crm_backup\views\index.php 155
+ERROR - 2020-10-20 12:45:30 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 12:45:30 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 12:45:30 --> Severity: error --> Exception: Call to undefined function echo_uri() D:\wamp64\www\airmediaex\modules\crm_backup\views\index.php 155
+ERROR - 2020-10-20 12:45:54 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 12:45:54 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 12:46:01 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 12:46:01 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 12:46:32 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 12:46:32 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 12:47:14 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 12:47:14 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 16:47:29 --> 404 Page Not Found: admin/Google_api/index
+ERROR - 2020-10-20 12:56:16 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 12:56:16 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 12:56:38 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 12:56:38 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 12:56:55 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 12:56:55 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 12:58:02 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 12:58:02 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 13:10:27 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 13:10:27 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 13:10:33 --> Severity: Warning --> require_once(D:\wamp64\www\airmediaex\modules/third_party/Google/google-api-php-client/vendor/autoload.php): failed to open stream: No such file or directory D:\wamp64\www\airmediaex\modules\crm_backup\libraries\Google.php 14
+ERROR - 2020-10-20 13:10:33 --> Severity: Compile Error --> require_once(): Failed opening required 'D:\wamp64\www\airmediaex\modules/third_party/Google/google-api-php-client/vendor/autoload.php' (include_path='.;C:\php\pear') D:\wamp64\www\airmediaex\modules\crm_backup\libraries\Google.php 14
+ERROR - 2020-10-20 13:11:03 --> Severity: error --> Exception: syntax error, unexpected '.', expecting identifier (T_STRING) D:\wamp64\www\airmediaex\modules\crm_backup\libraries\Google.php 14
+ERROR - 2020-10-20 13:11:24 --> Severity: Warning --> require_once(D:\wamp64\www\airmediaex\modules/third_party/Google/google-api-php-client/vendor/autoload.php): failed to open stream: No such file or directory D:\wamp64\www\airmediaex\modules\crm_backup\libraries\Google.php 14
+ERROR - 2020-10-20 13:11:24 --> Severity: Compile Error --> require_once(): Failed opening required 'D:\wamp64\www\airmediaex\modules/third_party/Google/google-api-php-client/vendor/autoload.php' (include_path='.;C:\php\pear') D:\wamp64\www\airmediaex\modules\crm_backup\libraries\Google.php 14
+ERROR - 2020-10-20 13:13:42 --> Severity: Notice --> Use of undefined constant module_dir_path - assumed 'module_dir_path' D:\wamp64\www\airmediaex\modules\crm_backup\controllers\Crm_backup.php 15
+ERROR - 2020-10-20 13:18:26 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 13:18:26 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 17:18:31 --> 404 Page Not Found: /index
+ERROR - 2020-10-20 13:18:59 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-10-20 13:18:59 --> Could not find the language line "notify_send_create_password"
