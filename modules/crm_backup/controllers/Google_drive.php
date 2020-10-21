@@ -20,8 +20,6 @@ class Google_drive extends AdminController {
 
     //get access token of drive and save
     function save_access_token() {
-        $this->access_only_admin();
-
         if (!empty($_GET)) {
             $this->google->save_access_token(get_array_value($_GET, 'code'));
             redirect(admin_url('crm_backup'));

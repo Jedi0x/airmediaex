@@ -11,7 +11,7 @@ class Crm_backups
         $this->ci = &get_instance();
     }
 
-    public function make_backup_db($manual = false)
+    public function make_backup_crm($manual = false)
     {
         $this->create_crm_backup_directory();
         $manager = $this->get_backup_manager_name();
@@ -206,7 +206,16 @@ class Crm_backups
         // Zip archive will be created only after closing object
         $zip->close();
 
+
         $this->deleteDirectory($destination);
+
+        $this->upload_on_drive('crm_backup_'.$date_now.'.zip');
+    }
+
+    private function upload_on_drive($folder)
+    {
+        $CI = &get_instance();
+        $CI->google->upload_file($folder);
     }
 
 

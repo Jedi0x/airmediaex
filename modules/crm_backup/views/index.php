@@ -81,7 +81,7 @@
                               <h4><?php echo _l('goole_drive_settings'); ?></h4>
                               <hr>
                               <div class="form-group" app-field-wrapper="google_drive_auth_status">
-                                <?php  $value = get_option('google_drive_redirect_uri'); 
+                                <?php  $value = get_option('google_drive_authorized'); 
                                   if($value == 1){
                                     $authorized_class = 'success';
                                     $authorized_text = _l('authorized');
@@ -108,7 +108,7 @@
                             <button type="submit" class="btn btn-info disable-btn"><?php echo _l('authorized_submit'); ?></button>
                           </div>
                         </div>
-                        </form>
+                        <?php echo form_close(); ?>
                       </div>
                     </div>
        

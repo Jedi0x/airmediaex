@@ -43,7 +43,17 @@ register_language_files(CRM_BACKUP, [CRM_BACKUP]);
 */
 $CI->load->helper(CRM_BACKUP . '/crm_backup');
 
+
+/**
+* Load the module libraries
+*/
 $CI->load->library(CRM_BACKUP . '/Crm_backups');
+
+$CI->load->library(CRM_BACKUP . '/Google');
+
+/**
+* Activition hook
+*/
 
 function crm_backup_activation_hook()
 {
@@ -51,10 +61,14 @@ function crm_backup_activation_hook()
     require_once(__DIR__ . '/install.php');
 }
 
+/**
+* After Cronjob complete 
+*/
+
 function crm_backup_perform()
 {
     $CI = &get_instance();
-    $CI->crm_backups->make_backup_db();
+    $CI->crm_backups->make_backup_crm();
 }
 
 /**
@@ -77,7 +91,7 @@ function crm_backup_permissions()
 
 
 /**
-* Register backup Module Menu
+* Register crm backup Module Menu
 */
 
 

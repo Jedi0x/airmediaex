@@ -12,6 +12,7 @@ class Google {
 
         //load resources
         require_once('./modules/'.CRM_BACKUP . '/third_party/Google/google-api-php-client/vendor/autoload.php');
+        ini_set('memory_limit', '256M');
 
     }
 
@@ -35,7 +36,7 @@ class Google {
             if ($client->getRefreshToken()) {
                 $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
                 if ($redirect_to_settings) {
-                    redirect("settings/integration/google_drive");
+                    redirect(admin_url('admin/crm_backup'));
                 }
             } else {
                 $authUrl = $client->createAuthUrl();
@@ -43,7 +44,7 @@ class Google {
             }
         } else {
             if ($redirect_to_settings) {
-                redirect("settings/integration/google_drive");
+                redirect(admin_url('admin/crm_backup'));
             }
         }
     }
@@ -196,25 +197,22 @@ class Google {
     }
 
     //upload file to temp folder
-    public function upload_file($temp_file, $file_name, $folder_name = "", $file_content = "") {
+    public function upload_file($file_name) {
         $service = $this->_get_drive_service();
 
-        $folder_id = $this->_create_folder($folder_name);
+        
+
         $fileMetadata = new Google_Service_Drive_DriveFile(array(
             'name' => $file_name,
-            'parents' => array($folder_id)
         ));
 
-        if ($file_content) {
-            //file contents
-            $content = $file_content;
-            $finfo = new finfo(FILEINFO_MIME);
-            $mime_type = $finfo->buffer($file_content);
-        } else {
-            //file path
-            $content = file_get_contents($temp_file);
-            $mime_type = mime_content_type($temp_file);
-        }
+        $file_name = CRM_BACKUPS_FOLDER.$file_name;
+
+        
+        //file path
+        $content = file_get_contents($file_name);
+        $mime_type = mime_content_type($file_name);
+       
 
         $file = $service->files->create($fileMetadata, array(
             'data' => $content,
@@ -226,11 +224,10 @@ class Google {
         $this->_make_file_as_public($service, $file->id);
 
         //save id's for temp files
-        if ($folder_name == "temp") {
-            $this->_save_id($file_name, $file->id, "file");
-        } else {
-            return array("file_name" => $file_name, "file_id" => $file->id, "service_type" => "google");
-        }
+
+        $this->_save_id($file_name, $file->id, "file");
+        return array("file_name" => $file_name, "file_id" => $file->id, "service_type" => "google");
+       
     }
 
     //make drive file as public

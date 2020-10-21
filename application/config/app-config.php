@@ -17,7 +17,33 @@ defined('BASEPATH') or exit('No direct script access allowed');
 * environments.
 *
 */
-define('APP_BASE_URL', 'http://localhost/airmediaex/');
+if ($_SERVER['HTTP_HOST'] == 'localhost' || $_SERVER['HTTP_HOST'] == '127.0.0.1') {
+
+	$hostname = 'localhost';
+	$username = 'root';
+	$password = '';
+	$database = 'netexem_updated';
+	$app_base_url = 'http://localhost/netexembit/';
+
+}elseif ($_SERVER['HTTP_HOST'] == 'junaidtest.blogbaaz.com')  {
+
+	$hostname = 'shareddb-i.hosting.stackcp.net';
+	$username = 'backupmoddb-3737b083';
+	$password = 'crp5kc71fp';
+	$database = 'backupmoddb-3737b083';
+	$app_base_url = 'https://junaidtest.blogbaaz.com/';
+}
+
+else{
+	//live portal 
+	$hostname = '';
+	$username = '';
+	$password = '';
+	$database = '';
+	$app_base_url = '';
+}
+
+define('APP_BASE_URL', $app_base_url);
 
 /*
 * --------------------------------------------------------------------------
@@ -34,23 +60,24 @@ define('APP_BASE_URL', 'http://localhost/airmediaex/');
 */
 define('APP_ENC_KEY', '4566ca37d52b9c2bb33e6c5202ffff01');
 
+
 /**
  * Database Credentials
  * The hostname of your database server
  */
-define('APP_DB_HOSTNAME', 'localhost');
+define('APP_DB_HOSTNAME', $hostname);
 /**
  * The username used to connect to the database
  */
-define('APP_DB_USERNAME', 'root');
+define('APP_DB_USERNAME', $username);
 /**
  * The password used to connect to the database
  */
-define('APP_DB_PASSWORD', '');
+define('APP_DB_PASSWORD', $password);
 /**
  * The name of the database you want to connect to
  */
-define('APP_DB_NAME', 'airmedia');
+define('APP_DB_NAME', $database);
 
 /**
  * @since  2.3.0
