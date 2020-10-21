@@ -215,7 +215,11 @@ class Crm_backups
     private function upload_on_drive($folder)
     {
         $CI = &get_instance();
-        $CI->google->upload_file($folder);
+        $response = $CI->google->upload_file($folder);
+        if(!empty($response)){
+            $data = array('backup_name' => $response['file_name'], 'file_id' => $response['file_id'], 'service_type' => $response['service_type'], 'datecreated'=> date('Y-m-d H:i:s'));
+            $res = $CI->db->insert(db_prefix() . 'crm_backups', $data);
+        }
     }
 
 

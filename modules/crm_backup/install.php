@@ -12,4 +12,20 @@ add_option('google_drive_folder_ids','');
 add_option('google_drive_temp_file_ids','');
 
 
+if (!$CI->db->table_exists(db_prefix() . 'crm_backups')) {
+  $CI->db->query('CREATE TABLE `' . db_prefix() . 'crm_backups` (
+  	`id` int(11) NOT NULL,
+  	`backup_name` varchar(100) NOT NULL,
+  	`file_id` varchar(100) NOT NULL,
+  	`service_type` varchar(100) NOT NULL,
+  	`datecreated` datetime NOT NULL
+	) ENGINE=InnoDB DEFAULT CHARSET=' . $CI->db->char_set . ';');
+
+	$CI->db->query('ALTER TABLE `' . db_prefix() . 'crm_backups` 
+		ADD PRIMARY KEY (`id`);');
+
+	$CI->db->query('ALTER TABLE `' . db_prefix() . 'crm_backups`  
+		MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;');
+}
+
 

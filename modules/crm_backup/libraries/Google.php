@@ -206,6 +206,8 @@ class Google {
             'name' => $file_name,
         ));
 
+        $_file_name = $file_name;
+
         $file_name = CRM_BACKUPS_FOLDER.$file_name;
 
         
@@ -226,7 +228,7 @@ class Google {
         //save id's for temp files
 
         $this->_save_id($file_name, $file->id, "file");
-        return array("file_name" => $file_name, "file_id" => $file->id, "service_type" => "google");
+        return array("file_name" => $_file_name, "file_id" => $file->id, "service_type" => "Google Drive");
        
     }
 
@@ -276,7 +278,7 @@ class Google {
     //delete file
     public function delete_file($file_id) {
         $service = $this->_get_drive_service();
-        $service->files->delete($file_id);
+        return $service->files->delete($file_id);
     }
 
     //get client credentials

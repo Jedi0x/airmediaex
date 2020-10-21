@@ -14,3 +14,8 @@ $lang['google_drive_authorized_status'] = 'Google Drive Authorized Status';
 $lang['authorized'] = 'Authorized';
 $lang['unauthorized'] = 'Anauthorized';
 $lang['authorized_submit'] = 'Authorized And Submit';
+$lang['backup_deleted'] = 'Backup Deleted';
+
+$lang['datecreated'] = "Date Created";
+$lang['service_type'] = "Service Name";
+$lang['backup_name'] = "Backup Name";
