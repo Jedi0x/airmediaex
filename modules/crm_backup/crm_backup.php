@@ -13,7 +13,7 @@ Author URI: https://bitsclan.com
 Version: 1.0.0
 Requires at least: 2.4.4
 */
-require('./modules/'.BACKUP_MODULE_NAME . '/vendor/autoload.php');
+require('./modules/backup/vendor/autoload.php');
 
 define('CRM_BACKUP', 'crm_backup');
 
@@ -51,6 +51,9 @@ $CI->load->library(CRM_BACKUP . '/Crm_backups');
 
 $CI->load->library(CRM_BACKUP . '/Google');
 
+$CI->load->library(CRM_BACKUP . '/Dropboxapi');
+
+$CI->load->library(CRM_BACKUP . '/Onedriveapi');
 /**
 * Activition hook
 */

@@ -6,7 +6,6 @@ class Google_drive extends AdminController {
 
     function __construct() {
         parent::__construct();
-        $this->load->library('crm_backup/google');
     }
 
     function index() {
@@ -22,7 +21,8 @@ class Google_drive extends AdminController {
     function save_access_token() {
         if (!empty($_GET)) {
             $this->google->save_access_token(get_array_value($_GET, 'code'));
-            redirect(admin_url('crm_backup'));
+            set_alert('success', _l('authorized'));
+            redirect(admin_url('crm_backup/manage'));
         }
     }
 

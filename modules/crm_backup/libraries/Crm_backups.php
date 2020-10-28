@@ -124,55 +124,71 @@ class Crm_backups
 
     private function crm_backup_codeigniter($manual)
     {
-       
-        ini_set('max_execution_time', 600);
-        $this->ci->load->library('zip');
-        $this->handle_memory_limit_error();
-        $this->ci->load->dbutil();
+        $backup_created_at =  get_option('backup_created_at');
+        $last_backup =  get_option('last_crm_backup');
 
-        $date_now = date('Y-m-d-H-i-s');
-        $dest = unique_filename(CRM_BACKUPS_FOLDER, 'crm_backup_' . $date_now);
+        if($backup_created_at == 1){
+            $backup_date = $last_backup + 60 * 60;
+        }else if($backup_created_at == 2){
+            $backup_date = $last_backup + 1  * 24 * 60 * 60;
+        }else if($backup_created_at == 3){
+            $backup_date = $last_backup + 7 * 24 * 60 * 60;
+        }else if($backup_created_at == 4){
+            $backup_date = $last_backup + 30 * 24 * 60 * 60;
+        }
 
-        $backup_name = $dest.'/database_backup_' . date('Y-m-d-H-i-s') . '-v' . wordwrap($this->ci->app->get_current_db_version(), 1, '-', true) . '.zip';
+        if(time() > $backup_date){
+            ini_set('max_execution_time', 600);
+            $this->ci->load->library('zip');
+            $this->handle_memory_limit_error();
+            $this->ci->load->dbutil();
 
-        $save_backup_path = CRM_BACKUPS_FOLDER . $backup_name;
+            $date_now = date('Y-m-d-H-i-s');
+            $dest = unique_filename(CRM_BACKUPS_FOLDER, 'crm_backup_' . $date_now);
 
-        $application = "./application";
-        $assets = "./assets";
-        $system = "./system";
-        $modules = "./modules";
-        $indexfile = "./index.php";
-        $htaccessfile = "./.htaccess";
-        $dest = CRM_BACKUPS_FOLDER . $dest;
+            $backup_name = $dest.'/database_backup_' . date('Y-m-d-H-i-s') . '-v' . wordwrap($this->ci->app->get_current_db_version(), 1, '-', true) . '.zip';
 
-        $bk_application = $this->folder_backup($application,$dest,"/application");
-        $bk_assets = $this->folder_backup($assets,$dest,"/assets");
-        $bk_system = $this->folder_backup($system,$dest,"/system");
-        $modules = $this->folder_backup($modules,$dest,"/modules");
-        $bk_index = $this->CopyFiles($indexfile,$dest."/index.php");
-        $bk_htaccess = $this->CopyFiles($htaccessfile,$dest."/ .htaccess");
+            $save_backup_path = CRM_BACKUPS_FOLDER . $backup_name;
 
-        $prefs = [
-                'format'   => 'zip',
-                'filename' => date('Y-m-d-H-i-s') . '_backup.sql',
-            ];
+            $application = "./application";
+            $assets = "./assets";
+            $system = "./system";
+            $modules = "./modules";
+            $indexfile = "./index.php";
+            $uploads = "./uploads";
+            $htaccessfile = "./.htaccess";
+            $dest = CRM_BACKUPS_FOLDER . $dest;
 
-        $backup           = @$this->ci->dbutil->backup($prefs);
+            $bk_application = $this->folder_backup($application,$dest,"/application");
+            $bk_assets = $this->folder_backup($assets,$dest,"/assets");
+            $bk_system = $this->folder_backup($system,$dest,"/system");
+            $modules = $this->folder_backup($modules,$dest,"/modules");
+            $uploads = $this->folder_backup($uploads,$dest,"/uploads");
+            $bk_index = $this->CopyFiles($indexfile,$dest."/index.php");
+            $bk_htaccess = $this->CopyFiles($htaccessfile,$dest."/ .htaccess");
+
+            $prefs = [
+                    'format'   => 'zip',
+                    'filename' => date('Y-m-d-H-i-s') . '_backup.sql',
+                ];
+
+            $backup           = @$this->ci->dbutil->backup($prefs);
 
 
-        $this->ci->load->helper('file');
+            $this->ci->load->helper('file');
 
-        if (@write_file($save_backup_path, $backup)) {
+            if (@write_file($save_backup_path, $backup)) {
 
-            $this->create_crm_backup_zip($dest,$date_now);
-           
-            if ($manual == false) {
-                update_option('last_auto_backup', time());
+                $this->create_crm_backup_zip($dest,$date_now);
+               
+                if ($manual == false) {
+                    update_option('last_auto_backup', time());
+                }
+
+                // $this->maybe_delete_old_backups();
+
+                return true;
             }
-
-            // $this->maybe_delete_old_backups();
-
-            return true;
         }
 
         return false;
@@ -206,20 +222,31 @@ class Crm_backups
         // Zip archive will be created only after closing object
         $zip->close();
 
-
-        $this->deleteDirectory($destination);
+        update_option('last_crm_backup',time());
 
         $this->upload_on_drive('crm_backup_'.$date_now.'.zip');
+        $this->deleteDirectory($destination);
     }
 
     private function upload_on_drive($folder)
     {
         $CI = &get_instance();
-        $response = $CI->google->upload_file($folder);
-        if(!empty($response)){
-            $data = array('backup_name' => $response['file_name'], 'file_id' => $response['file_id'], 'service_type' => $response['service_type'], 'datecreated'=> date('Y-m-d H:i:s'));
-            $res = $CI->db->insert(db_prefix() . 'crm_backups', $data);
+
+        $google_drive_file_id = NULL;
+        $onedrive_file = NULL;
+        if(get_option('dropbox_drive_active') == 1){
+            $CI->dropboxapi->upload_file($folder);
         }
+        if(get_option('google_drive_active') == 1){
+            $response = $CI->google->upload_file($folder);
+            $google_drive_file_id = $response['file_id'];
+        }
+        if(get_option('onedrive_active') == 1){
+            $response = $CI->onedriveapi->upload_file($folder);
+            $onedrive_file = $response;
+        }
+        $data = array('backup_name' => $folder, 'google_drive_file_id' => $google_drive_file_id, 'onedrive_file' => $onedrive_file, 'datecreated'=> date('Y-m-d H:i:s'));
+        $CI->db->insert(db_prefix() . 'crm_backups', $data);
     }
 
 

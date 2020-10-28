@@ -38,6 +38,9 @@ function render_yes_no_option($option_value, $label, $tooltip = '', $replace_yes
     echo $settings;
 }
 
+
+
+
 /**
  * Function that renders input for admin area based on passed arguments
  * @param  string $name             input name

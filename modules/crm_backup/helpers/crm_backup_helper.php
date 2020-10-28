@@ -48,3 +48,49 @@ if (!function_exists('get_array_value')) {
     }
 
 }
+
+
+function update_options($options)
+{
+	foreach ($options as $key => $value) {
+		update_option($key, $value);
+	}
+    return true;
+}
+
+
+/**
+ * For more readable code created this function to render only yes or not values for settings
+ * @param  string $option_value option from database to compare
+ * @param  string $label        input label
+ * @param  string $tooltip      tooltip
+ */
+function render_yes_no_option_backup($option_value, $label, $tooltip = '', $replace_yes_text = '', $replace_no_text = '', $replace_1 = '', $replace_0 = '')
+{
+    ob_start(); ?>
+    <div class="form-group">
+        <label for="<?php echo $option_value; ?>" class="control-label clearfix">
+            <?php echo($tooltip != '' ? '<i class="fa fa-question-circle" data-toggle="tooltip" data-title="' . _l($tooltip, '', false) . '"></i> ': '') . _l($label, '', false); ?>
+        </label>
+        <div class="radio radio-primary radio-inline">
+            <input type="radio" id="y_opt_1_<?php echo $label; ?>" name="<?php echo $option_value; ?>" value="<?php echo $replace_1 == '' ? 1 : $replace_1; ?>" <?php if (get_option($option_value) == ($replace_1 == '' ? '1' : $replace_1)) {
+        echo 'checked';
+    } ?>>
+            <label for="y_opt_1_<?php echo $label; ?>">
+                <?php echo $replace_yes_text == '' ? _l('settings_yes') : $replace_yes_text; ?>
+            </label>
+        </div>
+        <div class="radio radio-primary radio-inline">
+                <input type="radio" id="y_opt_2_<?php echo $label; ?>" name="<?php echo $option_value; ?>" value="<?php echo $replace_0 == '' ? 0 : $replace_0; ?>" <?php if (get_option($option_value) == ($replace_0 == '' ? '0' : $replace_0)) {
+        echo 'checked';
+    } ?>>
+                <label for="y_opt_2_<?php echo $label; ?>">
+                    <?php echo $replace_no_text == '' ? _l('settings_no') : $replace_no_text; ?>
+                </label>
+        </div>
+    </div>
+    <?php
+    $settings = ob_get_contents();
+    ob_end_clean();
+    echo $settings;
+}

@@ -1,0 +1,13 @@
+{
+  "associatedApplications": [
+    {
+      "applicationId": "165b05d7-a9ae-4c88-8645-bc8844f8372e"
+    }
+  ]
+}
+
+
+<form action="<?php echo "https://apis.live.net/v5.0/". $your_folder ."/files?access_token=" . $access_token . "&redirect_uri=http%3A%2F%2Fwww.whateverredirect.com"; ?>" method="post" enctype="multipart/form-data">
+    <input type="file" name="file"/>
+    <input type="submit" value="Upload your ppt" name="btnUpload"/>
+</form>

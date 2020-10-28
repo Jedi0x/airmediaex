@@ -22,8 +22,8 @@ if ($_SERVER['HTTP_HOST'] == 'localhost' || $_SERVER['HTTP_HOST'] == '127.0.0.1'
 	$hostname = 'localhost';
 	$username = 'root';
 	$password = '';
-	$database = 'netexem_updated';
-	$app_base_url = 'http://localhost/netexembit/';
+	$database = 'airmedia';
+	$app_base_url = 'http://localhost/airmediaex/';
 
 }elseif ($_SERVER['HTTP_HOST'] == 'junaidtest.blogbaaz.com')  {
 

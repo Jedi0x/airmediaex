@@ -8,9 +8,8 @@ $this->ci->db->query("SET sql_mode = ''");
 
 $aColumns = [
    
-    db_prefix().'crm_backups.file_id as id',
+    db_prefix().'crm_backups.id as id',
     'backup_name',
-    'service_type',
     db_prefix().'crm_backups.datecreated as datecreated',
 ];
 
@@ -34,12 +33,6 @@ foreach ($rResult as $aRow) {
     // User id
 
     $name = $aRow['backup_name'];
-    $isPerson = false;
-
-    $url = admin_url('crm_backup/manage/' . $aRow['id']);
-
-
-    $name =  $name;
 
     $name .= '<div class="row-options">';
     if ($hasPermissionDelete) {
@@ -51,7 +44,6 @@ foreach ($rResult as $aRow) {
 
     $row[] = $name;
 
-    $row[] = $aRow['service_type'];
 
     $row[] = _dt($aRow['datecreated']);
 

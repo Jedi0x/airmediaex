@@ -25,7 +25,7 @@ class Crm_backup_model extends App_Model
         }
 
         if (is_numeric($id)) {
-            $this->db->where(db_prefix() . 'crm_backups.file_id', $id);
+            $this->db->where(db_prefix() . 'crm_backups.id', $id);
             $crm_backups = $this->db->get(db_prefix() . 'crm_backups')->row();
 
             $GLOBALS['crm_backups'] = $crm_backups;
@@ -104,7 +104,7 @@ class Crm_backup_model extends App_Model
     public function delete($id)
     {
         $current         = $this->get($id);
-        $this->db->where('file_id', $id);
+        $this->db->where('id', $id);
         $this->db->delete(db_prefix() . 'crm_backups');
         if ($this->db->affected_rows() > 0) {
             return true;

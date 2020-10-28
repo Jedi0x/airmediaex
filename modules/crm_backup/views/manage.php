@@ -27,10 +27,7 @@
                  'name'=>_l('backup_name'),
                  'th_attrs'=>array('class'=>'toggleable', 'id'=>'th-backup_name')
                ),
-                array(
-                 'name'=>_l('service_type'),
-                 'th_attrs'=>array('class'=>'toggleable', 'id'=>'th-service_type')
-               ),
+
                 array(
                  'name'=>_l('datecreated'),
                  'th_attrs'=>array('class'=>'toggleable', 'id'=>'th-datecreated')

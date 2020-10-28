@@ -1,7 +1,5 @@
 <?php
-
-if (!defined('BASEPATH'))
-    exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Google {
 
@@ -36,7 +34,7 @@ class Google {
             if ($client->getRefreshToken()) {
                 $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
                 if ($redirect_to_settings) {
-                    redirect(admin_url('admin/crm_backup'));
+                    redirect(admin_url('crm_backup'));
                 }
             } else {
                 $authUrl = $client->createAuthUrl();
@@ -44,7 +42,7 @@ class Google {
             }
         } else {
             if ($redirect_to_settings) {
-                redirect(admin_url('admin/crm_backup'));
+                redirect(admin_url('crm_backup'));
             }
         }
     }
