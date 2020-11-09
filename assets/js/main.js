@@ -7102,3 +7102,6 @@ function init_currency_symbol() {
     console.warn('"init_currency_symbol" is deprecated, use "init_currency" instead')
     init_currency();
 }
+
+
+

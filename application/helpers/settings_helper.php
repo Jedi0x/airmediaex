@@ -239,4 +239,14 @@ function app_init_settings_tabs()
         'view'     => 'admin/settings/includes/misc',
         'position' => 95,
     ]);
+
+    #bitsclan solutions
+
+
+    $CI->app_tabs->add_settings_tab('misc', [
+        'name'     => _l('pdf_customizations'),
+        'view'     => 'admin/settings/includes/pdf_customizations',
+        'position' => 100,
+    ]);
+
 }

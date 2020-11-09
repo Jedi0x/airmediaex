@@ -340,6 +340,18 @@ $pdf->writeHTML($clearfication_Requirements, true, false, false, false, '');
 
 
 
+#bitsclan solutions
+
+$estimate_note = get_option('estimate_note_standard');
+$pdf->Ln(4);
+$pdf->SetFont($font_name, 'B', $font_size);
+$pdf->SetFont($font_name, '', $font_size);
+$pdf->Ln(2);
+$pdf->writeHTMLCell('', '', '', '', $estimate_note, 0, 1, false, true, 'L', true);
+
+
+
+
 if (!empty($estimate->clientnote)) {
     $pdf->Ln(4);
     $pdf->SetFont($font_name, 'B', $font_size);

@@ -33,7 +33,6 @@ add_option('onedrive_access_token','');
 add_option('onedrive_redirect_url',admin_url('crm_backup/one_drive/save_access_token'));
 
 
-
 if (!$CI->db->table_exists(db_prefix() . 'crm_backups')) {
   $CI->db->query('CREATE TABLE `' . db_prefix() . 'crm_backups` (
   	`id` int(11) NOT NULL,

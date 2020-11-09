@@ -3622,17 +3622,21 @@ $lang['schedule_date']                  = 'When would you like to send the email
 $lang['email_scheduled_successfully']   = 'Email scheduled successfully';
 $lang['invoice_will_be_sent_at']        = 'Invoice will be sent at %s';
 
+#bitsclan solutions
 
 
 $lang['add_item_group'] = "Add Item Group";
 $lang['invoice_grand_total'] = 'Grand Total';
 $lang['shipping'] = 'Shipping';
-
 $lang['sales_item_group']                  = 'Group';
-
 $lang['quote_configuration'] = "Quote Configuration";
-
 $lang['term_and_conditions'] = "Terms and Conditions (Default)";
 $lang['payment_terms'] = "Payment Terms";
 $lang['labour_terms'] = "Labour Terms";
 $lang['part_number'] = "Part Number";
+$lang['pdf_customizations'] = 'Pdf Customizations';
+$lang['settings_invoice_quote_pdf_note']  = 'These information will be displayed on invoices/estimates pdf';
+$lang['invoice_add_note'] = 'Invoice Note';
+$lang['estimate_add_note'] = 'Estimate Note';
+
+

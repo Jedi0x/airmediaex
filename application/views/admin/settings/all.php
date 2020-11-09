@@ -78,6 +78,9 @@
 <?php init_tail(); ?>
 <script>
  $(function(){
+
+  
+
   var slug = "<?php echo $tab['slug']; ?>";
   $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
     var settingsForm = $('#settings-form');
@@ -172,7 +175,20 @@
       $('input[name="settings[purchase_key]"]').parents('.form-group').addClass('has-error');
     }
   });
-  });
+
+    // On shown task add/edit modal
+
+  if ($('#pdf_customizations').find('.tinymce-invoice').val().trim() !== '') {
+    init_editor('.tinymce-invoice', { height: 300 });   
+  }
+
+  if ($('#pdf_customizations').find('.tinymce-estimate').val().trim() !== '') {
+    init_editor('.tinymce-estimate', { height: 300 });   
+  }
+       
+ });
+
+
 </script>
 <?php hooks()->do_action('settings_tab_footer', $tab); ?>
 </body>
