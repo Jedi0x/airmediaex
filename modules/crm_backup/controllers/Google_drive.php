@@ -8,17 +8,17 @@ class Google_drive extends AdminController {
         parent::__construct();
     }
 
-    function index() {
+    public function index() {
         $this->authorize();
     }
 
     //authorize google drive
-    function authorize() {
+    public function authorize() {
         $this->google->authorize();
     }
 
     //get access token of drive and save
-    function save_access_token() {
+    public function save_access_token() {
         if (!empty($_GET)) {
             $this->google->save_access_token(get_array_value($_GET, 'code'));
             set_alert('success', _l('authorized'));
@@ -28,4 +28,3 @@ class Google_drive extends AdminController {
 
 }
 
-/* End of file google_drive.php */

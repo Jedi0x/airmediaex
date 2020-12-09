@@ -1,6 +1,8 @@
 <?php
 
 $lang['crm_backup'] = 'Backup';
+$lang['crm_backup_settings'] = "Backup Settings";
+$lang['crm_backups'] = "Backups";
 $lang['backup_created_at'] = 'Backup created at';
 $lang['backup_remove'] = 'Auto remove backups'; 
 $lang['backup_settings'] = 'Backup Settings';

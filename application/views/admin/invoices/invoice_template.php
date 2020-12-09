@@ -621,7 +621,8 @@
             <?php $value = (isset($invoice) ? $invoice->clientnote : get_option('predefined_clientnote_invoice')); ?>
             <?php echo render_textarea('clientnote','invoice_add_edit_client_note',$value,array(),array(),'mtop15'); ?>
             
-
+            <?php /*
+              bitsclan comment here 
             <?php 
             $class_terms = "hide";
             if(isset($invoice)){
@@ -670,6 +671,7 @@
             <?php $value = (isset($invoice) ? $invoice->labour_terms : get_option('predefined_terms_invoice')); ?>
             <?php echo render_textarea('labour_terms','labour_terms',$value,array(),array(),'mtop15'); ?>
             </div>
+            */ ?>
 
             <div class="btn-bottom-toolbar text-right">
                 <?php if(!isset($invoice)){ ?>

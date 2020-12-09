@@ -188,7 +188,9 @@ $subtotal_Session .='<table style="background-color:#ececec;" cellpadding="10px"
         </tr>
         <tr>
             <td>Discount Type:</td>
-            <td colspan="3">Rental Partner @10%</td>
+            <td >Rental Partner @10%</td>
+            <td><p style="color:red;">Discount:</p><p>Discounted Subtotal:</p></td>
+            <td align="right"><p style="color:red;">' . app_format_money(123, $invoice->currency_name) . '</p><p>' . app_format_money(123, $invoice->currency_name) . '</p></td>
         </tr>';
 
         foreach ($items->taxes() as $tax) {

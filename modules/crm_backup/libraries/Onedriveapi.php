@@ -10,8 +10,7 @@ class Onedriveapi
     public $app_secret;
     public $redirect_uri;
     public $client;
-    public function __construct()
-    {
+    public function __construct(){
         ini_set('memory_limit', '256M');
         $this->ci = &get_instance();
         require_once('./modules/'.CRM_BACKUP . '/third_party/Onedrive/vendor/autoload.php');
@@ -19,15 +18,9 @@ class Onedriveapi
         $this->app_secret   = get_option('onedrive_app_secret');
         $this->redirect_uri = get_option('onedrive_redirect_url');
         $this->client = Onedrive::client($this->app_key);
-
-
     }
 
-    public function authorize()
-    {
-       
-
-
+    public function authorize() {
         // Gets a log in URL with sufficient privileges from the OneDrive API.
         $url = $this->client->getLogInUrl([
             'files.read',

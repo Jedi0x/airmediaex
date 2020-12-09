@@ -207,25 +207,20 @@
                     $sub_total+=$item['rate'] * $item['qty'];
                } ?>
 
+              <tr style="border-bottom: solid 1px #f1f5f7;"> 
+                <td colspan="7" align="right" style="padding: 10px 0px;"><span class="bold"><?php echo _l('invoice_subtotal'); ?> :</span></td>
+                <td colspan="3" align="right" class="sub_total_group total<?php echo $group->id ?>" data-amount = "<?php echo $sub_total; ?>" style="padding: 10px 0px;">
+                  <?php echo "$".app_format_number($sub_total); ?>
+                </td>
+              </tr>
+              <div class="clearfix"></div>
+           
            </tbody>
        </table>
 
-                           <div class="col-md-8 col-md-offset-4">
-         <table class="table text-right">
-          <tbody>
-            <tr>
-                  <td><span class="bold"><?php echo _l('invoice_subtotal'); ?> :</span>
-                  </td>
-                  <td class="sub_total_group total<?php echo $group->id ?>" data-amount = "<?php echo $sub_total; ?>">
-                    <?php echo "$".app_format_number($sub_total); ?>
-                  </td>
-               </tr>
-            </tbody>
-         </table>
-      </div>
-
+    
       <div class="clearfix"></div>
-      <div class="clearfix"></div>
+     
 
 
 

@@ -7,7 +7,7 @@ class Crm_backup extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Crm_backup_model');
+        $this->load->model('crm_backup_model');
     }
 
     public function index()
@@ -19,12 +19,12 @@ class Crm_backup extends AdminController
             }
         }
 
-        $data['crm_backups'] = $this->Crm_backup_model->get();
+        $data['crm_backups'] = $this->crm_backup_model->get();
         $data['title'] = _l('crm_backup');
-        $this->load->view('manage', $data);
+        $this->load->view('index', $data);
     }
 
-    public function manage()
+    public function setting()
     {
         if (!has_permission('crm_backup', '', 'view')) {
             if (!have_assigned_customers() && !has_permission('crm_backup', '', 'create')) {
@@ -36,14 +36,14 @@ class Crm_backup extends AdminController
             $insert = $this->input->post();
             update_options($insert);
             set_alert('success', _l('settings_updated'));
-            redirect(admin_url('crm_backup/manage'));
+            redirect(admin_url('crm_backup/setting'));
         }
     
         $data['backup_created_at'] = get_option('backup_created_at');
         $data['backup_remove'] = get_option('backup_remove');
 
         $data['title'] = _l('crm_backup');
-        $this->load->view('index', $data);
+        $this->load->view('setting', $data);
     }
 
     /* Table  */
@@ -119,32 +119,30 @@ class Crm_backup extends AdminController
 
     public function custom_copy($src, $dst) {  
   
-    // open the source directory 
-    $dir = opendir($src);  
+        // open the source directory 
+        $dir = opendir($src);  
+      
+        // Make the destination directory if not exist 
+        @mkdir($dst);  
+      
+        // Loop through the files in source directory 
+        while( $file = readdir($dir) ) {  
   
-    // Make the destination directory if not exist 
-    @mkdir($dst);  
-  
-    // Loop through the files in source directory 
-    while( $file = readdir($dir) ) {  
-  
-        if (( $file != '.' ) && ( $file != '..' )) {  
-            if ( is_dir($src . '/' . $file) )  
-            {  
-  
-                // Recursively calling custom copy function 
-                // for sub directory  
-                $this->custom_copy($src . '/' . $file, $dst . '/' . $file);  
-  
-            }  
-            else {  
-                copy($src . '/' . $file, $dst . '/' . $file);  
+            if (( $file != '.' ) && ( $file != '..' )) {  
+                if( is_dir($src . '/' . $file) ){  
+      
+                    // Recursively calling custom copy function 
+                    // for sub directory  
+                    $this->custom_copy($src . '/' . $file, $dst . '/' . $file);  
+      
+                }  else {  
+                    copy($src . '/' . $file, $dst . '/' . $file);  
+                }  
             }  
         }  
-    }  
   
-    closedir($dir); 
-}
+        closedir($dir); 
+    }
 
     public function deleteDirectory($dir) {
         if (!file_exists($dir)) {

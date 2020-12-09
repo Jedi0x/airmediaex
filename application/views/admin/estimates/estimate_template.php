@@ -62,6 +62,31 @@
             </div>
          <?php } ?>
 
+         <?php 
+
+         $options = array('due_upon_receipt_of_invoice','net_15_days','net_30_days','installment','pre_paid','due_prior_to_releasing_the_shipment_and_or_services');
+
+         $selected_payment_terms = (isset($estimate) ? unserialize($estimate->payment_term_select) : array());
+
+
+         ?>
+         <div class="form-group mbot15 select-placeholder">
+            <label for="contacts" class="control-label"><?php echo _l('payment_terms'); ?></label>
+            <br />
+            <select class="selectpicker" id= "payment_terms" data-toggle="" name="payment_term_select[]" multiple="true" data-width="100%"  data-title="<?php echo _l('payment_terms'); ?>">
+              <?php 
+
+                foreach ($options as $k => $v) { ?>
+                  <option value = '<?=$k?>' <?php echo (in_array($k,$selected_payment_terms)) ? "selected" : "" ;?> ><?php echo _l($v); ?></option> <?php
+                }
+
+              ?>
+
+            </select>
+          </div>
+
+
+
        <!--  Bitsclan Solutions End Code  -->
 
             
@@ -380,6 +405,7 @@
             <?php $value = (isset($estimate) ? $estimate->clientnote : get_option('predefined_clientnote_estimate')); ?>
             <?php echo render_textarea('clientnote','estimate_add_edit_client_note',$value,array(),array(),'mtop15'); ?>
             
+            <?php /*
             <?php 
             $class_terms = "hide";
             if(isset($estimate)){
@@ -428,7 +454,7 @@
             <?php $value = (isset($estimate) ? $estimate->labour_terms : get_option('predefined_terms_estimete')); ?>
             <?php echo render_textarea('labour_terms','labour_terms',$value,array(),array(),'mtop15'); ?>
             </div>
-
+            */ ?>
             <div class="btn-bottom-toolbar text-right">
               <button type="button" class="btn-tr btn btn-info mleft10 estimate-form-submit save-and-send transaction-submit">
               <?php echo _l('save_and_send'); ?>

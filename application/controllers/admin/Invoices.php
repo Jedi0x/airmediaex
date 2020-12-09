@@ -314,6 +314,7 @@ class Invoices extends AdminController
 
             if(isset($invoice_data['shipping_active'])){
                 $invoice_data['shipping_active'] = $invoice_data['shipping_active'];
+                $invoice_data['shipping_terms'] = get_option('invoice_shipping_terms');
             }else{
                 $invoice_data['shipping_active'] = 0;
                 $invoice_data['shipping_terms'] = '';
@@ -321,6 +322,7 @@ class Invoices extends AdminController
 
             if(isset($invoice_data['payment_terms_active'])){
                 $invoice_data['payment_terms_active'] = $invoice_data['payment_terms_active'];
+                $invoice_data['payment_terms'] = get_option('invoice_payment_terms');
             }else{
                 $invoice_data['payment_terms_active'] = 0;
                 $invoice_data['payment_terms'] = '';
@@ -328,6 +330,7 @@ class Invoices extends AdminController
 
             if(isset($invoice_data['term_and_conditions_active'])){
                 $invoice_data['term_and_conditions_active'] = $invoice_data['term_and_conditions_active'];
+                $invoice_data['terms'] = get_option('invoice_terms');
             }else{
                 $invoice_data['term_and_conditions_active'] = 0;
                 $invoice_data['terms'] = '';
@@ -335,10 +338,12 @@ class Invoices extends AdminController
 
             if(isset($invoice_data['labour_terms_active'])){
                 $invoice_data['labour_terms_active'] = $invoice_data['labour_terms_active'];
+                $invoice_data['labour_terms'] = get_option('invoice_labour_terms');
             }else{
                 $invoice_data['labour_terms_active'] = 0;
                 $invoice_data['labour_terms'] = '';
             }
+
 
             unset($invoice_data['item_select_group'],$invoice_data['discount'],$invoice_data['group_order'],$invoice_data['discount_group_percent'],$invoice_data['discount_group_total'],$invoice_data['part_number']);
             // Bitsclan Solutions End Code Invoice module

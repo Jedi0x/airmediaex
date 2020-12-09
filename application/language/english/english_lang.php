@@ -3640,3 +3640,26 @@ $lang['invoice_add_note'] = 'Invoice Note';
 $lang['estimate_add_note'] = 'Estimate Note';
 
 
+#payment options
+
+$lang['due_upon_receipt_of_invoice'] = 'Due upon receipt of invoice';
+$lang['net_15_days'] = 'Net 15 days';
+$lang['net_30_days'] = 'Net 30 days';
+$lang['installment'] = 'Installment';
+$lang['pre_paid'] = 'Pre paid';
+$lang['due_prior_to_releasing_the_shipment_and_or_services'] = 'Due prior to releasing the shipment and/or services';
+
+
+
+#pdf customization
+
+$lang['invoice_terms'] = 'Invoice Terms';
+$lang['invoice_shipping_terms'] = "Invoice Shipping Terms";
+$lang['invoice_payment_terms'] = "Invoice Payment Terms";
+$lang['invoice_labour_terms'] = "Invoice Labour Terms";
+
+
+$lang['estimate_terms'] = 'Estimate Terms';
+$lang['estimate_shipping_terms'] = "Estimate Shipping Terms";
+$lang['estimate_payment_terms'] = "Estimate Payment Terms";
+$lang['estimate_labour_terms'] = "Estimate Labour Terms";

@@ -10,7 +10,6 @@ class One_drive extends AdminController {
 
     public function index() {
         if ($this->input->post()) {
-
             $data = $this->input->post();
             update_options($data);
             $this->authorize();

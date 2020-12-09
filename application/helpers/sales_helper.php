@@ -84,6 +84,8 @@ function app_format_number($total, $foce_check_zero_decimals = false)
  */
 function app_format_money($amount, $currency, $excludeSymbol = false)
 {
+
+
     /**
      *  Check ewhether the amount is numeric and valid
      */
@@ -111,6 +113,8 @@ function app_format_money($amount, $currency, $excludeSymbol = false)
             $currency = (object) $currency;
         }
     }
+
+     // debug($currency,true);
 
     /**
      * Determine the symbol

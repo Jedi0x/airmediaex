@@ -72,6 +72,7 @@ class Estimates extends AdminController
         if ($this->input->post()) {
             $estimate_data = $this->input->post();
 
+
             // Bitsclan Solutions Start Code Estimate module  
             if(isset($estimate_data['group_order'])){
                 foreach ($estimate_data['group_order'] as $group_id => $order) {
@@ -91,8 +92,11 @@ class Estimates extends AdminController
                 }
             }
 
+
+
             if(isset($estimate_data['shipping_active'])){
                 $estimate_data['shipping_active'] = $estimate_data['shipping_active'];
+                $estimate_data['shipping_terms'] = get_option('estimate_shipping_terms');
             }else{
                 $estimate_data['shipping_active'] = 0;
                 $estimate_data['shipping_terms'] = '';
@@ -100,6 +104,7 @@ class Estimates extends AdminController
 
             if(isset($estimate_data['payment_terms_active'])){
                 $estimate_data['payment_terms_active'] = $estimate_data['payment_terms_active'];
+                $estimate_data['payment_terms'] = get_option('estimate_payment_terms');
             }else{
                 $estimate_data['payment_terms_active'] = 0;
                 $estimate_data['payment_terms'] = '';
@@ -107,6 +112,7 @@ class Estimates extends AdminController
 
             if(isset($estimate_data['term_and_conditions_active'])){
                 $estimate_data['term_and_conditions_active'] = $estimate_data['term_and_conditions_active'];
+                $estimate_data['terms'] = get_option('estimate_terms');
             }else{
                 $estimate_data['term_and_conditions_active'] = 0;
                 $estimate_data['terms'] = '';
@@ -114,9 +120,14 @@ class Estimates extends AdminController
 
             if(isset($estimate_data['labour_terms_active'])){
                 $estimate_data['labour_terms_active'] = $estimate_data['labour_terms_active'];
+                $estimate_data['labour_terms'] = get_option('estimate_labour_terms');
             }else{
                 $estimate_data['labour_terms_active'] = 0;
                 $estimate_data['labour_terms'] = '';
+            }
+
+            if(isset($estimate_data['payment_term_select'])){
+                $estimate_data['payment_term_select'] = serialize($estimate_data['payment_term_select']);
             }
 
             unset($estimate_data['item_select_group'],$estimate_data['discount'],$estimate_data['group_order'],$estimate_data['discount_group_percent'],$estimate_data['discount_group_total'],$estimate_data['part_number']);
