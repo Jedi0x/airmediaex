@@ -73,7 +73,7 @@
          <div class="form-group mbot15 select-placeholder">
             <label for="contacts" class="control-label"><?php echo _l('payment_terms'); ?></label>
             <br />
-            <select class="selectpicker" id= "payment_terms" data-toggle="" name="payment_term_select[]" multiple="true" data-width="100%"  data-title="<?php echo _l('payment_terms'); ?>">
+            <select class="selectpicker ajax-search" data-live-search="true" data-width="100%" id= "payment_terms" data-toggle="" name="payment_term_select[]" multiple="true" data-width="100%"  data-title="<?php echo _l('payment_terms'); ?>">
               <?php 
 
                 foreach ($options as $k => $v) { ?>
@@ -84,6 +84,9 @@
 
             </select>
           </div>
+
+
+          
 
 
 

@@ -264,6 +264,8 @@ class Invoice_items extends AdminController
              $this->load->model('taxes_model');
             $data['taxes'] = $this->taxes_model->get();
             $data['items'] = $this->invoice_items_model->items_group_by_id($id);
+            $data['all_items'] = $this->invoice_items_model->get_all_items();
+
             $data['group'] = $this->invoice_items_model->get_item_group($id);
             $data['template'] = $this->load->view('admin/invoices/group_items', $data,true);
             echo json_encode($data);

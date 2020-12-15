@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <table class="table invoice-items-table items table-item-group<?php echo $group->id; ?> table-main-invoice-edit has-calculations no-mtop item-group-<?php echo $group->id ?> group_items-drag" data-group-id = <?=$group->id?>>
   <thead>
     <tr>
@@ -32,6 +33,23 @@
       </tr>
     </thead>
     <tbody class="item<?php echo $group->id ?> ui-sortable connectedSortable">
+       <!-- Junaid Code here -->
+      <tr>
+        <td colspan="10">
+          <div class="form-group items-wrapper select-placeholder input-group-select">
+            <div class="input-group input-group-select" style="width: 100%;">
+              <div class="items-select-wrapper">
+                <select class="selectpicker no-margin ajax-search item-select item-select<?=$group->id?>" onchange="add_item_to_group(<?=$group->id?>);" data-width="100%" data-none-selected-text="<?php echo _l('add_item'); ?>" data-live-search="true">
+                  <option value=""></option>
+                  <?php foreach($all_items as $group_id=>$_items){ ?>
+                  <option value="<?php echo $_items['itemid']; ?>" data-subtext="<?php echo strip_tags(mb_substr($_items['long_description'],0,200)).'...'; ?>">(<?php echo app_format_number($_items['rate']); ; ?>) <?php echo $_items['description']; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
       <tr class="main">
         <td></td>
         <td>
@@ -207,15 +225,18 @@
                     $sub_total+=$item['rate'] * $item['qty'];
                } ?>
 
-              <tr style="border-bottom: solid 1px #f1f5f7;"> 
+              
+              <div class="clearfix"></div>
+           
+           </tbody>
+           <tfoot>
+             <tr style="border-bottom: solid 1px #f1f5f7;"> 
                 <td colspan="7" align="right" style="padding: 10px 0px;"><span class="bold"><?php echo _l('invoice_subtotal'); ?> :</span></td>
                 <td colspan="3" align="right" class="sub_total_group total<?php echo $group->id ?>" data-amount = "<?php echo $sub_total; ?>" style="padding: 10px 0px;">
                   <?php echo "$".app_format_number($sub_total); ?>
                 </td>
               </tr>
-              <div class="clearfix"></div>
-           
-           </tbody>
+           </tfoot>
        </table>
 
     

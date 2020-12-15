@@ -15,20 +15,7 @@ class App_tabs
         $this->ci = &get_instance();
     }
 
-    // Bitsclan Solutions Start Code 
-    public function add_opportunity_profile_tab($slug, $tab)
-    {
-        $this->add($slug, $tab, 'opportunity_profile');
 
-        return $this;
-    }
-   
-    public function get_opportunity_profile_tabs()
-    {
-        return $this->get('opportunity_profile');
-    }
-
-    // Bitsclan Solutions End Code
 
     public function add_customer_profile_tab($slug, $tab)
     {

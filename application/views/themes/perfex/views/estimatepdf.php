@@ -176,6 +176,42 @@ $pdf->writeHTML($tblhtml, false, false, false, false, '');
 
 $pdf->Ln(8);
 
+$add_items       = $estimate->items;
+  $total_amount_cal = 0;
+  $sub_total = 0;
+  $groups = array();
+  $group_items = array();
+  $discounted_price = 0;
+  foreach ($add_items as $item) {
+    if(!in_array($item['group_id'], $groups)){
+      array_push($groups, $item['group_id']);
+    }
+  }
+
+  foreach ($add_items as $item) {
+    if(in_array($item['group_id'], $groups)){
+      $group_id = $item['group_id'];
+      $group_items[$group_id][] = array($item);
+    } 
+  } 
+
+  foreach ($group_items as $group => $group_items_arr) {
+    $_group = item_group($group);
+    foreach ($group_items_arr  as $k => $item) { 
+      $total_amount_cal+=$item[0]['rate']*$item[0]['qty'];
+      $amount = $item[0]['rate'] * $item[0]['qty'];
+      if($item[0]['discount_type'] == 'percentage'){
+        $percentage = $item[0]['discount'];
+        $discounted_value = ($percentage / 100) * $amount;
+      }else{
+        $discounted_value = $item[0]['discount'];
+      }
+      $discounted_price+=$discounted_value;
+      $sub_total+=($amount - $discounted_value);
+    }
+  }
+
+
 $subtotal_Session = '';
 $subtotal_Session .='<table style="background-color:#ececec;" cellpadding="10px">
     <tbody>
@@ -183,11 +219,13 @@ $subtotal_Session .='<table style="background-color:#ececec;" cellpadding="10px"
             <td>Currency:</td>
             <td>USD</td>
             <td>Subtotal:</td>
-            <td align="right">' . app_format_money($estimate->subtotal, $estimate->currency_name) . '</td>
+            <td align="right">' . app_format_money($total_amount_cal, $estimate->currency_name) . '</td>
         </tr>
         <tr>
             <td>Discount Type:</td>
-            <td colspan="3">Rental Partner @10%</td>
+            <td >Rental Partner @10%</td>
+            <td><p style="color:red;">Discount:</p><p>Discounted Subtotal:</p></td>
+            <td align="right"><p style="color:red;">' . app_format_money($discounted_price, $estimate->currency_name) . '</p><p>' . app_format_money($sub_total, $estimate->currency_name) . '</p></td>
         </tr>';
 
         foreach ($items->taxes() as $tax) {
@@ -211,7 +249,7 @@ $subtotal_Session .='<table style="background-color:#ececec;" cellpadding="10px"
         <tr>
             <td colspan="2"><i>Wire Transfer, Credit Card, Cheque</i></td>
             <td >Total:</td>
-            <td align="right">' . app_format_money($estimate->total, $estimate->currency_name) . '</td>
+            <td align="right">' . app_format_money($sub_total+$estimate->shipping, $estimate->currency_name) . '</td>
         </tr>
     </tbody>
 </table>';
@@ -230,7 +268,7 @@ $total_due .='<table style="background-color:#bdebfe; color:black;padding-left:1
             <tbody>
                 <tr>
                     <td valign="middle"><h2>TOTAL DUE</h2></td>
-                    <td align="right" valign="middle">' . app_format_money($estimate->total, $estimate->currency_name) . '</td>
+                    <td align="right" valign="middle">' . app_format_money($sub_total+$estimate->shipping, $estimate->currency_name) . '</td>
                 </tr>
             </tbody></table>
             </td>
@@ -245,20 +283,24 @@ $pdf->writeHTML($total_due, false, false, false, false, '');
 $pdf->Ln(hooks()->apply_filters('pdf_info_and_table_separator', 6));
 
 $payment_terms = '';
+$payment_terms .='<h2 style="color:#17aaf9;">PAYMENT TERMS</h2>';
+$payment_terms .='<table style="background-color:#ececec;margin-top:0px;"><tbody>';
 
-$payment_terms .='<h2>PAYMENT TERMS</h2>';
-$payment_terms .='<table style="background-color:#ececec;margin-top:0px;">
-    <tbody>
+$selected_payment_terms = (!empty($estimate->payment_term_select) ? unserialize($estimate->payment_term_select) : array());
+$options = array('due_upon_receipt_of_invoice','net_15_days','net_30_days','installment','pre_paid','due_prior_to_releasing_the_shipment_and_or_services');
+$count =  sizeof($selected_payment_terms);
+$installment = 1;
+foreach ($options as $k => $v) { 
+    if(in_array($k,$selected_payment_terms)){
+        $payment_terms .='
         <tr>
-            <td>Installment 1 - 50% Upon receipt of invoice</td>
-            <td align="right">' . app_format_money($estimate->total/2, $estimate->currency_name) . '</td>
-        </tr>
-        <tr>
-            <td>Installment 2 - 50 % Due prior to releasing the shipment</td>
-            <td align="right">' . app_format_money($estimate->total/2, $estimate->currency_name) . '</td>
-        </tr>
-    </tbody>
-</table>';
+            <td>Installment '.$installment .'  '. _l($options[$k]).'</td>
+            <td align="right"> ' .app_format_money($sub_total/$count, $estimate->currency_name). '</td>
+        </tr>';
+        $installment++;
+    }
+}
+$payment_terms .='</tbody></table>';
 $pdf->writeHTML($payment_terms, false, false, false, false, '');
 
 

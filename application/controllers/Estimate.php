@@ -50,6 +50,8 @@ class Estimate extends ClientsController
         }
         // Handle Estimate PDF generator
         if ($this->input->post('estimatepdf')) {
+
+            
             try {
                 $pdf = estimate_pdf($estimate);
             } catch (Exception $e) {

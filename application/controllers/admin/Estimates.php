@@ -218,6 +218,8 @@ class Estimates extends AdminController
         $data['estimate_statuses'] = $this->estimates_model->get_statuses();
         $data['title']             = $title;
 
+        $data['all_items'] = $this->invoice_items_model->get_all_items();
+
         $this->load->view('admin/estimates/estimate', $data);
     }
 
@@ -562,6 +564,7 @@ class Estimates extends AdminController
         $estimate_number = format_estimate_number($estimate->id);
 
         try {
+        
             $pdf = estimate_pdf($estimate);
         } catch (Exception $e) {
             $message = $e->getMessage();

@@ -30,7 +30,7 @@
       <table class="table invoice-items-table items table-item-group<?php echo $_group->id; ?> table-main-invoice-edit has-calculations no-mtop item-group-<?php echo $_group->id ?> item-group"  data-group-id = "<?php echo $_group->id; ?>">
       <thead>
         <tr>
-          <th colspan="9"  class="dragger ui-sortable-handle">
+          <th colspan="10"  class="dragger ui-sortable-handle">
             <h4 class="group-custom-head-class"><?php echo $_group->name ?>
               <button type="button" onclick="delete_item_group(<?php echo $_group->id ?>); return false;" class="btn pull-right btn-danger"><i class="fa fa-times"></i></button>
             </h4>
@@ -53,8 +53,9 @@
                 } else if(isset($invoice) && $invoice->show_quantity_as == 3){
                   $qty_heading = _l('invoice_table_quantity_heading') .'/'._l('invoice_table_hours_heading');
                 } ?>
+                <th width="10%"><?php echo _l('part_number'); ?></th>
                 <th width="10%" align="right" class="qty"><?php echo $qty_heading; ?></th>
-                <th width="15%" align="right"><?php echo _l('invoice_table_rate_heading'); ?></th>
+                <th width="10%" align="right"><?php echo _l('invoice_table_rate_heading'); ?></th>
                 <th width="10%" align="right"><?php echo _l('invoice_table_tax_heading'); ?></th>
                 <th width="30%" align="right"><?php echo _l('invoice_discount'); ?></th>
                 <th width="10%" align="right"><?php echo _l('invoice_table_amount_heading'); ?></th>
@@ -62,13 +63,34 @@
               </tr>
               </thead>
                 <tbody class="item<?php echo $_group->id ?> connectedSortable">
-                  <tr class="main">
+                  <!-- Junaid Code here -->
+                  <tr>
+                    <td colspan="10">
+                      <div class="form-group items-wrapper select-placeholder input-group-select">
+                        <div class="input-group input-group-select" style="width: 100%;">
+                          <div class="items-select-wrapper">
+                            <select class="selectpicker no-margin ajax-search item-select item-select<?=$_group->id?>" onchange="add_item_to_group(<?=$_group->id?>);" data-width="100%" data-none-selected-text="<?php echo _l('add_item'); ?>" data-live-search="true">
+                              <option value=""></option>
+                              <?php foreach($all_items as $group_id=>$_items){ ?>
+                                <option value="<?php echo $_items['itemid']; ?>" data-subtext="<?php echo strip_tags(mb_substr($_items['long_description'],0,200)).'...'; ?>">(<?php echo app_format_number($_items['rate']); ; ?>) <?php echo $_items['description']; ?></option>
+                              <?php } ?>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- <tr class="main">
                     <td></td>
                     <td>
                       <textarea name="description" class="form-control" rows="4" placeholder="<?php echo _l('item_description_placeholder'); ?>"></textarea>
                     </td>
                     <td>
                       <textarea name="long_description" rows="4" class="form-control" placeholder="<?php echo _l('item_long_description_placeholder'); ?>"></textarea>
+                    </td>
+                    <td>
+                      <input type="text" placeholder="<?php echo _l('part_number'); ?>" name="part_number" class="form-control">
                     </td>
                     <?php echo render_custom_fields_items_table_add_edit_preview(); ?>
                     <td>
@@ -132,7 +154,7 @@
                       } ?>
                       <button type="button" onclick="add_group_item_to_table('undefined','undefined','undefined','',<?php echo $_group->id; ?>); return false;" class="btn pull-right btn-info"><i class="fa fa-check"></i></button>
                     </td>
-                  </tr>
+                  </tr> -->
                   <?php 
                   $i               = rand();
                   $order = 1;
@@ -183,6 +205,10 @@
                     $table_row .= '</td>';
                     $table_row .= '<td class="bold description"><textarea name="' . $items_indicator . '[' . $i . '][description]" class="form-control" rows="5">' . clear_textarea_breaks($item[0]['description']) . '</textarea></td>';
                     $table_row .= '<td><textarea name="' . $items_indicator . '[' . $i . '][long_description]" class="form-control" rows="5">' . clear_textarea_breaks($item[0]['long_description']) . '</textarea></td>';
+
+                     $table_row .= '<td>
+                    <input type="text" name="' . $items_indicator . '[' . $i . '][part_number]" class="form-control" value="'.$item[0]['part_number'].'">
+                    </td>';
 
                     $table_row .= render_custom_fields_items_table_in($item[0],$items_indicator.'['.$i.']');
 
@@ -257,15 +283,18 @@
                     $total_amount+=$sub_total;
                      ?>
 
+                    
+                    <div class="clearfix"></div>
+                     
+                  </tbody>
+                  <tfoot>
                     <tr style="border-bottom: solid 1px #f1f5f7;"> 
                       <td colspan="7" align="right" style="padding: 10px 0px;"><span class="bold"><?php echo _l('invoice_subtotal'); ?> :</span></td>
                       <td colspan="3" align="right" class="sub_total_group total<?php echo $_group->id ?>" data-amount = "<?php echo $sub_total; ?>" style="padding: 10px 0px;">
                         <?php echo "$".app_format_number($sub_total); ?>
                       </td>
                     </tr>
-                    <div class="clearfix"></div>
-                     
-                  </tbody>
+                  </tfoot>
                 </table>
  
 

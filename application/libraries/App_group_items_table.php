@@ -193,7 +193,8 @@ class App_group_items_table extends App_group_items_table_template
 
                             $html .= $itemHTML;
 
-                            $subtotal+=$item[0]['rate'] * $item[0]['qty'];
+                            //$subtotal+=$item[0]['rate'] * $item[0]['qty'];
+                            $subtotal+=($amount - $discounted_value);
 
                             $i++;
                         }
@@ -364,7 +365,8 @@ class App_group_items_table extends App_group_items_table_template
 
                     $html .= $itemHTML;
 
-                    $subtotal+=$item[0]['rate'] * $item[0]['qty'];
+                    //$subtotal+=$item[0]['rate'] * $item[0]['qty'];
+                    $subtotal+=($amount - $discounted_value);
 
                     $i++;
                 }

@@ -431,6 +431,8 @@ class Invoices extends AdminController
         $data['title']     = $title;
         $data['bodyclass'] = 'invoice';
 
+        $data['all_items'] = $this->invoice_items_model->get_all_items();
+
         // debug($data,true);
         $this->load->view('admin/invoices/invoice', $data);
     }
