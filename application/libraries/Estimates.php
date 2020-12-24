@@ -128,8 +128,6 @@ class Estimates extends AdminController
 
             if(isset($estimate_data['payment_term_select'])){
                 $estimate_data['payment_term_select'] = serialize($estimate_data['payment_term_select']);
-            }else{
-                $estimate_data['payment_term_select'] = serialize(array());
             }
 
             unset($estimate_data['item_select_group'],$estimate_data['discount'],$estimate_data['group_order'],$estimate_data['discount_group_percent'],$estimate_data['discount_group_total'],$estimate_data['part_number']);

@@ -1,0 +1,16 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+
+ERROR - 2020-12-22 11:38:58 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-22 11:38:58 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-22 11:39:26 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-22 11:39:26 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-22 11:39:28 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-22 11:39:28 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-22 11:41:33 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-22 11:41:33 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-22 11:41:35 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-22 11:41:35 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-22 11:41:48 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-22 11:41:48 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-22 11:43:07 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-22 11:43:07 --> Could not find the language line "notify_send_create_password"

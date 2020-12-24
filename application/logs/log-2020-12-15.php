@@ -253,3 +253,39 @@ ERROR - 2020-12-15 09:36:28 --> Could not find the language line "notify_send_cr
 ERROR - 2020-12-15 09:36:28 --> Could not find the language line "notify_send_create_password"
 ERROR - 2020-12-15 09:36:34 --> Could not find the language line "notify_send_create_password"
 ERROR - 2020-12-15 09:36:34 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-15 10:25:25 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-15 10:25:25 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-15 10:25:29 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-15 10:25:29 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-15 10:26:23 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-15 10:26:23 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-15 10:26:26 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-15 10:26:26 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-15 10:26:27 --> Severity: Warning --> in_array() expects parameter 2 to be array, boolean given D:\wamp64\www\airmediaex\application\views\admin\estimates\estimate_template.php 80
+ERROR - 2020-12-15 10:26:27 --> Severity: Warning --> in_array() expects parameter 2 to be array, boolean given D:\wamp64\www\airmediaex\application\views\admin\estimates\estimate_template.php 80
+ERROR - 2020-12-15 10:26:27 --> Severity: Warning --> in_array() expects parameter 2 to be array, boolean given D:\wamp64\www\airmediaex\application\views\admin\estimates\estimate_template.php 80
+ERROR - 2020-12-15 10:26:27 --> Severity: Warning --> in_array() expects parameter 2 to be array, boolean given D:\wamp64\www\airmediaex\application\views\admin\estimates\estimate_template.php 80
+ERROR - 2020-12-15 10:26:27 --> Severity: Warning --> in_array() expects parameter 2 to be array, boolean given D:\wamp64\www\airmediaex\application\views\admin\estimates\estimate_template.php 80
+ERROR - 2020-12-15 10:26:27 --> Severity: Warning --> in_array() expects parameter 2 to be array, boolean given D:\wamp64\www\airmediaex\application\views\admin\estimates\estimate_template.php 80
+ERROR - 2020-12-15 10:26:33 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-15 10:26:33 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-15 10:26:40 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-15 10:26:40 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-15 10:26:40 --> Severity: Warning --> in_array() expects parameter 2 to be array, boolean given D:\wamp64\www\airmediaex\application\views\admin\estimates\estimate_template.php 80
+ERROR - 2020-12-15 10:26:40 --> Severity: Warning --> in_array() expects parameter 2 to be array, boolean given D:\wamp64\www\airmediaex\application\views\admin\estimates\estimate_template.php 80
+ERROR - 2020-12-15 10:26:40 --> Severity: Warning --> in_array() expects parameter 2 to be array, boolean given D:\wamp64\www\airmediaex\application\views\admin\estimates\estimate_template.php 80
+ERROR - 2020-12-15 10:26:40 --> Severity: Warning --> in_array() expects parameter 2 to be array, boolean given D:\wamp64\www\airmediaex\application\views\admin\estimates\estimate_template.php 80
+ERROR - 2020-12-15 10:26:40 --> Severity: Warning --> in_array() expects parameter 2 to be array, boolean given D:\wamp64\www\airmediaex\application\views\admin\estimates\estimate_template.php 80
+ERROR - 2020-12-15 10:26:40 --> Severity: Warning --> in_array() expects parameter 2 to be array, boolean given D:\wamp64\www\airmediaex\application\views\admin\estimates\estimate_template.php 80
+ERROR - 2020-12-15 10:26:44 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-15 10:26:44 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-15 10:26:46 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-15 10:26:46 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-15 10:26:56 --> Severity: Notice --> Undefined property: Opportunities::$Opportunity_model D:\wamp64\www\airmediaex\modules\opportunities\controllers\Opportunities.php 268
+ERROR - 2020-12-15 10:26:56 --> Severity: error --> Exception: Call to a member function get() on null D:\wamp64\www\airmediaex\modules\opportunities\controllers\Opportunities.php 268
+ERROR - 2020-12-15 10:27:18 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-15 10:27:18 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-15 10:29:47 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-15 10:29:47 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-15 10:29:52 --> Could not find the language line "notify_send_create_password"
+ERROR - 2020-12-15 10:29:52 --> Could not find the language line "notify_send_create_password"
