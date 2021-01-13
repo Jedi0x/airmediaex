@@ -89,7 +89,12 @@ $vat = $invoice->client->vat;
 $street = trim(preg_replace("/<br\W*?\/>/", "\n", $street));
 
 $companyName = $companyName;
-  
+// Arslan code here
+  $project_name='';
+   if(isset($invoice->project_data))
+          {
+            $project_name = $invoice->project_data->name;
+          }
 
 $billing_info .= '<table width="100%" style="padding-top:20px;"  cellspacing="10px">
     <tbody>
@@ -132,7 +137,7 @@ $billing_info .= '<table width="100%" style="padding-top:20px;"  cellspacing="10
                 
             </td>
             <td  align="right" width="40%">
-                <span style="color:#00aeef;text-transform:uppercase;">PROJECT NAME:</span> BlackTrax Average<br>
+                <span style="color:#00aeef;text-transform:uppercase;">PROJECT NAME:</span>' .$project_name.'<br>
                 <span>System Size [SAMPLE]</span><br>
                 <span>Invoice No.: # ' . $invoice_number . '</span><br>
                 <span>Invoice Date.: ' . $invoice->date. '</span><br>

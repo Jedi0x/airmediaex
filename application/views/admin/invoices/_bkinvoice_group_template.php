@@ -222,7 +222,7 @@
                         <div class="input-group-addon">
                           <div class="dropdown">
                             <a class="dropdown-toggle" href="#" id="dropdown_menu_tax_total_type_1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                              <span class="discount-group-total-type-selected">'.($item[0]['discount_type'] == "fix amount" ? 'Fixed Amount' : '%' ).'</span>
+                              <span class="discount-group-total-type-selected">'.($item[0]['discount_type'] == "fix amount" ? '$' : '%' ).'</span>
                               <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu discount-group-total-type-dropdown" id="discount-group-total-type-dropdown'.$item[0]['id'].'" aria-labelledby="dropdown_menu_tax_total_type">

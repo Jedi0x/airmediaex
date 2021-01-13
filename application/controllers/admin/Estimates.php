@@ -72,7 +72,6 @@ class Estimates extends AdminController
         if ($this->input->post()) {
             $estimate_data = $this->input->post();
 
-
             // Bitsclan Solutions Start Code Estimate module  
             if(isset($estimate_data['group_order'])){
                 foreach ($estimate_data['group_order'] as $group_id => $order) {
@@ -132,6 +131,15 @@ class Estimates extends AdminController
                 $estimate_data['payment_term_select'] = serialize(array());
             }
 
+                  // Arslan code here
+            if(isset($estimate_data['sale_agent']) && empty($id)){
+                $estimate_data['sale_agent'] = serialize($estimate_data['sale_agent']);
+            }else if(isset($estimate_data['sale_agent']) && !empty($id)){
+                $estimate_data['sale_agent'] = serialize($estimate_data['sale_agent']);
+            }else{
+                $estimate_data['sale_agent'] = serialize(array());
+            }
+
             unset($estimate_data['item_select_group'],$estimate_data['discount'],$estimate_data['group_order'],$estimate_data['discount_group_percent'],$estimate_data['discount_group_total'],$estimate_data['part_number']);
             // Bitsclan Solutions End Code Estimate module
 
@@ -157,6 +165,7 @@ class Estimates extends AdminController
                     access_denied('estimates');
                 }
 
+              
                 $success = $this->estimates_model->update($estimate_data, $id);
                 if ($success) {
                     set_alert('success', _l('updated_successfully', _l('estimate')));
@@ -564,6 +573,8 @@ class Estimates extends AdminController
         }
         $estimate        = $this->estimates_model->get($id);
         $estimate_number = format_estimate_number($estimate->id);
+
+        //debug($estimate->project_data->name,true);
 
         try {
         

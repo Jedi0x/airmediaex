@@ -87,9 +87,13 @@ $vat = $estimate->client->vat;
 
 
 $street = trim(preg_replace("/<br\W*?\/>/", "\n", $street));
-
+// Arslam code here
 $companyName = $companyName;
-  
+ $project_name='';
+   if(isset($estimate->project_data))
+          {
+            $project_name = $estimate->project_data->name;
+          }
 
 $billing_info .= '<table width="100%" style="padding-top:20px;"  cellspacing="10px">
     <tbody>
@@ -132,7 +136,7 @@ $billing_info .= '<table width="100%" style="padding-top:20px;"  cellspacing="10
                 
             </td>
             <td  align="right" width="40%">
-                <span style="color:#00aeef;text-transform:uppercase;">PROJECT NAME:</span> BlackTrax Average<br>
+                <span style="color:#00aeef;text-transform:uppercase;">PROJECT NAME:</span> ' .$project_name.' Average<br>  
                 <span>System Size [SAMPLE]</span><br>
                 <span>Quote No.: # ' . $estimate_number . '</span><br>
                 <span>Created By: '. get_staff_full_name($estimate->addedfrom).'</span><br>
