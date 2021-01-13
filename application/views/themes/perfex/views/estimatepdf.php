@@ -181,7 +181,39 @@ $add_items       = $estimate->items;
   $sub_total = 0;
   $groups = array();
   $group_items = array();
-  $discounted_price = 0;
+
+
+
+  $new_added_discount = 0;
+$discount_name = '';
+
+
+if($estimate->discount_added == 1){
+    $discount_name = 'Tech Partner/Studio 5%';
+    $new_added_discount = (5 / 100) * $estimate->subtotal;
+}else if($estimate->discount_added == 2){
+    $discount_name = 'Rental Partner 10%';
+     $new_added_discount = (10 / 100) * $estimate->subtotal;
+}
+else if($estimate->discount_added == 3){
+    $discount_name = 'Dealer 25%';
+     $new_added_discount = (25 / 100) * $estimate->subtotal;
+}
+else if($estimate->discount_added == 4){
+    $discount_name = 'Education 25%';
+     $new_added_discount = (25 / 100) * $estimate->subtotal;
+}
+else if($estimate->discount_added == 5){
+    $discount_name = 'Distributer 30%';
+     $new_added_discount = (30 / 100) * $estimate->subtotal;
+}
+else if($estimate->discount_added == 6){
+    $discount_name = 'Demo 40%';
+    $new_added_discount = (40 / 100) * $estimate->subtotal;
+}
+
+
+
   foreach ($add_items as $item) {
     if(!in_array($item['group_id'], $groups)){
       array_push($groups, $item['group_id']);
@@ -206,10 +238,12 @@ $add_items       = $estimate->items;
       }else{
         $discounted_value = $item[0]['discount'];
       }
-      $discounted_price+=$discounted_value;
+      $new_added_discount+=$discounted_value;
       $sub_total+=($amount - $discounted_value);
     }
+
   }
+
 
 
 $subtotal_Session = '';
@@ -223,9 +257,9 @@ $subtotal_Session .='<table style="background-color:#ececec;" cellpadding="10px"
         </tr>
         <tr>
             <td>Discount Type:</td>
-            <td >Rental Partner @10%</td>
+            <td >'.$discount_name.'</td>
             <td><p style="color:red;">Discount:</p><p>Discounted Subtotal:</p></td>
-            <td align="right"><p style="color:red;">' . app_format_money($discounted_price, $estimate->currency_name) . '</p><p>' . app_format_money($sub_total, $estimate->currency_name) . '</p></td>
+            <td align="right"><p style="color:red;">' . app_format_money($new_added_discount, $estimate->currency_name) . '</p><p>' . app_format_money($sub_total-$new_added_discount, $estimate->currency_name) . '</p></td>
         </tr>';
 
         foreach ($items->taxes() as $tax) {
@@ -249,7 +283,7 @@ $subtotal_Session .='<table style="background-color:#ececec;" cellpadding="10px"
         <tr>
             <td colspan="2"><i>Wire Transfer, Credit Card, Cheque</i></td>
             <td >Total:</td>
-            <td align="right">' . app_format_money($sub_total+$estimate->shipping, $estimate->currency_name) . '</td>
+            <td align="right">' . app_format_money($sub_total-$new_added_discount+$estimate->shipping, $estimate->currency_name) . '</td>
         </tr>
     </tbody>
 </table>';
@@ -268,7 +302,7 @@ $total_due .='<table style="background-color:#bdebfe; color:black;padding-left:1
             <tbody>
                 <tr>
                     <td valign="middle"><h2>TOTAL DUE</h2></td>
-                    <td align="right" valign="middle">' . app_format_money($sub_total+$estimate->shipping, $estimate->currency_name) . '</td>
+                    <td align="right" valign="middle">' . app_format_money($sub_total-$new_added_discount+$estimate->shipping, $estimate->currency_name) . '</td>
                 </tr>
             </tbody></table>
             </td>

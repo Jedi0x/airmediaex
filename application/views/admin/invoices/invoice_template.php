@@ -511,6 +511,7 @@
       <div class="col-md-8 col-md-offset-4">
          <table class="table text-right">
             <tbody>
+              
                <tr id="subtotal">
                   <td><span class="bold"><?php echo _l('invoice_subtotal'); ?> :</span>
                   </td>
@@ -518,6 +519,44 @@
                     <?php echo "$".app_format_number($sub_total); ?>
                   </td>
                </tr>
+
+               <!-- new code here -->
+               <tr>
+                <td>
+                  <div class="row">
+                    <div class="col-md-7"><span class="bold"><?php echo _l('discount_added'); ?></span></div>
+                    <div class="col-md-5">
+                      <?php
+                      $selected = '';
+                      if (isset($invoice)) {
+                        $selected       = $invoice->discount_added;
+                      }
+
+                      $discount_options = array();
+                      $discount_options[] = array('id' => 1, 'name' => 'Tech Partner/Studio 5%');
+                      $discount_options[] = array('id' => 2, 'name' => 'Rental Partner 10%');
+                      $discount_options[] = array('id' => 3, 'name' => 'Dealer 25%');
+                      $discount_options[] = array('id' => 4, 'name' => 'Education 25%');
+                      $discount_options[] = array('id' => 5, 'name' => 'Distributer 30%');
+                      $discount_options[] = array('id' => 6, 'name' => 'Demo 40%');
+                      ?>
+                      <select class="selectpicker" data-live-search="true" id= "discount_added"  data-toggle="" name="discount_added" data-width="100%"  data-title="<?php echo _l('discount_added'); ?>">
+                        <?php 
+
+                        foreach ($discount_options as $key => $value) { ?>
+                         <option value= '<?=$value["id"]?>' <?php if($selected == $value["id"]){ echo "selected"; } ?>> <?=$value["name"]?> </option>  
+                       <?php }
+                       ?>
+                       
+                     </select>
+                   </div>
+                 </div>
+               </td>
+               <td class="new-discount-total"> -<?php echo "$".app_format_number(0); ?></td>
+             </tr>
+
+             <!--  new code end here -->
+
                <tr id="discount_area">
                   <td>
                      <div class="row">

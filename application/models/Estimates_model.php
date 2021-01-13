@@ -237,7 +237,8 @@ class Estimates_model extends App_Model
         $new_invoice_data['shipping_terms']         = $_estimate->shipping_terms;
         $new_invoice_data['payment_terms']         = $_estimate->payment_terms;
         $new_invoice_data['labour_terms']         = $_estimate->labour_terms;
-      
+        // new code here
+        $new_invoice_data['discount_added']         = $_estimate->discount_added;
         
         if ($_estimate->include_shipping == 1) {
             $new_invoice_data['include_shipping'] = 1;

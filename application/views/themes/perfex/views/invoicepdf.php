@@ -177,6 +177,59 @@ $pdf->writeHTML($tblhtml, false, false, false, false, '');
 
 $pdf->Ln(8);
 
+$new_added_discount = 0;
+$discount_name = '';
+
+
+if($invoice->discount_added == 1){
+    $discount_name = 'Tech Partner/Studio 5%';
+    $new_added_discount = (5 / 100) * $invoice->subtotal;
+}else if($invoice->discount_added == 2){
+    $discount_name = 'Rental Partner 10%';
+     $new_added_discount = (10 / 100) * $invoice->subtotal;
+}
+else if($invoice->discount_added == 3){
+    $discount_name = 'Dealer 25%';
+     $new_added_discount = (25 / 100) * $invoice->subtotal;
+}
+else if($invoice->discount_added == 4){
+    $discount_name = 'Education 25%';
+     $new_added_discount = (25 / 100) * $invoice->subtotal;
+}
+else if($invoice->discount_added == 5){
+    $discount_name = 'Distributer 30%';
+     $new_added_discount = (30 / 100) * $invoice->subtotal;
+}
+else if($invoice->discount_added == 6){
+    $discount_name = 'Demo 40%';
+     $new_added_discount = (40 / 100) * $invoice->subtotal;
+}
+
+
+
+foreach ($invoice->items as $k => $v) {
+    $amount = $v['rate'] * $v['qty'];
+    if($v['discount_type'] == 'percentage'){
+    $percentage = $v['discount'];
+    $discounted_value = ($percentage / 100) * $amount;
+    }else{
+        $discounted_value = $v['discount'];
+    }
+    $new_added_discount+=$discounted_value;
+            // $sub_total+=($amount - $discounted_value);
+            // $amount = app_format_number($amount - $discounted_value);
+}
+
+
+
+
+$invoice->total = $invoice->total - $new_added_discount;
+
+
+
+
+
+
 $subtotal_Session = '';
 $subtotal_Session .='<table style="background-color:#ececec;" cellpadding="10px">
     <tbody>
@@ -188,9 +241,9 @@ $subtotal_Session .='<table style="background-color:#ececec;" cellpadding="10px"
         </tr>
         <tr>
             <td>Discount Type:</td>
-            <td >Rental Partner @10%</td>
+            <td >'.$discount_name.'</td>
             <td><p style="color:red;">Discount:</p><p>Discounted Subtotal:</p></td>
-            <td align="right"><p style="color:red;">' . app_format_money(123, $invoice->currency_name) . '</p><p>' . app_format_money(123, $invoice->currency_name) . '</p></td>
+            <td align="right"><p style="color:red;">' . app_format_money($new_added_discount, $invoice->currency_name) . '</p><p>' . app_format_money($new_added_discount, $invoice->currency_name) . '</p></td>
         </tr>';
 
         foreach ($items->taxes() as $tax) {

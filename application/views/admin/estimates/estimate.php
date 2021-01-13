@@ -28,6 +28,10 @@
 		init_ajax_project_search_by_customer_id();
 		// Maybe items ajax search
 	    init_ajax_search('items','#item_select.ajax-search',undefined,admin_url+'items/search');
+
+	    
+	    // new code here
+	    setTimeout(function(){ calculate_total_group(0,''); }, 1000);
 	});
 
 	// Bitsclan Solutions Start Code 

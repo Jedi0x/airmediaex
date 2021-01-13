@@ -3663,3 +3663,5 @@ $lang['estimate_terms'] = 'Estimate Terms';
 $lang['estimate_shipping_terms'] = "Estimate Shipping Terms";
 $lang['estimate_payment_terms'] = "Estimate Payment Terms";
 $lang['estimate_labour_terms'] = "Estimate Labour Terms";
+
+$lang['discount_added'] = "Discount";

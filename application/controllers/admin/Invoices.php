@@ -714,6 +714,7 @@ class Invoices extends AdminController
         $invoice        = hooks()->apply_filters('before_admin_view_invoice_pdf', $invoice);
         $invoice_number = format_invoice_number($invoice->id);
 
+
         try {
             $pdf = invoice_pdf($invoice);
         } catch (Exception $e) {
