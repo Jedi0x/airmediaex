@@ -170,6 +170,7 @@ if($invoice->scheduled_email) { ?>
    <div class="col-md-5 col-md-offset-7">
       <table class="table text-right">
          <tbody>
+
             <tr id="subtotal">
                <td><span class="bold"><?php echo _l('invoice_subtotal'); ?></span>
                </td>
@@ -177,6 +178,45 @@ if($invoice->scheduled_email) { ?>
                   <?php echo app_format_money($invoice->subtotal, $invoice->currency_name); ?>
                </td>
             </tr>
+
+            <?php
+            //added custom feild junaid code here
+            $custom_discount = 0;
+            $discount_name = '';
+            if(!empty($invoice->discount_added)){
+
+               if($invoice->discount_added == 1){
+                  $discount_name = 'Tech Partner/Studio 5%';
+                  $custom_discount = (5 / 100) * $invoice->subtotal;
+               }else if($invoice->discount_added == 2){
+                  $discount_name = 'Rental Partner 10%';
+                  $custom_discount = (10 / 100) * $invoice->subtotal;
+               }else if($invoice->discount_added == 3){
+                  $discount_name = 'Dealer 25%';
+                  $custom_discount = (25 / 100) * $invoice->subtotal;
+               }else if($invoice->discount_added == 4){
+                  $discount_name = 'Education 25%';
+                  $custom_discount = (25 / 100) * $invoice->subtotal;
+               }else if($invoice->discount_added == 5){
+                  $discount_name = 'Distributer 30%';
+                  $custom_discount = (30 / 100) * $invoice->subtotal;
+               }else if($invoice->discount_added == 6){
+                  $discount_name = 'Demo 40%';
+                  $custom_discount = (40 / 100) * $invoice->subtotal;
+               } ?>
+               <tr>
+                  <td><span class="bold"><?php echo $discount_name; ?></span>
+                  </td>
+                  <td>
+                     <?php echo '-'.app_format_money($custom_discount, $invoice->currency_name); ?>
+                  </td>
+               </tr> <?php
+
+            }
+
+             ?>
+
+
             <?php if(is_sale_discount_applied($invoice)){ ?>
                <tr>
                   <td>
@@ -191,8 +231,12 @@ if($invoice->scheduled_email) { ?>
                   </tr>
                <?php } ?>
                <?php
+               $tax_rate = 0;
                foreach($items->taxes() as $tax){
                  echo '<tr class="tax-area"><td class="bold">'.$tax['taxname'].' ('.app_format_number($tax['taxrate']).'%)</td><td>'.app_format_money($tax['total_tax'], $invoice->currency_name).'</td></tr>';
+
+               // invoice calculations junaid code here
+                 $tax_rate+=$tax['total_tax'];
               }
               ?>
               <?php if((int)$invoice->adjustment != 0){ ?>
@@ -217,7 +261,7 @@ if($invoice->scheduled_email) { ?>
                <td><span class="bold"><?php echo _l('invoice_total'); ?></span>
                </td>
                <td class="total">
-                  <?php echo app_format_money($invoice->total, $invoice->currency_name); ?>
+                  <?php echo app_format_money($invoice->total+$tax_rate, $invoice->currency_name); ?>
                </td>
             </tr>
             <?php if(count($invoice->payments) > 0 && get_option('show_total_paid_on_invoice') == 1) { ?>
@@ -241,7 +285,7 @@ if($invoice->scheduled_email) { ?>
                   <td><span class="<?php if($invoice->total_left_to_pay > 0){echo 'text-danger ';} ?>bold"><?php echo _l('invoice_amount_due'); ?></span></td>
                   <td>
                      <span class="<?php if($invoice->total_left_to_pay > 0){echo 'text-danger';} ?>">
-                        <?php echo app_format_money($invoice->total_left_to_pay, $invoice->currency_name); ?>
+                        <?php echo app_format_money($invoice->total_left_to_pay+$tax_rate, $invoice->currency_name); ?>
                      </span>
                   </td>
                </tr>

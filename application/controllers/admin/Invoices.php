@@ -293,7 +293,6 @@ class Invoices extends AdminController
         if ($this->input->post()) {
             $invoice_data = $this->input->post();
 
-
             // Bitsclan Solutions Start Code Invoice module  
 
             if(isset($invoice_data['group_order'])){

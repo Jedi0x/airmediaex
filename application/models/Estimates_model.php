@@ -239,6 +239,9 @@ class Estimates_model extends App_Model
         $new_invoice_data['labour_terms']         = $_estimate->labour_terms;
         // new code here
         $new_invoice_data['discount_added']         = $_estimate->discount_added;
+        $new_invoice_data['custom_discount_added']         = $_estimate->custom_discount_added;
+        $new_invoice_data['total_amount']         = $_estimate->total_amount;
+        $new_invoice_data['before_adding_shipping']         = $_estimate->before_adding_shipping;
         
         if ($_estimate->include_shipping == 1) {
             $new_invoice_data['include_shipping'] = 1;

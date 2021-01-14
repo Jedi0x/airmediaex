@@ -116,7 +116,54 @@
                      $items = get_group_items_table_data($invoice, 'invoice');
                      // Bitsclan Solutions End Code Invoice module
                      echo $items->table();
-                     ?>
+
+                     debug($invoice);
+
+                     $new_added_discount = 0;
+                     $discount_name = '';
+
+                     $new_subtotal = 0;
+             
+                     foreach ($invoice->items as $k => $v) {
+                        $amount = $v['rate'] * $v['qty'];
+                        if($v['discount_type'] == 'percentage'){
+                           $percentage = $v['discount'];
+                           $discounted_value = ($percentage / 100) * $amount;
+                        }else{
+                           $discounted_value = $v['discount'];
+                        }
+                        $new_added_discount+=$discounted_value;
+                        $new_subtotal +=($amount - $discounted_value);
+                     }
+
+
+
+               if($invoice->discount_added == 1){
+                  $discount_name = 'Tech Partner/Studio 5%';
+                  $new_added_discount += (5 / 100) * $new_subtotal;
+
+               }else if($invoice->discount_added == 2){
+                  $discount_name = 'Rental Partner 10%';
+                  $new_added_discount += (10 / 100) * $new_subtotal;
+               }
+               else if($invoice->discount_added == 3){
+                  $discount_name = 'Dealer 25%';
+                  $new_added_discount += (25 / 100) * $new_subtotal;
+               }
+               else if($invoice->discount_added == 4){
+                  $discount_name = 'Education 25%';
+                  $new_added_discount += (25 / 100) * $new_subtotal;
+               }
+               else if($invoice->discount_added == 5){
+                  $discount_name = 'Distributer 30%';
+                  $new_added_discount += (30 / 100) * $new_subtotal;
+               }
+               else if($invoice->discount_added == 6){
+                  $discount_name = 'Demo 40%';
+                  $new_added_discount += (40 / 100) * $new_subtotal;
+               }
+         
+               ?>
                </div>
             </div>
             <div class="col-md-6 col-md-offset-6">

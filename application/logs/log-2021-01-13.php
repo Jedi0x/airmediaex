@@ -717,3 +717,12 @@ ERROR - 2021-01-13 11:38:38 --> Could not find the language line "notify_send_cr
 ERROR - 2021-01-13 11:38:38 --> Could not find the language line "notify_send_create_password"
 ERROR - 2021-01-13 11:39:12 --> Could not find the language line "notify_send_create_password"
 ERROR - 2021-01-13 11:39:12 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-01-13 12:45:08 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-01-13 12:45:08 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-01-13 17:50:09 --> Severity: Warning --> mysqli::real_connect(): (HY000/2002): No connection could be made because the target machine actively refused it.
+ F:\wamp64\www\airmediaex\system\database\drivers\mysqli\mysqli_driver.php 203
+ERROR - 2021-01-13 17:50:09 --> Unable to connect to the database
+ERROR - 2021-01-13 12:50:20 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-01-13 12:50:20 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-01-13 12:50:21 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-01-13 12:50:21 --> Could not find the language line "notify_send_create_password"

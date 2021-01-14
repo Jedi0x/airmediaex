@@ -536,6 +536,8 @@
       <?php $this->load->view('admin/invoices/invoice_group_template'); ?>
       <!-- Bitsclan Solutions End Code Invoice module -->
 
+
+
       <div class="col-md-8 col-md-offset-4">
          <table class="table text-right">
             <tbody>
@@ -543,7 +545,8 @@
                <tr id="subtotal">
                   <td><span class="bold"><?php echo _l('invoice_subtotal'); ?> :</span>
                   </td>
-                  <td class="subtotal-group">
+                  <!-- junaid code here -->
+                  <td class="subtotal-group-invoice">
                     <?php echo "$".app_format_number($sub_total); ?>
                   </td>
                </tr>
@@ -661,7 +664,8 @@
                <tr>
                   <td><span class="bold"><?php echo _l('invoice_grand_total'); ?> :</span>
                   </td>
-                  <td class="total-group">
+                  <!-- junaid code here -->
+                  <td class="total-group-invoice">
                    
                     <?php 
                     $shipping_price = 0;

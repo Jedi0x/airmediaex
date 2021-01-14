@@ -310,6 +310,59 @@
                                     <?php echo app_format_money($estimate->subtotal, $estimate->currency_name); ?>
                                  </td>
                               </tr>
+
+
+
+                              <?php
+            //added custom feild junaid code here
+            $custom_discount = 0;
+            $discount_name = '';
+            if(!empty($estimate->discount_added)){
+
+               if($estimate->discount_added == 1){
+                  $discount_name = 'Tech Partner/Studio 5%';
+                  $custom_discount = (5 / 100) * $estimate->subtotal;
+               }else if($estimate->discount_added == 2){
+                  $discount_name = 'Rental Partner 10%';
+                  $custom_discount = (10 / 100) * $estimate->subtotal;
+               }else if($estimate->discount_added == 3){
+                  $discount_name = 'Dealer 25%';
+                  $custom_discount = (25 / 100) * $estimate->subtotal;
+               }else if($estimate->discount_added == 4){
+                  $discount_name = 'Education 25%';
+                  $custom_discount = (25 / 100) * $estimate->subtotal;
+               }else if($estimate->discount_added == 5){
+                  $discount_name = 'Distributer 30%';
+                  $custom_discount = (30 / 100) * $estimate->subtotal;
+               }else if($estimate->discount_added == 6){
+                  $discount_name = 'Demo 40%';
+                  $custom_discount = (40 / 100) * $estimate->subtotal;
+               } ?>
+               <tr>
+                  <td><span class="bold"><?php echo $discount_name; ?></span>
+                  </td>
+                  <td>
+                     <?php echo '-'.app_format_money($custom_discount, $estimate->currency_name); ?>
+                  </td>
+               </tr> <?php
+
+            }
+
+             ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                               <?php if(is_sale_discount_applied($estimate)){ ?>
                               <tr>
                                  <td>
@@ -324,8 +377,12 @@
                               </tr>
                               <?php } ?>
                               <?php
+
+                               $tax_rate = 0;
                                  foreach($items->taxes() as $tax){
                                      echo '<tr class="tax-area"><td class="bold">'.$tax['taxname'].' ('.app_format_number($tax['taxrate']).'%)</td><td>'.app_format_money($tax['total_tax'], $estimate->currency_name).'</td></tr>';
+
+                                     $tax_rate+=$tax['total_tax'];
                                  }
                                  ?>
                               <?php if((int)$estimate->adjustment != 0){ ?>
@@ -353,7 +410,7 @@
                                  <td><span class="bold"><?php echo _l('estimate_total'); ?></span>
                                  </td>
                                  <td class="total">
-                                    <?php echo app_format_money($estimate->total, $estimate->currency_name); ?>
+                                    <?php echo app_format_money($estimate->total+$tax_rate, $estimate->currency_name); ?>
                                  </td>
                               </tr>
                            </tbody>

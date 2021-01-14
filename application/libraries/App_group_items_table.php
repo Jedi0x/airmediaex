@@ -199,12 +199,14 @@ class App_group_items_table extends App_group_items_table_template
                             $i++;
                         }
 
+
                         $html.='</tbody>';
 
                         $html.='<tfoot class="table text-right">
                         <tr>
                            <td  colspan=5 align="right"><span class="bold" >'._l('invoice_subtotal').'</span></td>
                            <td class="subtotal" colspan=3 align="right">'.app_format_money($subtotal,$this->transaction->currency_name).'</td>
+                           
                         </tr>
                         </tfoot>
                     </table>
