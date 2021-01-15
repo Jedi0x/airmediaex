@@ -321,20 +321,48 @@
                         ?>
                      <?php echo render_select('currency', $currencies, array('id','name','symbol'), 'invoice_add_edit_currency', $selected, $currency_attr); ?>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-6">       <!-- Arslan Code here -->
                      <?php
-                        $i = 0;
-                        $selected = '';
-                        foreach($staff as $member){
-                         if(isset($invoice)){
-                           if($invoice->sale_agent == $member['staffid']) {
-                             $selected = $member['staffid'];
-                           }
-                         }
-                         $i++;
-                        }
-                        echo render_select('sale_agent',$staff,array('staffid',array('firstname','lastname')),'sale_agent_string',$selected);
+
+                
+                        // $i = 0;
+                        // $selected = '';
+                        // foreach($staff as $member){
+                        //  if(isset($invoice)){
+                        //    if($invoice->sale_agent == $member['staffid']) {
+                        //      $selected = $member['staffid'];
+                        //    }
+                        //  }
+                        //  $i++;
+                        // }
+                        // // Arslan code here
+                        // echo render_select('sale_agent',$staff,array('staffid',array('firstname','lastname')),'sale_agent_string',$selected,array('multiple'=>"true"));
                         ?>
+
+                         <div class="form-group mbot15 select-placeholder">
+                         <label for="sale_agent" class="control-label"><?php echo _l('sale_agent_string'); ?></label>
+
+                    <select class="selectpicker" id= "sale_agent" data-toggle="" data-none-selected-text="Nothing selected" data-live-search="true" name="sale_agent[]" multiple="true" data-width="100%"  data-title="Nothing selected">
+                  <?php
+                      
+                      $selected_contacts = array();
+                      if(isset($invoice)){
+                         $selected_sale_agents = $invoice->sale_agent;
+                     $selected_contacts =  unserialize($selected_sale_agents);
+                      }
+                      
+                     foreach ($staff as $k => $v) { ?>
+                        <option value = '<?=$v['staffid']?>' <?php echo (in_array($v['staffid'],$selected_contacts)) ? "selected" : "" ;?>> <?=$v['firstname']." ".$v['lastname']?></option> <?php
+                     }
+                
+                  ?>
+                  </select>
+                </div>
+
+
+
+
+
                   </div>
                   <div class="col-md-6">
                      <div class="form-group select-placeholder"<?php if(isset($invoice) && !empty($invoice->is_recurring_from)){ ?> data-toggle="tooltip" data-title="<?php echo _l('create_recurring_from_child_error_message', [_l('invoice_lowercase'),_l('invoice_lowercase'), _l('invoice_lowercase')]); ?>"<?php } ?>>
@@ -508,6 +536,8 @@
       <?php $this->load->view('admin/invoices/invoice_group_template'); ?>
       <!-- Bitsclan Solutions End Code Invoice module -->
 
+
+
       <div class="col-md-8 col-md-offset-4">
          <table class="table text-right">
             <tbody>
@@ -515,7 +545,8 @@
                <tr id="subtotal">
                   <td><span class="bold"><?php echo _l('invoice_subtotal'); ?> :</span>
                   </td>
-                  <td class="subtotal-group">
+                  <!-- junaid code here -->
+                  <td class="subtotal-group-invoice">
                     <?php echo "$".app_format_number($sub_total); ?>
                   </td>
                </tr>
@@ -633,7 +664,8 @@
                <tr>
                   <td><span class="bold"><?php echo _l('invoice_grand_total'); ?> :</span>
                   </td>
-                  <td class="total-group">
+                  <!-- junaid code here -->
+                  <td class="total-group-invoice">
                    
                     <?php 
                     $shipping_price = 0;

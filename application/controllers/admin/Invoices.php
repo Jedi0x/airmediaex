@@ -344,6 +344,15 @@ class Invoices extends AdminController
                 $invoice_data['labour_terms'] = '';
             }
 
+          // Arslan code here
+
+            if(isset($invoice_data['sale_agent']) && empty($id)){
+                $invoice_data['sale_agent'] = serialize($invoice_data['sale_agent']);
+            }else if(isset($invoice_data['sale_agent']) && !empty($id)){
+                $invoice_data['sale_agent'] = serialize($invoice_data['sale_agent']);
+            }else{
+                $invoice_data['sale_agent'] = serialize(array());
+            }
 
             unset($invoice_data['item_select_group'],$invoice_data['discount'],$invoice_data['group_order'],$invoice_data['discount_group_percent'],$invoice_data['discount_group_total'],$invoice_data['part_number']);
             // Bitsclan Solutions End Code Invoice module
@@ -354,7 +363,7 @@ class Invoices extends AdminController
                     access_denied('invoices');
                 }
 
-               
+
                 $id = $this->invoices_model->add($invoice_data);
                 if ($id) {
                     set_alert('success', _l('added_successfully', _l('invoice')));
@@ -427,7 +436,7 @@ class Invoices extends AdminController
 
         $data['base_currency'] = $this->currencies_model->get_base_currency();
 
-        $data['staff']     = $this->staff_model->get('', ['active' => 1]);
+        $data['staff']     = $this->staff_model->get('', ['active' => 1,'role'=>3]);
         $data['title']     = $title;
         $data['bodyclass'] = 'invoice';
 

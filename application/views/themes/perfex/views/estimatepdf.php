@@ -87,9 +87,13 @@ $vat = $estimate->client->vat;
 
 
 $street = trim(preg_replace("/<br\W*?\/>/", "\n", $street));
-
+// Arslam code here
 $companyName = $companyName;
-  
+ $project_name='';
+   if(isset($estimate->project_data))
+          {
+            $project_name = $estimate->project_data->name;
+          }
 
 $billing_info .= '<table width="100%" style="padding-top:20px;"  cellspacing="10px">
     <tbody>
@@ -132,7 +136,7 @@ $billing_info .= '<table width="100%" style="padding-top:20px;"  cellspacing="10
                 
             </td>
             <td  align="right" width="40%">
-                <span style="color:#00aeef;text-transform:uppercase;">PROJECT NAME:</span> BlackTrax Average<br>
+                <span style="color:#00aeef;text-transform:uppercase;">PROJECT NAME:</span> ' .$project_name.' Average<br>  
                 <span>System Size [SAMPLE]</span><br>
                 <span>Quote No.: # ' . $estimate_number . '</span><br>
                 <span>Created By: '. get_staff_full_name($estimate->addedfrom).'</span><br>
@@ -169,7 +173,6 @@ $pdf->writeHTML($billing_info, false, false, false, false, '');
  
 $items = get_group_items_table_data($estimate, 'invoice', 'pdf');
 
-
 $tblhtml = $items->table();
 
 $pdf->writeHTML($tblhtml, false, false, false, false, '');
@@ -184,67 +187,46 @@ $add_items       = $estimate->items;
 
 
 
-  $new_added_discount = 0;
+$calculate_discount = 0;
 $discount_name = '';
 
 
 if($estimate->discount_added == 1){
     $discount_name = 'Tech Partner/Studio 5%';
-    $new_added_discount = (5 / 100) * $estimate->subtotal;
+    $calculate_discount = (5 / 100) * $estimate->subtotal;
 }else if($estimate->discount_added == 2){
     $discount_name = 'Rental Partner 10%';
-     $new_added_discount = (10 / 100) * $estimate->subtotal;
+    $calculate_discount = (10 / 100) * $estimate->subtotal;
 }
 else if($estimate->discount_added == 3){
     $discount_name = 'Dealer 25%';
-     $new_added_discount = (25 / 100) * $estimate->subtotal;
+    $calculate_discount = (25 / 100) * $estimate->subtotal;
 }
 else if($estimate->discount_added == 4){
     $discount_name = 'Education 25%';
-     $new_added_discount = (25 / 100) * $estimate->subtotal;
+    $calculate_discount = (25 / 100) * $estimate->subtotal;
 }
 else if($estimate->discount_added == 5){
     $discount_name = 'Distributer 30%';
-     $new_added_discount = (30 / 100) * $estimate->subtotal;
+    $calculate_discount = (30 / 100) * $estimate->subtotal;
 }
 else if($estimate->discount_added == 6){
     $discount_name = 'Demo 40%';
-    $new_added_discount = (40 / 100) * $estimate->subtotal;
+    $calculate_discount = (40 / 100) * $estimate->subtotal;
 }
 
 
 
-  foreach ($add_items as $item) {
-    if(!in_array($item['group_id'], $groups)){
-      array_push($groups, $item['group_id']);
+foreach ($estimate->items as $k => $v) {
+    $amount = $v['rate'] * $v['qty'];
+    if($v['discount_type'] == 'percentage'){
+    $percentage = $v['discount'];
+    $discounted_value = ($percentage / 100) * $amount;
+    }else{
+        $discounted_value = $v['discount'];
     }
-  }
-
-  foreach ($add_items as $item) {
-    if(in_array($item['group_id'], $groups)){
-      $group_id = $item['group_id'];
-      $group_items[$group_id][] = array($item);
-    } 
-  } 
-
-  foreach ($group_items as $group => $group_items_arr) {
-    $_group = item_group($group);
-    foreach ($group_items_arr  as $k => $item) { 
-      $total_amount_cal+=$item[0]['rate']*$item[0]['qty'];
-      $amount = $item[0]['rate'] * $item[0]['qty'];
-      if($item[0]['discount_type'] == 'percentage'){
-        $percentage = $item[0]['discount'];
-        $discounted_value = ($percentage / 100) * $amount;
-      }else{
-        $discounted_value = $item[0]['discount'];
-      }
-      $new_added_discount+=$discounted_value;
-      $sub_total+=($amount - $discounted_value);
-    }
-
-  }
-
-
+    $calculate_discount+=$discounted_value;
+}
 
 $subtotal_Session = '';
 $subtotal_Session .='<table style="background-color:#ececec;" cellpadding="10px">
@@ -253,37 +235,43 @@ $subtotal_Session .='<table style="background-color:#ececec;" cellpadding="10px"
             <td>Currency:</td>
             <td>USD</td>
             <td>Subtotal:</td>
-            <td align="right">' . app_format_money($total_amount_cal, $estimate->currency_name) . '</td>
+            <td align="right">' . app_format_money($estimate->total_amount, $estimate->currency_name) . '</td>
         </tr>
-        <tr>
-            <td>Discount Type:</td>
-            <td >'.$discount_name.'</td>
-            <td><p style="color:red;">Discount:</p><p>Discounted Subtotal:</p></td>
-            <td align="right"><p style="color:red;">' . app_format_money($new_added_discount, $estimate->currency_name) . '</p><p>' . app_format_money($sub_total-$new_added_discount, $estimate->currency_name) . '</p></td>
-        </tr>';
+         <tr>';
 
+        if(!empty($invoice->discount_added)){
+            $subtotal_Session .=' <td>Discount Type:</td><td >'.$discount_name.'</td>';
+        }else{
+           $subtotal_Session .=' <td></td><td ></td>'; 
+        }
+
+        $subtotal_Session .='<td><p style="color:red;">Discount:</p><p>Discounted Subtotal:</p></td>
+            <td align="right"><p style="color:red;">' . app_format_money($calculate_discount, $estimate->currency_name) . '</p><p>' . app_format_money($estimate->before_adding_shipping, $estimate->currency_name) . '</p></td>
+        </tr>';
+        $tax_rate = 0;
         foreach ($items->taxes() as $tax) {
-    $subtotal_Session .='<tr>
+
+     $subtotal_Session .='<tr>
     <td><strong>' . $tax['taxname'] . ' (' . app_format_number($tax['taxrate']) . '%)' . '</strong></td>
     <td>' . app_format_money($tax['total_tax'], $estimate->currency_name) . '</td>
 </tr>';
+$tax_rate+=$tax['total_tax'];
 }
 
-        
         $subtotal_Session .='<tr>
             <td>Shipping Provider:</td>
             <td>CAST - FedEx</td>
             <td>Shipping:</td>
             <td align="right">' . app_format_money($estimate->shipping, $estimate->currency_name) . '</td>
         </tr>
-        <tr>
+      <tr>
             <td colspan="4"><b><i>Payment Methods</i></b></td>
         </tr>
 
         <tr>
             <td colspan="2"><i>Wire Transfer, Credit Card, Cheque</i></td>
-            <td >Total:</td>
-            <td align="right">' . app_format_money($sub_total-$new_added_discount+$estimate->shipping, $estimate->currency_name) . '</td>
+            <td style="color:red;">Payments/Credits:</td>
+            <td align="right">$0.00</td>
         </tr>
     </tbody>
 </table>';
@@ -300,9 +288,9 @@ $total_due .='<table style="background-color:#bdebfe; color:black;padding-left:1
             <td rowspan="2">
             <table>
             <tbody>
-                <tr>
+               <tr>
                     <td valign="middle"><h2>TOTAL DUE</h2></td>
-                    <td align="right" valign="middle">' . app_format_money($sub_total-$new_added_discount+$estimate->shipping, $estimate->currency_name) . '</td>
+                    <td align="right" valign="middle">' . app_format_money($estimate->total+$tax_rate, $estimate->currency_name) . '</td>
                 </tr>
             </tbody></table>
             </td>
@@ -317,24 +305,20 @@ $pdf->writeHTML($total_due, false, false, false, false, '');
 $pdf->Ln(hooks()->apply_filters('pdf_info_and_table_separator', 6));
 
 $payment_terms = '';
-$payment_terms .='<h2 style="color:#17aaf9;">PAYMENT TERMS</h2>';
-$payment_terms .='<table style="background-color:#ececec;margin-top:0px;"><tbody>';
 
-$selected_payment_terms = (!empty($estimate->payment_term_select) ? unserialize($estimate->payment_term_select) : array());
-$options = array('due_upon_receipt_of_invoice','net_15_days','net_30_days','installment','pre_paid','due_prior_to_releasing_the_shipment_and_or_services');
-$count =  sizeof($selected_payment_terms);
-$installment = 1;
-foreach ($options as $k => $v) { 
-    if(in_array($k,$selected_payment_terms)){
-        $payment_terms .='
+$payment_terms .='<h2>PAYMENT TERMS</h2>';
+$payment_terms .='<table style="background-color:#ececec;margin-top:0px;">
+    <tbody>
         <tr>
-            <td>Installment '.$installment .'  '. _l($options[$k]).'</td>
-            <td align="right"> ' .app_format_money($sub_total/$count, $estimate->currency_name). '</td>
-        </tr>';
-        $installment++;
-    }
-}
-$payment_terms .='</tbody></table>';
+            <td>Installment 1 - 50% Upon receipt of invoice</td>
+            <td align="right">' . app_format_money($estimate->total+$tax_rate/2, $estimate->currency_name) . '</td>
+        </tr>
+        <tr>
+            <td>Installment 2 - 50 % Due prior to releasing the shipment</td>
+            <td align="right">' . app_format_money($estimate->total+$tax_rate/2, $estimate->currency_name) . '</td>
+        </tr>
+    </tbody>
+</table>';
 $pdf->writeHTML($payment_terms, false, false, false, false, '');
 
 

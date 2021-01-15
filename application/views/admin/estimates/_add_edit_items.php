@@ -362,7 +362,7 @@ $total_amount = 0;
     <tr id="subtotal">
      <td><span class="bold"><?php echo _l('estimate_subtotal'); ?> :</span>
      </td>
-     <td class="subtotal-group">
+     <td class="subtotal-group-invoice">
       <?php echo "$".app_format_number($sub_total); ?>
     </td>
   </tr>
@@ -477,7 +477,7 @@ $total_amount = 0;
 <tr>
  <td><span class="bold"><?php echo _l('invoice_grand_total'); ?> :</span>
  </td>
- <td class="total-group">
+ <td class="total-group-invoice">
   <?php 
   $shipping_price = 0;
   if(isset($estimate)){

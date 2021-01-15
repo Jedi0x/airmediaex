@@ -89,7 +89,12 @@ $vat = $invoice->client->vat;
 $street = trim(preg_replace("/<br\W*?\/>/", "\n", $street));
 
 $companyName = $companyName;
-  
+// Arslan code here
+  $project_name='';
+   if(isset($invoice->project_data))
+          {
+            $project_name = $invoice->project_data->name;
+          }
 
 $billing_info .= '<table width="100%" style="padding-top:20px;"  cellspacing="10px">
     <tbody>
@@ -132,7 +137,7 @@ $billing_info .= '<table width="100%" style="padding-top:20px;"  cellspacing="10
                 
             </td>
             <td  align="right" width="40%">
-                <span style="color:#00aeef;text-transform:uppercase;">PROJECT NAME:</span> BlackTrax Average<br>
+                <span style="color:#00aeef;text-transform:uppercase;">PROJECT NAME:</span>' .$project_name.'<br>
                 <span>System Size [SAMPLE]</span><br>
                 <span>Invoice No.: # ' . $invoice_number . '</span><br>
                 <span>Invoice Date.: ' . $invoice->date. '</span><br>
@@ -177,32 +182,33 @@ $pdf->writeHTML($tblhtml, false, false, false, false, '');
 
 $pdf->Ln(8);
 
-$new_added_discount = 0;
+$calculate_discount = 0;
 $discount_name = '';
 
 
 if($invoice->discount_added == 1){
     $discount_name = 'Tech Partner/Studio 5%';
-    $new_added_discount = (5 / 100) * $invoice->subtotal;
+    $calculate_discount = (5 / 100) * $invoice->subtotal;
+
 }else if($invoice->discount_added == 2){
     $discount_name = 'Rental Partner 10%';
-     $new_added_discount = (10 / 100) * $invoice->subtotal;
+     $calculate_discount = (10 / 100) * $invoice->subtotal;
 }
 else if($invoice->discount_added == 3){
     $discount_name = 'Dealer 25%';
-     $new_added_discount = (25 / 100) * $invoice->subtotal;
+     $calculate_discount = (25 / 100) * $invoice->subtotal;
 }
 else if($invoice->discount_added == 4){
     $discount_name = 'Education 25%';
-     $new_added_discount = (25 / 100) * $invoice->subtotal;
+     $calculate_discount = (25 / 100) * $invoice->subtotal;
 }
 else if($invoice->discount_added == 5){
     $discount_name = 'Distributer 30%';
-     $new_added_discount = (30 / 100) * $invoice->subtotal;
+     $calculate_discount = (30 / 100) * $invoice->subtotal;
 }
 else if($invoice->discount_added == 6){
     $discount_name = 'Demo 40%';
-     $new_added_discount = (40 / 100) * $invoice->subtotal;
+     $calculate_discount = (40 / 100) * $invoice->subtotal;
 }
 
 
@@ -215,15 +221,13 @@ foreach ($invoice->items as $k => $v) {
     }else{
         $discounted_value = $v['discount'];
     }
-    $new_added_discount+=$discounted_value;
-            // $sub_total+=($amount - $discounted_value);
-            // $amount = app_format_number($amount - $discounted_value);
+    $calculate_discount+=$discounted_value;
 }
 
 
 
 
-$invoice->total = $invoice->total - $new_added_discount;
+// $invoice->total = $invoice->total - $new_added_discount;
 
 
 
@@ -237,20 +241,28 @@ $subtotal_Session .='<table style="background-color:#ececec;" cellpadding="10px"
             <td>Currency:</td>
             <td>USD</td>
             <td>Subtotal:</td>
-            <td align="right">' . app_format_money($invoice->subtotal, $invoice->currency_name) . '</td>
+            <td align="right">' . app_format_money($invoice->total_amount, $invoice->currency_name) . '</td>
         </tr>
-        <tr>
-            <td>Discount Type:</td>
-            <td >'.$discount_name.'</td>
-            <td><p style="color:red;">Discount:</p><p>Discounted Subtotal:</p></td>
-            <td align="right"><p style="color:red;">' . app_format_money($new_added_discount, $invoice->currency_name) . '</p><p>' . app_format_money($new_added_discount, $invoice->currency_name) . '</p></td>
-        </tr>';
+        <tr>';
+        if(!empty($invoice->discount_added)){
+            $subtotal_Session .=' <td>Discount Type:</td><td >'.$discount_name.'</td>';
+        }else{
+           $subtotal_Session .=' <td></td><td ></td>'; 
+        }
 
+
+
+
+        $subtotal_Session .='<td><p style="color:red;">Discount:</p><p>Discounted Subtotal:</p></td>
+            <td align="right"><p style="color:red;">' . app_format_money($calculate_discount, $invoice->currency_name) . '</p><p>' . app_format_money($invoice->before_adding_shipping, $invoice->currency_name) . '</p></td>
+        </tr>';
+        $tax_rate = 0;
         foreach ($items->taxes() as $tax) {
     $subtotal_Session .='<tr>
     <td><strong>' . $tax['taxname'] . ' (' . app_format_number($tax['taxrate']) . '%)' . '</strong></td>
     <td>' . app_format_money($tax['total_tax'], $invoice->currency_name) . '</td>
 </tr>';
+$tax_rate+=$tax['total_tax'];
 }
 
         
@@ -286,7 +298,7 @@ $total_due .='<table style="background-color:#bdebfe; color:black;padding-left:1
             <tbody>
                 <tr>
                     <td valign="middle"><h2>TOTAL DUE</h2></td>
-                    <td align="right" valign="middle">' . app_format_money($invoice->total, $invoice->currency_name) . '</td>
+                    <td align="right" valign="middle">' . app_format_money($invoice->total+$tax_rate, $invoice->currency_name) . '</td>
                 </tr>
             </tbody></table>
             </td>
@@ -307,11 +319,11 @@ $payment_terms .='<table style="background-color:#ececec;margin-top:0px;">
     <tbody>
         <tr>
             <td>Installment 1 - 50% Upon receipt of invoice</td>
-            <td align="right">' . app_format_money($invoice->total/2, $invoice->currency_name) . '</td>
+            <td align="right">' . app_format_money($invoice->total+$tax_rate/2, $invoice->currency_name) . '</td>
         </tr>
         <tr>
             <td>Installment 2 - 50 % Due prior to releasing the shipment</td>
-            <td align="right">' . app_format_money($invoice->total/2, $invoice->currency_name) . '</td>
+            <td align="right">' . app_format_money($invoice->total+$tax_rate/2, $invoice->currency_name) . '</td>
         </tr>
     </tbody>
 </table>';

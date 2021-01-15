@@ -309,19 +309,70 @@
                   <div class="col-md-12">
                     <?php $value = (isset($estimate) ? $estimate->reference_no : ''); ?>
                     <?php echo render_input('reference_no','reference_no',$value); ?>
-                  </div>
+                  </div>    <!-- Arslan code here -->
                   <div class="col-md-6">
                          <?php
-                        $selected = '';
-                        foreach($staff as $member){
-                         if(isset($estimate)){
-                           if($estimate->sale_agent == $member['staffid']) {
-                             $selected = $member['staffid'];
-                           }
-                         }
-                        }
-                        echo render_select('sale_agent',$staff,array('staffid',array('firstname','lastname')),'sale_agent_string',$selected);
+                        // $selected = '';
+                        // foreach($staff as $member){
+                        //  if(isset($estimate)){
+                        //    if($estimate->sale_agent == $member['staffid']) {
+                        //      $selected = $member['staffid'];
+                        //    }
+                        //  }
+                        // }
+                        // // Arslan code here
+                        // echo render_select('sale_agent',$staff,array('staffid',array('firstname','lastname')),'sale_agent_string',$selected,array('multiple'=>"true"));
                         ?>
+
+
+
+
+                         <div class="form-group mbot15 select-placeholder">
+                         <label for="sale_agent" class="control-label"><?php echo _l('sale_agent_string'); ?></label>
+
+                    <select class="selectpicker" id= "sale_agent" data-toggle="" data-none-selected-text="Nothing selected" data-live-search="true" name="sale_agent[]" multiple="true" data-width="100%"  data-title="Nothing selected">
+                  <?php
+                      
+                      $selected_contacts = array();
+                      if(isset($estimate)){
+                         $selected_sale_agents = $estimate->sale_agent;
+                     $selected_contacts =  unserialize($selected_sale_agents);
+                      }
+                      
+                     foreach ($staff as $k => $v) { ?>
+                        <option value = '<?=$v['staffid']?>' <?php echo (in_array($v['staffid'],$selected_contacts)) ? "selected" : "" ;?>> <?=$v['firstname']." ".$v['lastname']?></option> <?php
+                     }
+                
+                  ?>
+                  </select>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                   </div>
                   <div class="col-md-6">
                        <div class="form-group select-placeholder">
