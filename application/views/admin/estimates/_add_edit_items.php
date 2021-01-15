@@ -212,7 +212,7 @@ $total_amount = 0;
           $table_row = '<tr class="sortable item item'.$item[0]['id'].'">';
           $table_row .= '<td class="dragger">';
           $item[0]['id'] = $item[0]['itemid'];
-          $item[0]['qty'] = 1;
+          $item[0]['qty'] = $item[0]['qty'];
 
           $estimate_item_taxes = get_estimate_item_taxes($item[0]['id']);
 
@@ -468,7 +468,7 @@ $total_amount = 0;
      <span class="bold"><?php echo _l('shipping'); ?></span>
    </div>
    <div class="col-md-5">
-     <input type="number" data-toggle="tooltip" data-title="<?php echo _l('numbers_not_formatted_while_editing'); ?>" value="1000" class="form-control pull-left" name="shipping">
+     <input type="number" data-toggle="tooltip" data-title="<?php echo _l('numbers_not_formatted_while_editing'); ?>" value="<?php if(isset($estimate)){ echo $estimate->shipping; } else { echo '1000'; } ?>" class="form-control pull-left" name="shipping">
    </div>
  </div>
 </td>

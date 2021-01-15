@@ -166,6 +166,7 @@
                   }
                   $sub_total = 0;
 
+                  //debug($item);
                   foreach ($group_items_arr  as $k => $item) { 
 
                     $item[0]['itemid'] = $item[0]['id'];
@@ -173,7 +174,7 @@
                     $table_row = '<tr class="sortable item item'.$item[0]['id'].'">';
                     $table_row .= '<td class="dragger">';
                     $item[0]['id'] = $item[0]['itemid'];
-                    $item[0]['qty'] = 1;
+                    $item[0]['qty'] = $item[0]['qty'];
 
                     $invoice_item_taxes = get_invoice_item_taxes($item[0]['id']);
 
