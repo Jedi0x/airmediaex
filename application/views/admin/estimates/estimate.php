@@ -48,6 +48,17 @@
 	        }
 	    });
 	});
+
+	// Arslan code here
+$( "#project_ajax_search_wrapper" ).change(function() {
+
+if ($('#project_id').val() != ''){
+
+$(".projectname").hide(); 
+ }else {
+ 	$(".projectname").show();
+ }
+ });
 	// Bitsclan Solutions End Code
 </script>
 </body>

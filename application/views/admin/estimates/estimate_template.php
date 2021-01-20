@@ -256,6 +256,10 @@
                   }
                   echo render_date_input('expirydate','estimate_add_edit_expirydate',$value); ?>
                </div>
+               <!-- Arslan Code here -->
+               <div class="col-md-6 projectname">
+                 <?php echo  render_input('projectname','estimate_add_project_name'); ?>
+               </div>
             </div>
             <div class="clearfix mbot15"></div>
             <?php $rel_id = (isset($estimate) ? $estimate->id : false); ?>

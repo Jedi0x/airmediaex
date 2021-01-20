@@ -293,6 +293,8 @@ class Invoices extends AdminController
         if ($this->input->post()) {
             $invoice_data = $this->input->post();
 
+            // debug($invoice_data,true);
+
             // Bitsclan Solutions Start Code Invoice module  
 
             if(isset($invoice_data['group_order'])){
@@ -345,6 +347,15 @@ class Invoices extends AdminController
             }
 
           // Arslan code here
+
+
+            if(isset($invoice_data['projectname']) && !empty($invoice_data['projectname'])){
+                $invoice_data['projectname'] = $invoice_data['projectname'];
+                
+            }else{
+               $invoice_data['projectname'] = NULL;
+            }
+
 
             if(isset($invoice_data['sale_agent']) && empty($id)){
                 $invoice_data['sale_agent'] = serialize($invoice_data['sale_agent']);

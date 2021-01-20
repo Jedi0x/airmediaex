@@ -231,6 +231,10 @@
                   }
                    ?>
                   <?php echo render_date_input('duedate','invoice_add_edit_duedate',$value); ?>
+
+               </div>
+               <div class="col-md-6 projectname">
+                 <?php echo  render_input('projectname','invoice_add_project_name'); ?>
                </div>
             </div>
                 <?php if(is_invoices_overdue_reminders_enabled()){ ?>
@@ -781,3 +785,5 @@
       </div>
    </div>
 </div>
+
+

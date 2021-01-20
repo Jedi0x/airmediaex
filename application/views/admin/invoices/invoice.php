@@ -31,6 +31,18 @@
 	    // new code here
 	    setTimeout(function(){ calculate_total_group(0,''); }, 1000);
 	});
+
+
+
+$( "#project_ajax_search_wrapper" ).change(function() {
+
+if ($('#project_id').val() != ''){
+
+$(".projectname").hide(); 
+ }else {
+ 	$(".projectname").show();
+ }
+ });
 </script>
 </body>
 </html>

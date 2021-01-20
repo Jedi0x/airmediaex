@@ -107,6 +107,7 @@ if($invoice->scheduled_email) { ?>
       <?php echo format_organization_info(); ?>
    </address>
 </div>
+
 <div class="col-sm-6 text-right">
    <span class="bold"><?php echo _l('invoice_bill_to'); ?>:</span>
    <address>
@@ -138,12 +139,23 @@ if($invoice->scheduled_email) { ?>
          <?php echo get_staff_full_name($invoice->sale_agent); ?>
       </p>
    <?php } ?>
+
+
+
+
    <?php if($invoice->project_id != 0 && get_option('show_project_on_invoice') == 1){ ?>
       <p class="no-mbot">
          <span class="bold"><?php echo _l('project'); ?>:</span>
          <?php echo get_project_name_by_id($invoice->project_id); ?>
       </p>
-   <?php } ?>
+   <?php }else{ ?>
+      <p class="no-mbot">
+         <span class="bold"><?php echo _l('project'); ?>:</span>
+         <?php echo $invoice->projectname; ?>
+      </p>
+      <?php
+
+   } ?>
    <?php $pdf_custom_fields = get_custom_fields('invoice',array('show_on_pdf'=>1));
    foreach($pdf_custom_fields as $field){
     $value = get_custom_field_value($invoice->id,$field['id'],'invoice');

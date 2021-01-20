@@ -89,12 +89,23 @@ $vat = $estimate->client->vat;
 $street = trim(preg_replace("/<br\W*?\/>/", "\n", $street));
 // Arslam code here
 $companyName = $companyName;
+ // $project_name='';
+ //   if(isset($estimate->project_data))
+ //          {
+ //            $project_name = $estimate->project_data->name;
+ //          }
+
+
+
+
+
  $project_name='';
    if(isset($estimate->project_data))
           {
             $project_name = $estimate->project_data->name;
+          }else{
+            $project_name = $estimate->projectname;
           }
-
 $billing_info .= '<table width="100%" style="padding-top:20px;"  cellspacing="10px">
     <tbody>
         <tr>
