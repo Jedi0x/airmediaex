@@ -233,9 +233,9 @@
                   <?php echo render_date_input('duedate','invoice_add_edit_duedate',$value); ?>
 
                </div>
-               <div class="col-md-6 projectname">
+              <!--  <div class="col-md-6 projectname">
                  <?php echo  render_input('projectname','invoice_add_project_name'); ?>
-               </div>
+               </div> -->
             </div>
                 <?php if(is_invoices_overdue_reminders_enabled()){ ?>
                <div class="form-group">
@@ -259,6 +259,9 @@
                    <div class="form-group">
                   <label for="tags" class="control-label"><i class="fa fa-tag" aria-hidden="true"></i> <?php echo _l('tags'); ?></label>
                   <input type="text" class="tagsinput" id="tags" name="tags" value="<?php echo (isset($invoice) ? prep_tags_input(get_tags_in($invoice->id,'invoice')) : ''); ?>" data-role="tagsinput">
+               </div>
+                 <div class="form-group projectname">
+                 <?php echo  render_input('projectname','invoice_add_project_name'); ?>
                </div>
                <div class="form-group mbot15 select-placeholder">
                   <label for="allowed_payment_modes" class="control-label"><?php echo _l('invoice_add_edit_allowed_payment_modes'); ?></label>
