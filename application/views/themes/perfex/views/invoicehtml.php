@@ -117,7 +117,7 @@
                      // Bitsclan Solutions End Code Invoice module
                      echo $items->table();
 
-                     debug($invoice);
+                     // debug($invoice);
 
                      $new_added_discount = 0;
                      $discount_name = '';

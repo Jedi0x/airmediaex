@@ -261,7 +261,8 @@
                   <input type="text" class="tagsinput" id="tags" name="tags" value="<?php echo (isset($invoice) ? prep_tags_input(get_tags_in($invoice->id,'invoice')) : ''); ?>" data-role="tagsinput">
                </div>
                  <div class="form-group projectname">
-                 <?php echo  render_input('projectname','invoice_add_project_name'); ?>
+                   <?php $value = (isset($invoice) ? $invoice->projectname : ''); ?>
+                 <?php echo  render_input('projectname','invoice_add_project_name',$value); ?>
                </div>
                <div class="form-group mbot15 select-placeholder">
                   <label for="allowed_payment_modes" class="control-label"><?php echo _l('invoice_add_edit_allowed_payment_modes'); ?></label>

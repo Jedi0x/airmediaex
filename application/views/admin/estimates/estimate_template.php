@@ -277,7 +277,8 @@
                   <input type="text" class="tagsinput" id="tags" name="tags" value="<?php echo (isset($estimate) ? prep_tags_input(get_tags_in($estimate->id,'estimate')) : ''); ?>" data-role="tagsinput">
                </div>
                <div class="form-group projectname">
-                 <?php echo  render_input('projectname','invoice_add_project_name'); ?>
+                <?php $value = (isset($estimate) ? $estimate->projectname : ''); ?>
+                 <?php echo  render_input('projectname','invoice_add_project_name',$value); ?>
                </div>
                <div class="row">
                   <div class="col-md-6">
