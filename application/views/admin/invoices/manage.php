@@ -17,6 +17,9 @@
 	$(function(){
 		init_invoice();
 	});
+
+
 </script>
 </body>
 </html>
+

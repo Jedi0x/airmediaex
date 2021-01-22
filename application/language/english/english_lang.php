@@ -215,6 +215,7 @@ $lang['invoice_select_customer']                 = 'Customer';
 $lang['invoice_add_edit_number']                 = 'Invoice Number';
 $lang['invoice_add_edit_date']                   = 'Invoice Date';
 $lang['invoice_add_edit_duedate']                = 'Due Date';
+$lang['invoice_add_project_name']                = 'Project Name';
 $lang['invoice_add_edit_currency']               = 'Currency';
 $lang['invoice_add_edit_client_note']            = 'Client Note';
 $lang['invoice_add_edit_admin_note']             = 'Admin Note';
@@ -1065,6 +1066,7 @@ $lang['estimate_dt_table_heading_expirydate']     = 'Expiry Date';
 $lang['estimate_dt_table_heading_amount']         = 'Amount';
 $lang['estimate_dt_table_heading_status']         = 'Status';
 $lang['estimate_convert_to_invoice']              = 'Convert to Invoice';
+$lang['estimate_add_project_name']                = 'Project Name';
 
 # Clients
 $lang['client_payments_tab'] = 'Payments';

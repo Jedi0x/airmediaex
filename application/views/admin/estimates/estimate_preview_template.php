@@ -276,8 +276,15 @@
                         <p class="no-mbot">
                            <span class="bold"><?php echo _l('project'); ?>:</span>
                            <?php echo get_project_name_by_id($estimate->project_id); ?>
-                        </p>
-                        <?php } ?>
+                        </p>   <!-- Arslan Code here -->
+                       <?php }else{ ?>
+                       <p class="no-mbot">
+                       <span class="bold"><?php echo _l('project'); ?>:</span>
+                       <?php echo $estimate->projectname; ?>
+                       </p>
+                       <?php
+
+                       } ?>
                         <?php $pdf_custom_fields = get_custom_fields('estimate',array('show_on_pdf'=>1));
                            foreach($pdf_custom_fields as $field){
                            $value = get_custom_field_value($estimate->id,$field['id'],'estimate');

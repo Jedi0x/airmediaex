@@ -256,6 +256,10 @@
                   }
                   echo render_date_input('expirydate','estimate_add_edit_expirydate',$value); ?>
                </div>
+               <!-- Arslan Code here -->
+              <!--  <div class="col-md-6 projectname">
+                 <?php echo  render_input('projectname','estimate_add_project_name'); ?>
+               </div> -->
             </div>
             <div class="clearfix mbot15"></div>
             <?php $rel_id = (isset($estimate) ? $estimate->id : false); ?>
@@ -271,6 +275,10 @@
                <div class="form-group">
                   <label for="tags" class="control-label"><i class="fa fa-tag" aria-hidden="true"></i> <?php echo _l('tags'); ?></label>
                   <input type="text" class="tagsinput" id="tags" name="tags" value="<?php echo (isset($estimate) ? prep_tags_input(get_tags_in($estimate->id,'estimate')) : ''); ?>" data-role="tagsinput">
+               </div>
+               <div class="form-group projectname">
+                <?php $value = (isset($estimate) ? $estimate->projectname : ''); ?>
+                 <?php echo  render_input('projectname','invoice_add_project_name',$value); ?>
                </div>
                <div class="row">
                   <div class="col-md-6">

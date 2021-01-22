@@ -94,6 +94,8 @@ $companyName = $companyName;
    if(isset($invoice->project_data))
           {
             $project_name = $invoice->project_data->name;
+          }else{
+            $project_name = $invoice->projectname;
           }
 
 $billing_info .= '<table width="100%" style="padding-top:20px;"  cellspacing="10px">
@@ -138,7 +140,6 @@ $billing_info .= '<table width="100%" style="padding-top:20px;"  cellspacing="10
             </td>
             <td  align="right" width="40%">
                 <span style="color:#00aeef;text-transform:uppercase;">PROJECT NAME:</span>' .$project_name.'<br>
-                <span>System Size [SAMPLE]</span><br>
                 <span>Invoice No.: # ' . $invoice_number . '</span><br>
                 <span>Invoice Date.: ' . $invoice->date. '</span><br>
                 <span>Created By: '. get_staff_full_name($invoice->addedfrom).'</span><br>

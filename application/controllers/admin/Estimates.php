@@ -132,6 +132,14 @@ class Estimates extends AdminController
             }
 
                   // Arslan code here
+
+
+            if(isset($estimate_data['projectname']) && !empty($estimate_data['projectname'])){
+                $estimate_data['projectname'] = $estimate_data['projectname'];
+                
+            }else{
+               $estimate_data['projectname'] = NULL;
+            }
             if(isset($estimate_data['sale_agent']) && empty($id)){
                 $estimate_data['sale_agent'] = serialize($estimate_data['sale_agent']);
             }else if(isset($estimate_data['sale_agent']) && !empty($id)){
