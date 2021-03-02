@@ -228,7 +228,7 @@ class Opportunities extends AdminController
                 }
             }
 
-            $data['staff'] = $this->staff_model->get('', ['active' => 1]);
+            $data['staff'] = $this->staff_model->get('', ['active' => 1,'role'=>3]);
 
             $data['opportunity'] = $opportunity;
             $data['opportunities']  = $this->opportunity->get();
@@ -249,7 +249,7 @@ class Opportunities extends AdminController
         $data['currencies'] = $this->currencies_model->get();
     
         $data['companies'] = $this->clients_model->get();
-        $data['staffs'] = $this->Staff_model->get();
+        $data['staffs'] = $this->Staff_model->get('',array('role'=>3));
 
         $data['bodyclass'] = 'customer-profile dynamic-create-groups';
         $data['title']     = $title;

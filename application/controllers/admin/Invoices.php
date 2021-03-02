@@ -82,6 +82,8 @@ class Invoices extends AdminController
             $data['billing_shipping'] = $this->clients_model->get_customer_billing_and_shipping_details($customer_id);
             $data['client_currency']  = $this->clients_model->get_customer_default_currency($customer_id);
 
+            $data['contact_name']  = contact_name($customer_id);
+
             $data['customer_has_projects'] = customer_has_projects($customer_id);
             $data['billable_tasks']        = $this->tasks_model->get_billable_tasks($customer_id);
 
@@ -345,8 +347,12 @@ class Invoices extends AdminController
                 $invoice_data['labour_terms_active'] = 0;
                 $invoice_data['labour_terms'] = '';
             }
+ 
+
 
           // Arslan code here
+
+            $invoice_data['contact_name']  = contact_name($invoice_data['clientid']);
 
 
             if(isset($invoice_data['projectname']) && !empty($invoice_data['projectname'])){
@@ -375,6 +381,7 @@ class Invoices extends AdminController
                 }
 
 
+                
                 $id = $this->invoices_model->add($invoice_data);
                 if ($id) {
                     set_alert('success', _l('added_successfully', _l('invoice')));

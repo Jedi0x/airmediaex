@@ -132,7 +132,7 @@ class Estimates extends AdminController
             }
 
                   // Arslan code here
-
+             $estimate_data['contact_name']  = contact_name($estimate_data['clientid']);
 
             if(isset($estimate_data['projectname']) && !empty($estimate_data['projectname'])){
                 $estimate_data['projectname'] = $estimate_data['projectname'];

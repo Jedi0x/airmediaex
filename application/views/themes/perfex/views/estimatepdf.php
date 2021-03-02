@@ -202,27 +202,27 @@ $discount_name = '';
 
 
 if($estimate->discount_added == 1){
-    $discount_name = 'Tech Partner/Studio 5%';
-    $calculate_discount = (5 / 100) * $estimate->subtotal;
+    $discount_name = 'Tech Partner/Studio @5%';
+    //$calculate_discount = (5 / 100) * $estimate->subtotal;
 }else if($estimate->discount_added == 2){
-    $discount_name = 'Rental Partner 10%';
-    $calculate_discount = (10 / 100) * $estimate->subtotal;
+    $discount_name = 'Rental Partner @10%';
+    //$calculate_discount = (10 / 100) * $estimate->subtotal;
 }
 else if($estimate->discount_added == 3){
-    $discount_name = 'Dealer 25%';
-    $calculate_discount = (25 / 100) * $estimate->subtotal;
+    $discount_name = 'Dealer @25%';
+    //$calculate_discount = (25 / 100) * $estimate->subtotal;
 }
 else if($estimate->discount_added == 4){
-    $discount_name = 'Education 25%';
-    $calculate_discount = (25 / 100) * $estimate->subtotal;
+    $discount_name = 'Education @25%';
+    //$calculate_discount = (25 / 100) * $estimate->subtotal;
 }
 else if($estimate->discount_added == 5){
-    $discount_name = 'Distributer 30%';
-    $calculate_discount = (30 / 100) * $estimate->subtotal;
+    $discount_name = 'Distributer @30%';
+    //$calculate_discount = (30 / 100) * $estimate->subtotal;
 }
 else if($estimate->discount_added == 6){
-    $discount_name = 'Demo 40%';
-    $calculate_discount = (40 / 100) * $estimate->subtotal;
+    $discount_name = 'Demo @40%';
+    //$calculate_discount = (40 / 100) * $estimate->subtotal;
 }
 
 
@@ -249,7 +249,7 @@ $subtotal_Session .='<table style="background-color:#ececec;" cellpadding="10px"
         </tr>
          <tr>';
 
-        if(!empty($invoice->discount_added)){
+        if(!empty($estimate->discount_added)){
             $subtotal_Session .=' <td>Discount Type:</td><td >'.$discount_name.'</td>';
         }else{
            $subtotal_Session .=' <td></td><td ></td>'; 

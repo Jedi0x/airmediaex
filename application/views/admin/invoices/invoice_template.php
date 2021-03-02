@@ -107,6 +107,12 @@
                <div class="col-md-6">
                   <p class="bold"><?php echo _l('ship_to'); ?></p>
                   <address>
+
+                    <span class="contact_name">
+                     <?php $contact_name = (isset($invoice) ? $invoice->contact_name : '--'); ?>
+                     <?php $contact_name = ($contact_name == '' ? '--' :$contact_name); ?>
+                     <?php echo $contact_name; ?></span><br>
+
                      <span class="shipping_street">
                      <?php $shipping_street = (isset($invoice) ? $invoice->shipping_street : '--'); ?>
                      <?php $shipping_street = ($shipping_street == '' ? '--' :$shipping_street); ?>

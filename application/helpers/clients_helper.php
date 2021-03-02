@@ -1147,3 +1147,15 @@ function can_logged_in_contact_change_language()
 
     return $GLOBALS['contact']->is_primary == '1' && get_option('disable_language') == 0;
 }
+
+function contact_name($customer_id)
+{
+   $CI = &get_instance();
+   $CI->db->where('userid', $customer_id);
+   $CI->db->order_by('is_primary', 'DESC');
+   $contact =  $CI->db->get(db_prefix() . 'contacts')->row();
+   return $contact->firstname.' '.$contact->lastname;
+     
+
+
+}

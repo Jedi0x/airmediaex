@@ -140,27 +140,27 @@
 
                if($invoice->discount_added == 1){
                   $discount_name = 'Tech Partner/Studio 5%';
-                  $new_added_discount += (5 / 100) * $new_subtotal;
+                  //$new_added_discount += (5 / 100) * $new_subtotal;
 
                }else if($invoice->discount_added == 2){
                   $discount_name = 'Rental Partner 10%';
-                  $new_added_discount += (10 / 100) * $new_subtotal;
+                  //$new_added_discount += (10 / 100) * $new_subtotal;
                }
                else if($invoice->discount_added == 3){
                   $discount_name = 'Dealer 25%';
-                  $new_added_discount += (25 / 100) * $new_subtotal;
+                  //$new_added_discount += (25 / 100) * $new_subtotal;
                }
                else if($invoice->discount_added == 4){
                   $discount_name = 'Education 25%';
-                  $new_added_discount += (25 / 100) * $new_subtotal;
+                  //$new_added_discount += (25 / 100) * $new_subtotal;
                }
                else if($invoice->discount_added == 5){
                   $discount_name = 'Distributer 30%';
-                  $new_added_discount += (30 / 100) * $new_subtotal;
+                  //$new_added_discount += (30 / 100) * $new_subtotal;
                }
                else if($invoice->discount_added == 6){
                   $discount_name = 'Demo 40%';
-                  $new_added_discount += (40 / 100) * $new_subtotal;
+                  //$new_added_discount += (40 / 100) * $new_subtotal;
                }
          
                ?>

@@ -1,0 +1,71 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+
+ERROR - 2021-02-04 04:20:08 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 04:20:08 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 04:20:14 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 04:20:14 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 04:36:11 --> Severity: error --> Exception: Using $this when not in object context F:\wamp64\www\airmediaex\application\helpers\clients_helper.php 1154
+ERROR - 2021-02-04 04:36:47 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 04:36:47 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 04:37:32 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 04:37:32 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 04:45:31 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 04:45:31 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 04:46:33 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 04:46:33 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 04:46:56 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 04:46:56 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 04:47:31 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 04:47:31 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 04:50:18 --> Severity: Warning --> date_format() expects parameter 1 to be DateTimeInterface, boolean given F:\wamp64\www\airmediaex\application\helpers\general_helper.php 520
+ERROR - 2021-02-04 04:50:20 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 04:50:20 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 04:50:48 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 04:50:48 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 04:51:08 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 04:51:08 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 05:55:27 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 05:55:27 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 05:55:30 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 05:55:30 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 05:55:34 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 05:55:34 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 05:55:41 --> Severity: Notice --> Undefined property: Opportunities::$Opportunity_model F:\wamp64\www\airmediaex\modules\opportunities\controllers\Opportunities.php 268
+ERROR - 2021-02-04 05:55:41 --> Severity: error --> Exception: Call to a member function get() on null F:\wamp64\www\airmediaex\modules\opportunities\controllers\Opportunities.php 268
+ERROR - 2021-02-04 05:59:26 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 05:59:26 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 06:10:50 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 06:10:50 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 06:11:00 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 06:11:00 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 06:11:25 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 06:11:25 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 06:11:43 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 06:11:43 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 06:16:00 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 06:16:00 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 06:19:11 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 06:19:11 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 11:21:05 --> Severity: error --> Exception: syntax error, unexpected 'echo' (T_ECHO) F:\wamp64\www\airmediaex\application\controllers\admin\Invoices.php 356
+ERROR - 2021-02-04 06:23:52 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 06:23:52 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 06:24:11 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 06:24:11 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 06:24:13 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 06:24:13 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 06:24:18 --> Severity: Notice --> Undefined property: Opportunities::$Opportunity_model F:\wamp64\www\airmediaex\modules\opportunities\controllers\Opportunities.php 268
+ERROR - 2021-02-04 06:24:18 --> Severity: error --> Exception: Call to a member function get() on null F:\wamp64\www\airmediaex\modules\opportunities\controllers\Opportunities.php 268
+ERROR - 2021-02-04 06:24:22 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 06:24:22 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 06:28:03 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 06:28:03 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 06:28:10 --> Severity: Notice --> Undefined property: Opportunities::$Opportunity_model F:\wamp64\www\airmediaex\modules\opportunities\controllers\Opportunities.php 268
+ERROR - 2021-02-04 06:28:10 --> Severity: error --> Exception: Call to a member function get() on null F:\wamp64\www\airmediaex\modules\opportunities\controllers\Opportunities.php 268
+ERROR - 2021-02-04 06:28:13 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 06:28:13 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 06:44:38 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 06:44:38 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 06:44:43 --> Severity: Notice --> Undefined property: Opportunities::$Opportunity_model F:\wamp64\www\airmediaex\modules\opportunities\controllers\Opportunities.php 268
+ERROR - 2021-02-04 06:44:43 --> Severity: error --> Exception: Call to a member function get() on null F:\wamp64\www\airmediaex\modules\opportunities\controllers\Opportunities.php 268
+ERROR - 2021-02-04 06:44:46 --> Could not find the language line "notify_send_create_password"
+ERROR - 2021-02-04 06:44:46 --> Could not find the language line "notify_send_create_password"

@@ -328,22 +328,22 @@
 
                if($estimate->discount_added == 1){
                   $discount_name = 'Tech Partner/Studio 5%';
-                  $custom_discount = (5 / 100) * $estimate->subtotal;
+                 // $custom_discount = (5 / 100) * $estimate->subtotal;
                }else if($estimate->discount_added == 2){
                   $discount_name = 'Rental Partner 10%';
-                  $custom_discount = (10 / 100) * $estimate->subtotal;
+                  //$custom_discount = (10 / 100) * $estimate->subtotal;
                }else if($estimate->discount_added == 3){
                   $discount_name = 'Dealer 25%';
-                  $custom_discount = (25 / 100) * $estimate->subtotal;
+                  //$custom_discount = (25 / 100) * $estimate->subtotal;
                }else if($estimate->discount_added == 4){
                   $discount_name = 'Education 25%';
-                  $custom_discount = (25 / 100) * $estimate->subtotal;
+                 // $custom_discount = (25 / 100) * $estimate->subtotal;
                }else if($estimate->discount_added == 5){
                   $discount_name = 'Distributer 30%';
-                  $custom_discount = (30 / 100) * $estimate->subtotal;
+                  //$custom_discount = (30 / 100) * $estimate->subtotal;
                }else if($estimate->discount_added == 6){
                   $discount_name = 'Demo 40%';
-                  $custom_discount = (40 / 100) * $estimate->subtotal;
+                  //$custom_discount = (40 / 100) * $estimate->subtotal;
                } ?>
                <tr>
                   <td><span class="bold"><?php echo $discount_name; ?></span>

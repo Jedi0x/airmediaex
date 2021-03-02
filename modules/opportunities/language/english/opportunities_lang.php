@@ -21,8 +21,8 @@ $lang['activity'] = "Activity";
 
 $lang['profile_project_name'] = "Project Name";
 $lang['profile_account'] = "Account";
-$lang['profile_client_contacts'] = "Client Contacts";
-$lang['profile_owner'] = "Owner";
+$lang['profile_client_contacts'] = "Contact Name";
+$lang['profile_owner'] = "Sales Agent";
 $lang['profile_delivery_date'] = "Delivery Date";
 $lang['profile_projected_sale_date'] = "Projected Sale Date";
 $lang['profile_probability'] = "Probability";
