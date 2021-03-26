@@ -351,9 +351,21 @@ class Invoices extends AdminController
 
 
           // Arslan code here
+            if(isset($invoice_data['payment_term_select'])){
+                $invoice_data['payment_term_select'] = serialize($invoice_data['payment_term_select']);
+            }else{
+                $invoice_data['payment_term_select'] = serialize(array());
+            }
+            
 
             $invoice_data['contact_name']  = contact_name($invoice_data['clientid']);
-
+            
+            if(isset($invoice_data['ponumber']) && !empty($invoice_data['ponumber'])){
+                $invoice_data['ponumber'] = $invoice_data['ponumber'];
+                
+            }else{
+               $invoice_data['ponumber'] = NULL;
+            }
 
             if(isset($invoice_data['projectname']) && !empty($invoice_data['projectname'])){
                 $invoice_data['projectname'] = $invoice_data['projectname'];

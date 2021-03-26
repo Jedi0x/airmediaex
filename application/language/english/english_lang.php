@@ -45,7 +45,8 @@ $lang['invoice_note']                          = 'Note:';
 $lang['invoice_payments_table_number_heading'] = 'Payment #';
 $lang['invoice_payments_table_mode_heading']   = 'Payment Mode';
 $lang['invoice_payments_table_date_heading']   = 'Date';
-$lang['invoice_payments_table_amount_heading'] = 'Amount';
+$lang['invoice_payments_table_amount_heading'] = 'Amount';  
+$lang['invoice_add_po_number']                 = 'Purchase Order'; 
 
 # Announcements
 $lang['announcement']                 = 'Announcement';

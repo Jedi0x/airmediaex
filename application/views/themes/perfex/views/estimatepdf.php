@@ -63,6 +63,10 @@ $zipCode = '';
 
 $zipCode = $estimate->billing_zip;
 
+$contactname='';
+
+$contactname = $estimate->contact_name;
+
 
 $countryCode = '';
 $countryName = '';
@@ -87,7 +91,7 @@ $vat = $estimate->client->vat;
 
 
 $street = trim(preg_replace("/<br\W*?\/>/", "\n", $street));
-// Arslam code here
+// Arslan code here
 $companyName = $companyName;
  // $project_name='';
  //   if(isset($estimate->project_data))
@@ -109,12 +113,15 @@ $companyName = $companyName;
 $billing_info .= '<table width="100%" style="padding-top:20px;"  cellspacing="10px">
     <tbody>
         <tr>
-            <td align="left" width="35%">
+            <td align="left" width="30%">
           
                 <table>
                     <tbody>
                         <tr>
                             <td style="color:#00aeef;text-transform:uppercase;">Quoted To</td>
+                        </tr>
+                        <tr>
+                            <td> '.trim($contactname) .'</td>
                         </tr>
                         <tr>
                             <td> '.trim($companyName) .'</td>
@@ -135,11 +142,17 @@ $billing_info .= '<table width="100%" style="padding-top:20px;"  cellspacing="10
                     </tbody>
                 </table>
             </td>
-            <td width="25%">
+            <td width="30%">
             <table>
                     <tbody>
                         <tr>
                             <td style="color:#00aeef;text-transform:uppercase;">Shipped To</td>
+                        </tr>
+                        <tr>
+                            <td> '.trim($contactname) .'</td>
+                        </tr>
+                          <tr>
+                            <td> '.trim($companyName) .'</td>
                         </tr>
                         '.format_customer_info_invoice($estimate, 'invoice', 'shipping').'
                     </tbody>
@@ -269,8 +282,8 @@ $tax_rate+=$tax['total_tax'];
 }
 
         $subtotal_Session .='<tr>
-            <td>Shipping Provider:</td>
-            <td>CAST - FedEx</td>
+            <td></td>
+            <td></td>
             <td>Shipping:</td>
             <td align="right">' . app_format_money($estimate->shipping, $estimate->currency_name) . '</td>
         </tr>
@@ -314,19 +327,21 @@ $pdf->writeHTML($total_due, false, false, false, false, '');
 
 $pdf->Ln(hooks()->apply_filters('pdf_info_and_table_separator', 6));
 
-$payment_terms = '';
+$payment_terms_select_opt = (isset($estimate) ? unserialize($estimate->payment_term_select) : array());
+$payment_row='';
+$payment_opt = array('due_upon_receipt_of_invoice','net_15_days','net_30_days','installment','pre_paid','due_prior_to_releasing_the_shipment_and_or_services');
 
+foreach ($payment_terms_select_opt as $key => $value) {
+          $payment_row.=' <tr>
+            <td>'. _l($payment_opt[$value]).'</td>
+            <td align="right">' . app_format_money(($estimate->total+$tax_rate)/sizeof($payment_terms_select_opt), $estimate->currency_name) . '</td>
+        </tr>';
+}
+$payment_terms = '';
 $payment_terms .='<h2>PAYMENT TERMS</h2>';
 $payment_terms .='<table style="background-color:#ececec;margin-top:0px;">
     <tbody>
-        <tr>
-            <td>Installment 1 - 50% Upon receipt of invoice</td>
-            <td align="right">' . app_format_money($estimate->total+$tax_rate/2, $estimate->currency_name) . '</td>
-        </tr>
-        <tr>
-            <td>Installment 2 - 50 % Due prior to releasing the shipment</td>
-            <td align="right">' . app_format_money($estimate->total+$tax_rate/2, $estimate->currency_name) . '</td>
-        </tr>
+    '.$payment_row.'
     </tbody>
 </table>';
 $pdf->writeHTML($payment_terms, false, false, false, false, '');
