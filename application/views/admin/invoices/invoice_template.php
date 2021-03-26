@@ -27,6 +27,7 @@
          <?php } ?>
       </div>
    </div>
+
 </div>
 <div class="panel_s invoice accounting-template">
    <div class="additional"></div>
@@ -72,6 +73,43 @@
                </div>
             </div>
             <?php } ?>
+
+
+
+
+
+          <?php 
+          $options = array('due_upon_receipt_of_invoice','net_15_days','net_30_days','installment','pre_paid','due_prior_to_releasing_the_shipment_and_or_services');
+
+          $selected_payment_terms = (isset($invoice) ? unserialize($invoice->payment_term_select) : array());
+          ?>
+          <div class="form-group mbot15 select-placeholder">
+            <label for="contacts" class="control-label"><?php echo _l('payment_terms'); ?></label>
+            <br />
+            <select class="selectpicker ajax-search" data-live-search="true" data-width="100%" id= "payment_terms" data-toggle="" name="payment_term_select[]"  data-width="100%"  data-title="<?php echo _l('payment_terms'); ?>">
+              <?php 
+
+                foreach ($options as $k => $v) { ?>
+                  <option value = '<?=$k?>' <?php echo (in_array($k,$selected_payment_terms)) ? "selected" : "" ;?> ><?php echo _l($v); ?></option> <?php
+                }
+
+              ?>
+
+            </select>
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
             <div class="row">
                <div class="col-md-12">
                <hr class="hr-10" />
@@ -107,6 +145,12 @@
                <div class="col-md-6">
                   <p class="bold"><?php echo _l('ship_to'); ?></p>
                   <address>
+
+                    <span class="contact_name">
+                     <?php $contact_name = (isset($invoice) ? $invoice->contact_name : '--'); ?>
+                     <?php $contact_name = ($contact_name == '' ? '--' :$contact_name); ?>
+                     <?php echo $contact_name; ?></span><br>
+
                      <span class="shipping_street">
                      <?php $shipping_street = (isset($invoice) ? $invoice->shipping_street : '--'); ?>
                      <?php $shipping_street = ($shipping_street == '' ? '--' :$shipping_street); ?>
@@ -259,6 +303,10 @@
                    <div class="form-group">
                   <label for="tags" class="control-label"><i class="fa fa-tag" aria-hidden="true"></i> <?php echo _l('tags'); ?></label>
                   <input type="text" class="tagsinput" id="tags" name="tags" value="<?php echo (isset($invoice) ? prep_tags_input(get_tags_in($invoice->id,'invoice')) : ''); ?>" data-role="tagsinput">
+               </div>
+               <div class="form-group ponumber">
+                   <?php $value = (isset($invoice) ? $invoice->ponumber : ''); ?>
+                 <?php echo  render_input('ponumber','invoice_add_po_number',$value); ?>
                </div>
                  <div class="form-group projectname">
                    <?php $value = (isset($invoice) ? $invoice->projectname : ''); ?>

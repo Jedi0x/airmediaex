@@ -85,6 +85,15 @@ $vat = '';
 
 $vat = $invoice->client->vat;
 
+$contactname='';
+
+$contactname = $invoice->contact_name;
+
+
+$po_number = $invoice->ponumber;
+
+
+
 
 $street = trim(preg_replace("/<br\W*?\/>/", "\n", $street));
 
@@ -97,16 +106,21 @@ $companyName = $companyName;
           }else{
             $project_name = $invoice->projectname;
           }
+       
+        
 
 $billing_info .= '<table width="100%" style="padding-top:20px;"  cellspacing="10px">
     <tbody>
         <tr>
-            <td align="left" width="35%">
+            <td align="left" width="30%">
           
                 <table>
                     <tbody>
                         <tr>
                             <td style="color:#00aeef;text-transform:uppercase;"> '. _l('invoice_bill_to') .'</td>
+                        </tr>
+                          <tr>
+                            <td> '.trim($contactname) .'</td>
                         </tr>
                         <tr>
                             <td> '.trim($companyName) .'</td>
@@ -127,13 +141,21 @@ $billing_info .= '<table width="100%" style="padding-top:20px;"  cellspacing="10
                     </tbody>
                 </table>
             </td>
-            <td width="25%">
+            <td width="30%">
             <table>
                     <tbody>
+
                         <tr>
                             <td style="color:#00aeef;text-transform:uppercase;"> '. _l('ship_to') .'</td>
                         </tr>
+                         <tr>
+                            <td> '.trim($contactname) .'</td>
+                        </tr>
+                         <tr>
+                            <td> '.trim($companyName) .'</td>
+                        </tr>
                         '.format_customer_info_invoice($invoice, 'invoice', 'shipping').'
+
                     </tbody>
                 </table>
                 
@@ -144,7 +166,7 @@ $billing_info .= '<table width="100%" style="padding-top:20px;"  cellspacing="10
                 <span>Invoice Date.: ' . $invoice->date. '</span><br>
                 <span>Created By: '. get_staff_full_name($invoice->addedfrom).'</span><br>
                 <span>Quote No: 19-####</span><br>
-                <span>PO No: 12245</span><br>
+                <span>PO No: '.$po_number.'</span><br>
                 <span>EST. DELIVERY DATE: '.$invoice->duedate.'</span>
             </td>
         </tr>
@@ -188,28 +210,28 @@ $discount_name = '';
 
 
 if($invoice->discount_added == 1){
-    $discount_name = 'Tech Partner/Studio 5%';
-    $calculate_discount = (5 / 100) * $invoice->subtotal;
+    $discount_name = 'Tech Partner/Studio @5%';
+    //$calculate_discount = (5 / 100) * $invoice->subtotal;
 
 }else if($invoice->discount_added == 2){
-    $discount_name = 'Rental Partner 10%';
-     $calculate_discount = (10 / 100) * $invoice->subtotal;
+    $discount_name = 'Rental Partner @10%';
+    //$calculate_discount = (10 / 100) * $invoice->subtotal;
 }
 else if($invoice->discount_added == 3){
-    $discount_name = 'Dealer 25%';
-     $calculate_discount = (25 / 100) * $invoice->subtotal;
+    $discount_name = 'Dealer @25%';
+    //$calculate_discount = (25 / 100) * $invoice->subtotal;
 }
 else if($invoice->discount_added == 4){
-    $discount_name = 'Education 25%';
-     $calculate_discount = (25 / 100) * $invoice->subtotal;
+    $discount_name = 'Education @25%';
+    //$calculate_discount = (25 / 100) * $invoice->subtotal;
 }
 else if($invoice->discount_added == 5){
-    $discount_name = 'Distributer 30%';
-     $calculate_discount = (30 / 100) * $invoice->subtotal;
+    $discount_name = 'Distributer @30%';
+    //$calculate_discount = (30 / 100) * $invoice->subtotal;
 }
 else if($invoice->discount_added == 6){
-    $discount_name = 'Demo 40%';
-     $calculate_discount = (40 / 100) * $invoice->subtotal;
+    $discount_name = 'Demo @40%';
+    //$calculate_discount = (40 / 100) * $invoice->subtotal;
 }
 
 
@@ -268,8 +290,8 @@ $tax_rate+=$tax['total_tax'];
 
         
         $subtotal_Session .='<tr>
-            <td>Shipping Provider:</td>
-            <td>CAST - FedEx</td>
+            <td></td>
+            <td></td>
             <td>Shipping:</td>
             <td align="right">' . app_format_money($invoice->shipping, $invoice->currency_name) . '</td>
         </tr>
@@ -313,19 +335,60 @@ $pdf->writeHTML($total_due, false, false, false, false, '');
 
 $pdf->Ln(hooks()->apply_filters('pdf_info_and_table_separator', 6));
 
-$payment_terms = '';
+// $payment_terms = '';
 
+// $payment_terms .='<h2>PAYMENT TERMS</h2>';
+// $payment_terms .='<table style="background-color:#ececec;margin-top:0px;">
+//     <tbody>
+//         <tr>
+//             <td>Installment 1 - 50% Upon receipt of invoice</td>
+//             <td align="right">' . app_format_money($invoice->total+$tax_rate/2, $invoice->currency_name) . '</td>
+//         </tr>
+//         <tr>
+//             <td>Installment 2 - 50 % Due prior to releasing the shipment</td>
+//             <td align="right">' . app_format_money($invoice->total+$tax_rate/2, $invoice->currency_name) . '</td>
+//         </tr>
+//     </tbody>
+// </table>';
+// $pdf->writeHTML($payment_terms, false, false, false, false, '');
+
+
+
+
+$payment_terms_select_opt = (isset($invoice) ? unserialize($invoice->payment_term_select) : array());
+$payment_row='';
+$payment_opt = array('due_upon_receipt_of_invoice','net_15_days','net_30_days','installment','pre_paid','due_prior_to_releasing_the_shipment_and_or_services');
+$payment_terms_select_opt = $payment_terms_select_opt[0];
+
+if($payment_terms_select_opt == 3){
+   $payment_row.=' <tr>
+   <td>'. _l($payment_opt[$payment_terms_select_opt]). " 1-50% Upon receipt of invoice " .'</td>
+   <td align="right">' . app_format_money(($invoice->total+$tax_rate)/2, $invoice->currency_name) . '</td>
+   </tr>';
+   $payment_row.=' <tr>
+   <td>'. _l($payment_opt[$payment_terms_select_opt]). " 2-50% Due upon receipt of invoice " .'</td>
+   <td align="right">' . app_format_money(($invoice->total+$tax_rate)/2, $invoice->currency_name) . '</td>
+   </tr>';
+}
+else {
+    $payment_row.=' <tr>
+   <td>'. _l($payment_opt[$payment_terms_select_opt]).'</td>
+   <td align="right">' . app_format_money(($invoice->total+$tax_rate), $invoice->currency_name) . '</td>
+   </tr>';
+}
+
+// foreach ($payment_terms_select_opt as $key => $value) {
+
+//           $payment_row.=' <tr>
+//             <td>'. _l($payment_opt[$value]).'</td>
+//             <td align="right">' . app_format_money(($invoice->total+$tax_rate)/sizeof($payment_terms_select_opt), $invoice->currency_name) . '</td>
+//         </tr>';
+// }
+$payment_terms = '';
 $payment_terms .='<h2>PAYMENT TERMS</h2>';
 $payment_terms .='<table style="background-color:#ececec;margin-top:0px;">
     <tbody>
-        <tr>
-            <td>Installment 1 - 50% Upon receipt of invoice</td>
-            <td align="right">' . app_format_money($invoice->total+$tax_rate/2, $invoice->currency_name) . '</td>
-        </tr>
-        <tr>
-            <td>Installment 2 - 50 % Due prior to releasing the shipment</td>
-            <td align="right">' . app_format_money($invoice->total+$tax_rate/2, $invoice->currency_name) . '</td>
-        </tr>
+    '.$payment_row.'
     </tbody>
 </table>';
 $pdf->writeHTML($payment_terms, false, false, false, false, '');

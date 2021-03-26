@@ -29,9 +29,9 @@ if ($this->ci->input->post('customers_related')) {
     array_push($filter, 'OR rel_type="customer"');
 }
 // Bitsclan Solutions Start Code 
-else{
-    array_push($filter, 'OR rel_type="opportunity"');
-}
+// else{
+//     array_push($filter, 'OR rel_type="opportunity"');
+// }
 // Bitsclan Solutions End Code
 if ($this->ci->input->post('expired')) {
     array_push($filter, 'OR open_till IS NOT NULL AND open_till <"' . date('Y-m-d') . '" AND status NOT IN(2,3)');

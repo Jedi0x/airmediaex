@@ -44,7 +44,7 @@ if ($proposal->show_quantity_as == 2) {
 }
 
 // The items table
-$items = get_items_table_data($proposal, 'proposal', 'pdf')
+$items = get_group_items_table_data($proposal, 'proposal', 'pdf')
         ->set_headings('estimate');
 
 $items_html = $items->table();

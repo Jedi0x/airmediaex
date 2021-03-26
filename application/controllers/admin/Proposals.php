@@ -130,12 +130,20 @@ class Proposals extends AdminController
 
     public function proposal($id = '')
     {
+
         if ($this->input->post()) {
             $proposal_data = $this->input->post();
+
+                unset($proposal_data['item_select_group'],
+                      $proposal_data['part_number'],
+                      $proposal_data['discount_group_percent'],
+                      $proposal_data['discount_group_total']);
             if ($id == '') {
                 if (!has_permission('proposals', '', 'create')) {
                     access_denied('proposals');
                 }
+
+                
                 $id = $this->proposals_model->add($proposal_data);
                 if ($id) {
                     set_alert('success', _l('added_successfully', _l('proposal')));
@@ -164,6 +172,7 @@ class Proposals extends AdminController
             $title = _l('add_new', _l('proposal_lowercase'));
         } else {
             $data['proposal'] = $this->proposals_model->get($id);
+           
 
             if (!$data['proposal'] || !user_can_view_proposal($id)) {
                 blank_page(_l('proposal_not_found'));
@@ -191,7 +200,10 @@ class Proposals extends AdminController
         $data['currencies']    = $this->currencies_model->get();
         $data['base_currency'] = $this->currencies_model->get_base_currency();
 
+
         $data['title'] = $title;
+
+
         $this->load->view('admin/proposals/proposal', $data);
     }
 

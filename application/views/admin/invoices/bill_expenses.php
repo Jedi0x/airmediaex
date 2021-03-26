@@ -1,4 +1,5 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+<?php echo 'here'; ?>
 <?php if(count($expenses_to_bill) > 0){ ?>
 <h4 class="bold mbot15 font-medium"><?php echo _l('expenses_available_to_bill'); ?></h4>
 <?php
